@@ -1,0 +1,469 @@
+<!-- TODO(iteration-2): mode CONTRACT is web-reframed (titles + two scope axes), but deep per-mode BODY content is still mobile-shaped. Author for web: "Platform-specific notes / iOS / Android" → "Responsive behavior (breakpoint) + Browser/engine notes"; touch-target → hover/focus/keyboard + pointer; add web sections (semantic HTML/heading outline, SEO for marketing, Core Web Vitals). -->
+<!-- INVERSION-WATCH(iter2): any mode rule treating hover/right-click/keyboard-first as a problem must be FLIPPED (required on web). "one-screen-at-a-time" → multi-pane/long-scroll. -->
+
+# Mode Definitions
+
+This document defines the six supported modes for `web-design-skill`.
+
+Each mode includes:
+
+- required input
+- optional input
+- output structure
+- validation checklist
+- fallback behavior
+
+All modes also use `docs/weaknesses.md` as a failure-mode preflight. The goal is to prevent outputs that are structurally complete but generic, overconfident, aesthetic-only, platform-flattened, or weakly buildable.
+
+Modes that propose, specify, review, or rationalize a design artifact also use `docs/design-quality-rubric.md`. Generated/specification outputs should internally target 4/5; reviews should expose both a current and a projected (conditional) score with evidence limits.
+
+All modes use `docs/clarification-policy.md` before drafting. Ask clarifying questions only when missing information would materially change the recommendation; otherwise proceed with minimal labeled assumptions.
+
+---
+
+## Mode A: Generate web page concept
+
+### Purpose
+Create a first-pass concept for a web page that is usable, structured, responsive, and browser-aware.
+
+### Required input
+At least one of:
+- app idea
+- feature description
+- user goal
+- screen type
+
+### Optional input
+- platform
+- target audience
+- brand or tone
+- current design system
+- accessibility sensitivity
+- enterprise context
+- content density
+- wireframe notes
+- constraints and deadlines
+
+### Output structure
+- Mode
+- Platform scope
+- Assumptions
+- Screen goal
+- Primary user task
+- Information hierarchy
+- Recommended layout structure
+- Suggested components
+- Interaction notes
+- Empty / loading / error states
+- Platform-specific notes
+- Accessibility considerations
+- Design quality calibration
+- Rationale for major choices
+- Next actions
+
+### Validation checklist
+- Is the primary task obvious?
+- Is the hierarchy sequenced by user need rather than decoration?
+- Are recommended components plausible for the task?
+- Are empty/loading/error states included?
+- Are touch and readability implications addressed?
+- Are visual hierarchy, composition, density, and production checks calibrated?
+- Does the proposal target at least 4/5 design quality, or explain what missing context blocks that target?
+- Are platform differences called out if relevant?
+- Is accessibility included by default?
+- Are invented details labeled as assumptions?
+
+### Fallback behavior
+If the request is underspecified:
+- infer only the minimum viable context
+- label assumptions clearly
+- keep the concept structural rather than visually over-specified
+
+---
+
+## Mode B: Design web user flow
+
+### Purpose
+Define a usable, predictable, recoverable mobile task flow.
+
+### Required input
+At least one of:
+- user goal
+- flow description
+- feature description
+- journey start and end states
+
+### Optional input
+- platform
+- authentication context
+- target audience
+- failure scenarios
+- enterprise or regulated context
+- current navigation model
+- content density
+- accessibility sensitivity
+
+### Output structure
+- Mode
+- Platform scope
+- Assumptions
+- Flow goal
+- Entry points
+- Ordered steps/screens
+- Decision points
+- Back-navigation logic
+- Failure and recovery paths
+- Platform behavior notes
+- Accessibility and usability risks
+- Simplification opportunities
+- Next actions
+
+### Validation checklist
+- Is the success path clear?
+- Are decision points explicit?
+- Is back-navigation logic predictable?
+- Are error and recovery paths present?
+- Are steps scoped to mobile realities, not desktop fantasies?
+- Are platform navigation differences included where relevant?
+- Are usability and accessibility risks included?
+- Are unnecessary steps flagged for simplification?
+
+### Fallback behavior
+If the request is incomplete:
+- define a lean “happy path” plus minimum recovery paths
+- note where business rules or product policy details are missing
+
+---
+
+## Mode C: Create responsive UI spec
+
+### Purpose
+Translate a screen or flow into implementation-friendly UI structure and behavior.
+
+### Required input
+At least one of:
+- screen description
+- wireframe description
+- feature description
+- flow scope
+
+### Optional input
+- platform
+- current design system
+- content model
+- states
+- interaction constraints
+- handoff depth
+- brand constraints
+- accessibility sensitivity
+- engineering context
+
+### Output structure
+- Mode
+- Platform scope
+- Assumptions
+- Screen or flow scope
+- Structural zones
+- Components by section
+- State definitions
+- Behavior rules
+- Content guidance
+- Spacing and layout notes
+- Typography rules
+- Accessibility requirements
+- Design quality requirements
+- iOS-specific and/or Android-specific implementation notes
+- Next actions
+
+### Validation checklist
+- Can an engineer or designer build from this?
+- Are states explicit?
+- Are behaviors described instead of implied?
+- Are spacing and typography included?
+- Are content constraints included?
+- Are platform notes split where conventions differ?
+- Are accessibility requirements concrete?
+- Are visual hierarchy, spacing, typography, color/state, and production quality requirements concrete?
+- Does the spec target at least 4/5 design quality with buildable requirements?
+- Are unknown details labeled as assumptions?
+
+### Fallback behavior
+If the request lacks detail:
+- create a base spec with explicit assumptions
+- avoid pretending to know hidden business rules
+- keep state definitions conservative and reusable
+
+---
+
+## Mode D: Review page for usability/accessibility
+
+### Purpose
+Run an expert review of a screen or screen description through usability, accessibility, hierarchy, design-quality, and platform lenses. Mode D borrows critique's reasoning structure (objective → decision → why it is or isn't effective) but, as an expert review rather than a facilitated critique, it also prescribes fixes: each finding is one causal chain — observation → violated principle → user consequence → change → predicted effect — not a list of problems split from a separate list of remedies.
+
+### Sub-cases
+
+Mode D behaves differently depending on what the user provides. Classify the request into exactly one sub-case at the start of the response, and adjust scope accordingly.
+
+#### D1: Review with visual design provided
+The user shares a screenshot, Figma link, or detailed visual description that includes layout, spacing, typography treatment, and color.
+
+- Full assessment is possible across visual hierarchy, spacing, typography, colors, and contrast.
+- Accessibility checks can address visual properties (contrast, focus appearance, touch-target visibility) as well as structural ones.
+- Use this sub-case label at the top of the response.
+
+#### D2: Review with text description only
+The user describes layout structure (fields, sections, actions, content) but no visual treatment.
+
+- Assess structure, logic, information order, state coverage, and interaction behavior.
+- Do not assert visual properties (contrast, spacing in pixels, visual weight) without qualifiers. Flag them under `Unresolved assumptions`.
+- Accessibility assessment is limited to properties that can be reasoned from structure: label strategy, state semantics, input affordances. Mark visual accessibility (contrast, focus visibility) as unverifiable.
+- Use this sub-case label at the top of the response.
+
+#### D3: Review with problem statement
+The user reports a symptom without a clear root cause ("users complain", "analytics show drop-off at step 3", "something feels off").
+
+- Lead with diagnosis: what likely causes the reported symptom, based on the described context.
+- Differentiate diagnosis from assessment. Diagnosis is a hypothesis; assessment reports observable problems.
+- Suggest targeted investigation steps (specific events to check, specific user actions to observe), not a full redesign.
+- Use this sub-case label at the top of the response.
+
+#### D4: Review with context change
+The user asks whether an existing design still holds under a changed context (new audience, new regulatory framing, new platform, new accessibility requirement).
+
+- Re-evaluate the existing design through the new lens; do not re-review from scratch.
+- Call out which prior-acceptable choices now fail under the new context, and which remain fine.
+- If the context change invalidates assumptions baked into the original design, state that the design likely needs re-structuring, not just adjustment.
+- Use this sub-case label at the top of the response.
+
+### Required input
+At least one of:
+- screen description
+- wireframe description
+- UI spec
+- screenshot description
+- current layout summary
+
+### Optional input
+- platform
+- target audience
+- product context
+- known complaints
+- current constraints
+- business priority
+- accessibility sensitivity
+- severity preference
+
+### Output structure
+- Mode
+- Platform scope
+- Sub-case (D1 / D2 / D3 / D4)
+- Assumptions
+- Quick summary
+- Strengths
+- Findings — each finding is one causal chain with: Lens (Usability / Accessibility / Hierarchy & readability / Design quality / Navigation & interaction), Observation, Violated principle (named), User consequence, Change, Predicted effect (directional + confidence), Severity (Nielsen 0–4 = frequency × impact × persistence), Moves (which design-quality dimension it shifts, band→band)
+- Design quality score (current → projected) — current and projected scores plus a per-dimension table; the projected number is the median of the assessable projected dimensions (visual dimensions are never projected upward from a text-only review), stated as a flat number; a higher number reachable only after a visual pass goes in a separate Ceiling note
+- Severity index — findings rolled up by Nielsen 0–4 level
+- Bold move (optional) — include only when the trigger is met (see below)
+- Platform-convention mismatches
+- Unresolved assumptions
+- Next actions
+
+The Bold move trigger: offer one only when ALL hold — the screen is already competent (current ≥3/5) but inert (loses no major points yet has no point of view); there is no unresolved severity-3 or severity-4 finding (fix those first); and there is a concrete UX upside. Allowed in D1/D3; in D2 it may address structure/flow only; in D4 only if the new context unlocks it. It is not a fix and not required to ship; if the trigger is not met, omit the section. A recommendation that contradicts the stated product/task is a failure only when its justification is aesthetic — a contradiction justified by a named usability/accessibility/hierarchy mechanism and surfaced in the Bold move block with its tradeoff and validation path is encouraged, not penalized.
+
+### Validation checklist
+- Is the sub-case (D1 / D2 / D3 / D4) classified explicitly?
+- Does the review distinguish strengths from problems, with at least one genuine strength?
+- Is each finding a single causal chain (observation → violated principle → user consequence → change → predicted effect), not an issue split from its fix?
+- Does every finding name the violated principle (heuristic/law), instead of "this feels off"?
+- Does every predicted effect name a user outcome, stated directionally with a confidence level and no fabricated percentages?
+- Is severity rated on the Nielsen 0–4 scale and justified as frequency × impact × persistence?
+- For D2: are visual claims qualified as unverifiable, or restricted to structure?
+- For D3: is diagnosis separated from assessment?
+- For D4: is the review framed as a delta against the changed context, not a full re-review?
+- Are both a current and a projected design-quality score exposed, the projected number being the median of the assessable projected dimensions (a flat number, not "up to"), with any higher post-visual-pass figure confined to a Ceiling note?
+- For D2/D3: is the projected score labeled provisional, and are visual dimensions kept at n/v (never projected upward)?
+- If a Bold move is offered: is the trigger met, does it carry all required fields (deviation, JTBD job, upside, risk, validation path, score impact, conviction), and is it kept separate from the required fixes?
+- Was any UX-strengthening recommendation withheld only because it contradicts the current product? If so, is it moved to Bold move with its tradeoff?
+- Are platform mismatches called out, and typography/spacing reviewed where verifiable?
+- Are design-quality claims limited to what can be verified from the provided visual or description?
+- Is compliance language avoided unless verified, and are unresolved assumptions stated?
+
+### Fallback behavior
+If evidence is limited:
+- frame findings as probable issues, not proven defects
+- state what cannot be verified from the provided material
+- for D2 in particular, never assert visual properties without a qualifier; move them to `Unresolved assumptions`
+
+---
+
+## Mode E: Create typography, spacing and grid system
+
+### Purpose
+Create a mobile-friendly type and spacing system grounded in readability, scaling, and touch ergonomics.
+
+### Required input
+At least one of:
+- product type
+- target audience
+- platform
+- density preference
+- current design direction
+
+### Optional input
+- current brand typography
+- accessibility sensitivity
+- enterprise context
+- multilingual support
+- content heaviness
+- handoff depth
+- existing token system
+
+### Output structure
+- Mode
+- Platform scope
+- Assumptions
+- Type roles
+- Size hierarchy
+- Weight usage
+- Line-height guidance
+- Spacing scale
+- Density rules
+- Visual rhythm rules
+- Touch-target implications
+- Accessibility considerations for scaling and readability
+- Usage examples for common screen areas
+- Next actions
+
+### Validation checklist
+- Does the system define roles instead of random sizes?
+- Does it address scaling and readability?
+- Does it cover spacing as a system?
+- Does it relate density to content and task needs?
+- Does it define visual rhythm and role limits so the system can be applied consistently?
+- Does it target at least 4/5 design quality through rhythm, density, scaling, and production-ready values?
+- Does it note touch implications?
+- Does it remain plausible across platforms?
+- Are accessibility constraints included?
+- Are examples practical?
+
+### Fallback behavior
+If brand rules are unknown:
+- define a neutral, platform-safe structure
+- separate role definitions from font-family decisions
+- mark unresolved brand-level decisions clearly
+
+---
+
+## Mode F: Prepare design rationale / handoff
+
+### Purpose
+Explain and package design decisions for product, design, and engineering handoff.
+
+### Required input
+At least one of:
+- design description
+- redesign summary
+- screen or flow concept
+- decision summary
+
+### Optional input
+- platform
+- audience
+- project context
+- constraints
+- known tradeoffs
+- implementation stage
+- research notes
+- accessibility sensitivity
+
+### Output structure
+- Mode
+- Platform scope
+- Assumptions
+- Design objective
+- Target users and context
+- Key design decisions
+- Pattern choices and why
+- Design quality rationale
+- Platform alignment
+- Accessibility and usability considerations
+- States and edge cases
+- Implementation notes
+- Open questions
+- Validation plan or recommended testing focus
+- Next actions
+
+### Validation checklist
+- Does it explain why decisions were made?
+- Does it connect choices to user goals and context?
+- Does it show platform alignment?
+- Does it explain how visual hierarchy, composition, density, and brand expression support the design objective?
+- Does the rationale state the quality target or current score using the 1-5 rubric?
+- Does it cover edge states and implementation concerns?
+- Does it avoid invented evidence?
+- Does it separate known facts from recommendations?
+- Is it usable in design/dev handoff?
+- Does it end with a realistic validation plan?
+
+### Fallback behavior
+If research evidence is missing:
+- do not fabricate validation
+- explicitly recommend what should be tested or confirmed next
+
+---
+
+## Mode G: Generate / critique a marketing landing page (conversion / CRO)
+
+<!-- TODO(iteration-2): author full web CRO content (above-the-fold, scroll narrative, persuasion, social proof, the marketing-vs-web-app optimization split). Scaffold only. -->
+
+### Purpose
+Design or review a marketing / landing page whose primary job is persuasion and conversion — not task completion. This mode optimizes the marketing-site end of the spectrum (above-the-fold clarity, scroll narrative, CTA hierarchy, social proof, conversion path), distinct from the web-app modes (A–F) which optimize task efficiency and density. The marketing-vs-web-app split is the defining tension of this mode.
+
+### Required input
+At least one of:
+- product / offer description
+- target audience or segment
+- conversion goal (signup, demo, purchase, lead)
+- existing landing page (for critique)
+
+### Optional input
+- brand / tone
+- traffic source / campaign context
+- competitor or benchmark references
+- existing analytics / funnel data
+- constraints (compliance, localization, performance budget)
+
+### Output structure
+- Mode
+- Responsive/breakpoint scope
+- Browser/engine scope
+- Assumptions
+- Conversion goal and primary CTA
+- Above-the-fold (hero) structure
+- Scroll narrative and section rhythm
+- Value proposition and messaging hierarchy
+- Social proof and trust signals
+- CTA hierarchy and placement
+- Objection handling / FAQ
+- Accessibility considerations
+- Performance considerations (Core Web Vitals, media weight)
+- SEO and shareability (semantic structure, metadata, Open Graph)
+- Design quality calibration
+- Conversion-rate reasoning (mechanisms, not guarantees)
+- Next actions
+
+### Validation checklist
+- Is the single primary conversion goal explicit?
+- Is the above-the-fold value proposition clear without scrolling?
+- Is there one dominant CTA with a clear hierarchy over secondary actions?
+- Are trust / social-proof signals specific, not generic?
+- Is the scroll narrative ordered by visitor questions, not by feature list?
+- Are performance and accessibility treated as conversion factors, not afterthoughts?
+- Are conversion claims framed as mechanisms / hypotheses, not fabricated lift percentages?
+- Is the marketing-vs-web-app framing respected (expressive / editorial craft is appropriate here)?
+
+### Fallback behavior
+If offer / audience / goal is underspecified:
+- state the smallest labeled assumption about the conversion goal
+- keep the structure (hero → proof → CTA) and flag missing funnel context in Next actions
+- never fabricate conversion-rate statistics or A/B results

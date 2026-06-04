@@ -1,0 +1,30 @@
+{
+  "id": "rubric-score-2-PLACEHOLDER-web",
+  "rubric_version": "1.0",
+  "mode": "Create responsive UI spec",
+  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 2/5].",
+  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 2/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "expected_score": 2,
+  "expected_verdict": "needs major revision",
+  "expected_cap": "Structurally weak",
+  "hard_limits": [],
+  "dimension_scores": {
+    "attention_path_and_hierarchy": 2,
+    "composition_and_spacing": 2,
+    "typography_craft": 2,
+    "color_state_and_contrast": 2,
+    "density_and_rhythm": 2,
+    "interaction_polish_and_motion": 2,
+    "context_and_brand_fit": 2,
+    "production_readiness": 2
+  },
+  "expected_failed_dimensions": [
+    "production readiness",
+    "responsive/breakpoint behavior"
+  ],
+  "expected_rationale": "PLACEHOLDER iter1 stub for the 2/5 calibration slot; re-author with a real web example in iteration 2.",
+  "improvement_suggestions": [
+    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
+    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+  ]
+}

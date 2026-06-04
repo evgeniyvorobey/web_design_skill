@@ -1,0 +1,64 @@
+{
+  "schema_version": "rendered-output-qa/v1",
+  "report_id": "web-stub-iteration-1",
+  "generated_at": "2026-01-01T00:00:00Z",
+  "artifact": {
+    "name": "[TODO iter2] web artifact",
+    "artifact_type": "local_url",
+    "platform_scope": "desktop_web",
+    "primary_task": "[TODO iter2]",
+    "source": {
+      "kind": "url",
+      "value": "http://localhost:3000/"
+    },
+    "commit": "stub",
+    "notes": "Iteration 1 stub; author a real web rendered-QA sample in iteration 2 (Playwright, breakpoint ladder, axe, 320px reflow, CWV)."
+  },
+  "coverage": {
+    "method": "manual_browser",
+    "viewports": [
+      {
+        "id": "desktop-1440x900",
+        "width": 1440,
+        "height": 900,
+        "device_class": "desktop",
+        "orientation": "landscape",
+        "notes": "stub"
+      }
+    ],
+    "states": [
+      {
+        "state": "default",
+        "status": "not_verified",
+        "notes": "stub"
+      }
+    ],
+    "settings": {
+      "color_scheme": "light",
+      "reduced_motion": "not_verified",
+      "text_scale": "100% only",
+      "locale": "en-US",
+      "keyboard": "not_verified",
+      "focus_navigation": "not_verified"
+    }
+  },
+  "summary": {
+    "status": "needs_fixes",
+    "max_severity": "info",
+    "finding_count": 0,
+    "passed_check_count": 0,
+    "unverified_check_count": 1,
+    "design_quality_score_cap": 3,
+    "short_rationale": "Iteration 1 stub."
+  },
+  "checks": [],
+  "findings": [],
+  "unverified": [
+    {
+      "category": "all",
+      "reason": "Iteration 1 stub.",
+      "needed_evidence": "Author in iteration 2."
+    }
+  ],
+  "recommendations": []
+}

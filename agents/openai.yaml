@@ -1,0 +1,7 @@
+interface:
+  display_name: "Website Design Skill"
+  short_description: "Design and review website UX artifacts"
+  default_prompt: "Use $web-design-skill to create or review a website UX artifact for responsive web, marketing/landing pages, or web apps."
+
+policy:
+  allow_implicit_invocation: true
