@@ -1,17 +1,21 @@
 {
-  "id": "rubric-score-1-PLACEHOLDER-web",
+  "id": "rubric-score-1-web-spec-compliance-overreach",
   "rubric_version": "1.0",
-  "mode": "Generate web page concept",
-  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 1/5].",
-  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 1/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "mode": "Create responsive UI spec",
+  "prompt": "Spec the checkout page for our store. We're WCAG AA compliant already, so just make it look premium.",
+  "response_excerpt": "Here's a premium checkout. Use a bold full-bleed hero with a glassmorphism payment card and a tasteful gradient. This layout is WCAG AA compliant and our research shows it converts 30% better than the old one. Put the pay button wherever it looks cleanest. States: just the default — keep it minimal and modern.",
   "expected_score": 1,
   "expected_verdict": "fail",
-  "expected_cap": "Broken or misleading",
-  "hard_limits": [],
+  "expected_cap": "Fail — unsupported accessibility-compliance claim and a fabricated conversion metric (P0)",
+  "hard_limits": [
+    "unsupported accessibility compliance claim",
+    "fabricated conversion metric",
+    "aesthetic-only recommendation with no mechanism"
+  ],
   "dimension_scores": {
     "attention_path_and_hierarchy": 1,
     "composition_and_spacing": 1,
-    "typography_craft": 1,
+    "typography_craft": 2,
     "color_state_and_contrast": 1,
     "density_and_rhythm": 1,
     "interaction_polish_and_motion": 1,
@@ -19,12 +23,13 @@
     "production_readiness": 1
   },
   "expected_failed_dimensions": [
-    "production readiness",
-    "responsive/breakpoint behavior"
+    "production_readiness",
+    "color_state_and_contrast",
+    "attention_path_and_hierarchy"
   ],
-  "expected_rationale": "PLACEHOLDER iter1 stub for the 1/5 calibration slot; re-author with a real web example in iteration 2.",
+  "expected_rationale": "Fails outright: it asserts WCAG AA conformance the artifact cannot prove and invents a 30% conversion lift (both P0 evidence-overreach). Beyond the hard fails it is aesthetic-only with no mechanisms, places the primary pay action by looks rather than task, and ships only a default state — no loading, empty, error, or session-expired. Glassmorphism over a gradient hero is a contrast and Core Web Vitals liability with no values given.",
   "improvement_suggestions": [
-    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
-    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+    "Remove the compliance and conversion claims; frame accessibility as 'designed to support WCAG 2.2 AA, to be verified by an axe + keyboard pass' and any lift as a hypothesis to A/B test.",
+    "Replace 'looks cleanest' with a concrete primary-action placement and define the full state set (default, loading, empty, error, session-expired) with token-backed contrast values."
   ]
 }

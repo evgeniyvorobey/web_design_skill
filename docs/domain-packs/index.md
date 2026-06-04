@@ -1,12 +1,9 @@
 # Web Domain Packs
 
-<!-- TODO(iteration-2): author the 5 web domain-pack index. Do NOT copy mobile bodies from ../mobile-design-skill. See ITERATION_2_HANDOFF.md. -->
+Synthetic web domain playbooks that shape hierarchy, trust language, state coverage, responsive/browser behavior, and handoff checks for a product category. They are **recommendations, not proof** of compliance, safety, or business performance. Load the closest pack when the domain materially changes risk, hierarchy, state coverage, or trust language.
 
-> STATUS: stub (Iteration 1 transfer). Web content is authored in Iteration 2.
-
-Synthetic web domain playbooks (recommendations, not proof):
-- [marketing-landing](marketing-landing.md)
-- [ecommerce](ecommerce.md)
-- [content-publishing](content-publishing.md)
-- [docs-dev-portal](docs-dev-portal.md)
-- [webapp-dashboard](webapp-dashboard.md)
+- [marketing-landing](marketing-landing.md) — conversion / CRO / persuasion surfaces
+- [ecommerce](ecommerce.md) — catalog, PDP, cart, checkout, trust
+- [content-publishing](content-publishing.md) — articles, reading, subscriptions
+- [docs-dev-portal](docs-dev-portal.md) — reference docs, search, code, versioning
+- [webapp-dashboard](webapp-dashboard.md) — dense data, tables, multi-pane, keyboard power-use

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/mobile-design-skill/rendered-output-qa-report.schema.json",
+  "$id": "https://example.com/web-design-skill/rendered-output-qa-report.schema.json",
   "title": "Rendered Output QA Report",
-  "description": "JSON Schema-like contract for optional mobile rendered-output QA reports. Screenshots and browser automation are optional; reports may be based on a running app, local HTML, prototype, screenshot, or recording.",
+  "description": "JSON Schema-like contract for optional web rendered-output QA reports. Playwright-driven cross-browser sweeps, axe-core, and Lighthouse are the primary tools; reports may also be based on a deployed URL, local HTML, prototype, screenshot, or recording.",
   "type": "object",
   "required": [
     "schema_version",
@@ -35,7 +35,8 @@
       "required": [
         "name",
         "artifact_type",
-        "platform_scope",
+        "responsive_scope",
+        "engine_scope",
         "primary_task",
         "source"
       ],
@@ -47,24 +48,39 @@
         "artifact_type": {
           "type": "string",
           "enum": [
+            "deployed_url",
             "local_url",
             "html_file",
-            "native_build",
             "prototype",
             "screenshot",
             "recording",
             "other"
           ]
         },
-        "platform_scope": {
-          "type": "string",
-          "enum": [
-            "ios",
-            "android",
-            "cross_platform",
-            "mobile_web",
-            "unspecified"
-          ]
+        "responsive_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mobile_web",
+              "tablet",
+              "desktop",
+              "wide",
+              "unspecified"
+            ]
+          }
+        },
+        "engine_scope": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "chromium",
+              "webkit",
+              "gecko",
+              "unspecified"
+            ]
+          }
         },
         "primary_task": {
           "type": "string"
@@ -112,8 +128,9 @@
           "type": "string",
           "enum": [
             "manual_browser",
-            "playwright_existing_project",
-            "native_simulator",
+            "playwright",
+            "lighthouse",
+            "axe_core",
             "screenshot_review",
             "recording_review",
             "hybrid"
@@ -153,7 +170,14 @@
                 "not_verified"
               ]
             },
-            "text_scale": {
+            "forced_colors": {
+              "type": "string",
+              "enum": [
+                "verified",
+                "not_verified"
+              ]
+            },
+            "zoom": {
               "type": "string"
             },
             "locale": {
@@ -167,7 +191,7 @@
                 "not_verified"
               ]
             },
-            "focus_navigation": {
+            "focus_order": {
               "type": "string",
               "enum": [
                 "verified",
@@ -270,17 +294,19 @@
     "checkCategory": {
       "type": "string",
       "enum": [
-        "mobile_viewport",
-        "overlap",
+        "layout_overlap",
         "clipping",
         "text_overflow",
-        "tap_target",
+        "reflow_320",
+        "target_size",
         "contrast",
-        "responsive_behavior",
-        "state_coverage",
         "keyboard_focus",
+        "focus_order",
         "reduced_motion",
-        "safe_area",
+        "forced_colors",
+        "state_coverage",
+        "performance_cwv",
+        "cross_browser",
         "evidence_boundary"
       ]
     },
@@ -290,8 +316,7 @@
         "id",
         "width",
         "height",
-        "device_class",
-        "orientation"
+        "device_class"
       ],
       "additionalProperties": false,
       "properties": {
@@ -309,19 +334,19 @@
         "device_class": {
           "type": "string",
           "enum": [
-            "narrow_phone",
-            "common_phone",
-            "tall_phone",
-            "landscape_phone",
+            "mobile_web",
             "tablet",
+            "desktop",
+            "wide",
             "custom"
           ]
         },
-        "orientation": {
+        "engine": {
           "type": "string",
           "enum": [
-            "portrait",
-            "landscape"
+            "chromium",
+            "webkit",
+            "gecko"
           ]
         },
         "notes": {
@@ -341,14 +366,19 @@
           "type": "string",
           "enum": [
             "default",
+            "hover",
+            "focus_visible",
             "loading",
             "empty",
             "error",
             "success",
+            "disabled",
             "offline",
-            "permission_denied",
-            "keyboard_open",
+            "session_expired",
+            "not_found_404",
+            "server_error_500",
             "reduced_motion",
+            "forced_colors",
             "other"
           ]
         },

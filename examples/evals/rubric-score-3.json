@@ -1,30 +1,33 @@
 {
-  "id": "rubric-score-3-PLACEHOLDER-web",
+  "id": "rubric-score-3-web-concept-acceptable-inert",
   "rubric_version": "1.0",
   "mode": "Generate web page concept",
-  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 3/5].",
-  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 3/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "prompt": "Concept for a SaaS settings page: profile, notifications, security, billing.",
+  "response_excerpt": "Use a left sidebar with the four sections and a content panel on the right. Each section is a card with its fields and a Save button. Labels above inputs, 16px body text, comfortable spacing. Keyboard works: real form controls, visible focus. Sidebar collapses to a top tab bar on mobile-web. Default and a basic error state are covered. Looks like a standard, clean settings page.",
   "expected_score": 3,
   "expected_verdict": "acceptable baseline",
-  "expected_cap": "Acceptable but not enough concrete web mechanisms for 4/5",
-  "hard_limits": [],
+  "expected_cap": "Capped at 3/5 — incomplete state coverage and an inert (faceless) page with no distinctive asset",
+  "hard_limits": [
+    "missing empty/loading/saving/success states (only default + error)",
+    "inert page — fails the faceless-screen test, no owned distinctive asset"
+  ],
   "dimension_scores": {
     "attention_path_and_hierarchy": 3,
     "composition_and_spacing": 3,
     "typography_craft": 3,
     "color_state_and_contrast": 3,
     "density_and_rhythm": 3,
-    "interaction_polish_and_motion": 3,
+    "interaction_polish_and_motion": 2,
     "context_and_brand_fit": 3,
     "production_readiness": 3
   },
   "expected_failed_dimensions": [
-    "production readiness",
-    "responsive/breakpoint behavior"
+    "interaction_polish_and_motion",
+    "context_and_brand_fit"
   ],
-  "expected_rationale": "PLACEHOLDER iter1 stub for the 3/5 calibration slot; re-author with a real web example in iteration 2.",
+  "expected_rationale": "A competent, conventional settings page: real form controls, visible focus, labels above inputs, a sensible sidebar that collapses on mobile-web — keyboard operability and responsive behavior are handled, so it clears the caps that pin scores 1–2. But it stops at acceptable: only default + error states (no loading/saving/success), per-section save with no unsaved-changes guard, and it is inert — strip the logo and it is indistinguishable from any template. That faceless-screen result caps it at 3/5 with an upside note rather than a quiet 4/5.",
   "improvement_suggestions": [
-    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
-    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+    "Complete the state set per section: loading, saving (optimistic with confirmation), success toast, and an unsaved-changes guard on navigation.",
+    "Add one owned distinctive asset (a considered density choice or a signature confirmation moment) and specify concrete spacing-scale and contrast values to lift it toward 4/5."
   ]
 }

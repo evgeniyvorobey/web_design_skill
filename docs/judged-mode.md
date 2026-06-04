@@ -32,7 +32,7 @@ The runner remains useful for CI, fixtures, and external command validation. Jud
 2. Run the normal web-design-skill workflow and draft the response privately.
 3. Build a judge packet containing:
    - selected mode
-   - platform scope
+   - responsive/breakpoint and browser/engine scope
    - user prompt
    - assumptions
    - draft response
@@ -53,7 +53,7 @@ The judge agent should receive only the minimum packet needed to score the draft
 Use this instruction:
 
 ```text
-You are an independent mobile design-quality judge.
+You are an independent web design-quality judge.
 
 Score the draft against the web-design-skill rubric from 1 to 5.
 Apply caps and hard limits before assigning the final score.

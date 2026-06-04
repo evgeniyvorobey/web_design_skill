@@ -1,12 +1,12 @@
 {
-  "id": "rubric-score-5-PLACEHOLDER-web",
+  "id": "rubric-score-5-web-spec-excellent-resilient",
   "rubric_version": "1.0",
-  "mode": "Review page for usability/accessibility",
-  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 5/5].",
-  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 5/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "mode": "Create responsive UI spec",
+  "prompt": "Spec a checkout payment step that must be excellent and resilient across breakpoints, themes, and assistive tech.",
+  "response_excerpt": "Layout: single column on mobile-web, two-column with a persistent order summary at >=1024px; reading/form column capped ~60ch. Type in rem with fluid clamp(1rem, 0.95rem + 0.3vw, 1.125rem); 1.5 line-height; tabular figures for totals. Spacing on the 4px scale (tokens space-1..space-8). Breakpoints 320/480/768/1024/1280/1440; verified 320px reflow with no horizontal scroll, and usable at 200% zoom (1.4.4) and with a 1.4.12 text-spacing override. Hosted card iframe is keyboard-focusable; on step mount focus moves to the step h1, and to the first error on a failed submit; dialogs trap focus and restore it. Skip link present; ESC closes overlays. Color roles with a real prefers-color-scheme dark theme and forced-colors support (focus ring + field borders survive); text >=4.5:1, non-text >=3:1, status by text+icon+color. Performance budget: hero/order-summary LCP <= 2.5s (preloaded, no layout-shifting fonts via font-display: swap + metric fallback), CLS <= 0.1 (media reserved with aspect-ratio), INP <= 200ms (deferred non-critical JS, optimistic submit). States: default, loading skeleton, empty cart, inline + summary errors, success, disabled, plus 404/500/offline/session-expired with cart restore and an idempotency key. Tokenized, component/state-mapped, axe-clean and keyboard-pass expected; localized copy and RTL-safe layout.",
   "expected_score": 5,
   "expected_verdict": "excellent and resilient",
-  "expected_cap": "Excellent and resilient web spec",
+  "expected_cap": "No cap",
   "hard_limits": [],
   "dimension_scores": {
     "attention_path_and_hierarchy": 5,
@@ -19,9 +19,9 @@
     "production_readiness": 5
   },
   "expected_failed_dimensions": [],
-  "expected_rationale": "PLACEHOLDER iter1 stub for the 5/5 calibration slot; re-author with a real web example in iteration 2.",
+  "expected_rationale": "Excellent and resilient. It is not just shippable: it cites rem/clamp type values, the 4px spacing scale, an explicit breakpoint ladder with a verified 320px reflow and 200% zoom, full focus management (move on mount, to first error, trap + restore), a real dark theme plus forced-colors survival, named contrast ratios, a measured Core Web Vitals budget (LCP/CLS/INP with the mechanisms that protect each), the complete state set including 404/500/offline/session-expired with cart restore and an idempotency key, and localization/RTL. Tokenized and axe-clean/keyboard-pass expected. No cap applies; resilience is demonstrated across states, accessibility settings, breakpoints, and engines.",
   "improvement_suggestions": [
-    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
-    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+    "Confirm the cross-iframe keyboard focus path in WebKit and Gecko with a Playwright run and capture the focus order as a regression artifact.",
+    "Validate the measured INP and LCP budgets against field data (CrUX) on real devices rather than lab numbers alone."
   ]
 }

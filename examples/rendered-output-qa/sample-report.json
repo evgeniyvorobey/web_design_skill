@@ -1,64 +1,117 @@
 {
   "schema_version": "rendered-output-qa/v1",
-  "report_id": "web-stub-iteration-1",
-  "generated_at": "2026-01-01T00:00:00Z",
+  "report_id": "checkout-2026-06-05",
+  "generated_at": "2026-06-05T10:00:00Z",
   "artifact": {
-    "name": "[TODO iter2] web artifact",
-    "artifact_type": "local_url",
-    "platform_scope": "desktop_web",
-    "primary_task": "[TODO iter2]",
+    "name": "Checkout — payment step",
+    "artifact_type": "deployed_url",
+    "responsive_scope": ["mobile_web", "desktop"],
+    "engine_scope": ["chromium", "webkit"],
+    "primary_task": "Enter payment and place the order",
     "source": {
       "kind": "url",
-      "value": "http://localhost:3000/"
+      "value": "https://staging.example.com/checkout/payment"
     },
-    "commit": "stub",
-    "notes": "Iteration 1 stub; author a real web rendered-QA sample in iteration 2 (Playwright, breakpoint ladder, axe, 320px reflow, CWV)."
+    "commit": "9f1c2ab",
+    "notes": "Playwright sweep across the breakpoint ladder; axe-core + Lighthouse run on Chromium and WebKit."
   },
   "coverage": {
-    "method": "manual_browser",
+    "method": "playwright",
     "viewports": [
-      {
-        "id": "desktop-1440x900",
-        "width": 1440,
-        "height": 900,
-        "device_class": "desktop",
-        "orientation": "landscape",
-        "notes": "stub"
-      }
+      { "id": "mw-320", "width": 320, "height": 800, "device_class": "mobile_web", "engine": "chromium", "notes": "320px reflow check" },
+      { "id": "mw-390", "width": 390, "height": 844, "device_class": "mobile_web", "engine": "webkit" },
+      { "id": "tab-768", "width": 768, "height": 1024, "device_class": "tablet", "engine": "chromium" },
+      { "id": "desk-1280", "width": 1280, "height": 900, "device_class": "desktop", "engine": "chromium" }
     ],
     "states": [
-      {
-        "state": "default",
-        "status": "not_verified",
-        "notes": "stub"
-      }
+      { "state": "default", "status": "verified" },
+      { "state": "focus_visible", "status": "verified" },
+      { "state": "loading", "status": "verified", "notes": "skeleton on order summary" },
+      { "state": "error", "status": "verified", "notes": "declined-card path" },
+      { "state": "session_expired", "status": "not_verified", "notes": "could not trigger expiry in staging" },
+      { "state": "forced_colors", "status": "verified" }
     ],
     "settings": {
-      "color_scheme": "light",
-      "reduced_motion": "not_verified",
-      "text_scale": "100% only",
+      "color_scheme": "both",
+      "reduced_motion": "both",
+      "forced_colors": "verified",
+      "zoom": "100% and 200%",
       "locale": "en-US",
-      "keyboard": "not_verified",
-      "focus_navigation": "not_verified"
+      "keyboard": "verified",
+      "focus_order": "partially_verified"
     }
   },
   "summary": {
     "status": "needs_fixes",
-    "max_severity": "info",
-    "finding_count": 0,
-    "passed_check_count": 0,
-    "unverified_check_count": 1,
+    "max_severity": "high",
+    "finding_count": 3,
+    "passed_check_count": 9,
+    "unverified_check_count": 2,
     "design_quality_score_cap": 3,
-    "short_rationale": "Iteration 1 stub."
+    "short_rationale": "Strong layout and contrast, but focus is lost when the payment iframe loads and the order summary overflows horizontally at 320px. Capped at 3/5 until both are fixed."
   },
-  "checks": [],
-  "findings": [],
-  "unverified": [
+  "checks": [
+    { "id": "c1", "category": "reflow_320", "status": "fail", "severity": "high", "evidence": "observed", "viewport_ids": ["mw-320"], "notes": "Order summary causes horizontal scroll at 320px." },
+    { "id": "c2", "category": "focus_order", "status": "fail", "severity": "high", "evidence": "observed", "viewport_ids": ["desk-1280"], "notes": "Focus drops to body when the hosted card iframe mounts." },
+    { "id": "c3", "category": "contrast", "status": "pass", "severity": "none", "evidence": "measured", "notes": "All text >= 4.5:1 in light and dark." },
+    { "id": "c4", "category": "target_size", "status": "warning", "severity": "low", "evidence": "measured", "viewport_ids": ["mw-390"], "notes": "Edit-link targets are 22px; below the 24px minimum." },
+    { "id": "c5", "category": "performance_cwv", "status": "pass", "severity": "none", "evidence": "measured", "notes": "Lighthouse: LCP 2.1s, CLS 0.04, INP 160ms." },
+    { "id": "c6", "category": "forced_colors", "status": "pass", "severity": "none", "evidence": "observed", "notes": "Focus ring and field borders survive forced-colors." }
+  ],
+  "findings": [
     {
-      "category": "all",
-      "reason": "Iteration 1 stub.",
-      "needed_evidence": "Author in iteration 2."
+      "id": "f1",
+      "severity": "high",
+      "category": "focus_order",
+      "title": "Focus lost when payment iframe mounts",
+      "evidence": {
+        "type": "observed",
+        "description": "Tabbing into the payment step moves focus to body when the hosted card iframe hydrates; keyboard users land nowhere.",
+        "viewport_ids": ["desk-1280"],
+        "selector_or_region": "#payment-iframe"
+      },
+      "impact": "Keyboard and screen-reader users cannot find the card field after the step loads.",
+      "recommendation": "Move focus to the payment step heading on mount, and ensure the iframe is reachable in tab order before it hydrates.",
+      "owner_hint": "engineering"
+    },
+    {
+      "id": "f2",
+      "severity": "high",
+      "category": "reflow_320",
+      "title": "Order summary overflows at 320px",
+      "evidence": {
+        "type": "observed",
+        "description": "The order-summary table forces horizontal scrolling at 320px, violating WCAG 1.4.10.",
+        "viewport_ids": ["mw-320"],
+        "selector_or_region": ".order-summary"
+      },
+      "impact": "Small-viewport users must scroll horizontally to read totals.",
+      "recommendation": "Stack the summary into label/value rows below 480px; cap the table to the viewport width.",
+      "owner_hint": "design"
+    },
+    {
+      "id": "f3",
+      "severity": "low",
+      "category": "target_size",
+      "title": "Edit links below 24px",
+      "evidence": {
+        "type": "measured",
+        "description": "Inline 'Edit' links in the summary measure 22px tall.",
+        "viewport_ids": ["mw-390"],
+        "selector_or_region": ".summary-edit"
+      },
+      "impact": "Harder to tap accurately on coarse pointers.",
+      "recommendation": "Increase the hit area to 24px minimum (44px on coarse pointers).",
+      "owner_hint": "design"
     }
   ],
-  "recommendations": []
+  "unverified": [
+    { "category": "state_coverage", "reason": "Session expiry could not be triggered in staging.", "needed_evidence": "A way to force token expiry, or a recording of the expired-session path." },
+    { "category": "cross_browser", "reason": "Gecko was not in scope for this sweep.", "needed_evidence": "A Playwright run on Firefox/Gecko." }
+  ],
+  "recommendations": [
+    { "priority": "p0", "title": "Restore focus on payment step", "action": "Manage focus on iframe mount and verify with a keyboard pass.", "success_criteria": "Tab order reaches the card field; focus never lands on body." },
+    { "priority": "p1", "title": "Fix 320px order-summary reflow", "action": "Stack the summary below 480px.", "success_criteria": "No horizontal scroll at 320px; 1.4.10 passes." },
+    { "priority": "p2", "title": "Enlarge edit-link targets", "action": "Raise hit area to 24px minimum.", "success_criteria": "All targets >= 24px; >= 44px on coarse pointers." }
+  ]
 }

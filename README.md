@@ -6,9 +6,9 @@
 </p>
 
 <p align="center">
-  <img alt="version" src="https://img.shields.io/badge/version-0.1.0-blue">
+  <img alt="version" src="https://img.shields.io/badge/version-1.0.0-blue">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
-  <img alt="status" src="https://img.shields.io/badge/status-iteration--1--transfer-orange">
+  <img alt="status" src="https://img.shields.io/badge/status-production--ready-brightgreen">
 </p>
 
 # Website Design Skill
@@ -17,20 +17,17 @@ A reusable AI skill that helps generate, review, structure, and justify **websit
 
 Works as a Claude Code skill (`/web-design-skill`), as a Codex / OpenAI skill, and as a system prompt for the Claude API or any LLM integration.
 
-Current version: **0.1.0** — see [`CHANGELOG.md`](CHANGELOG.md).
-
-> **⚠️ Iteration 1 — transfer skeleton (v0.1.0).**
-> This repository is a **hybrid clone** of [`mobile-design-skill`](../mobile-design-skill): it carries that skill's domain-agnostic chassis and methodology verbatim, and re-frames the contract for the web. The **web domain layer is currently STUBBED** — quality bars, sources, patterns, heuristics, the calibration corpus, and the Mode G (marketing/CRO) content are placeholders marked `TODO(iteration-2)`. The skill installs and classifies requests into one of 7 modes, but does **not yet give production-grade web advice**. Iteration 2 authors the web content; see [`ITERATION_2_HANDOFF.md`](ITERATION_2_HANDOFF.md).
+Current version: **1.0.0** — see [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What this skill does
 
-It enforces a practical framework for web design decisions, built for product work rather than decorative advice. It carries from the mobile skill:
+It enforces a practical, evidence-first framework for web design decisions, built for product work rather than decorative advice:
 
-- **Six web-reframed modes + a 7th marketing/CRO mode** — every request is classified into exactly one: web page concept, web user flow, responsive UI spec, page review, type/spacing/grid system, handoff rationale, or marketing landing page (conversion/CRO).
-- **Two scope axes** — `Responsive/breakpoint scope:` and `Browser/engine scope:` (replacing the mobile `Platform scope: iOS/Android`).
-- **The Mode D review engine** — causal Findings (observation → violated principle → user consequence → change → predicted effect + confidence → Nielsen 0–4 severity → score moves), before/after design-quality score, and a gated Bold move.
-- **A 1–5 design-quality rubric** with caps and median scoring, a weakness preflight, hard guardrails, a mandatory self-review, and an inspiration-vs-evidence firewall.
-- **An LLM-as-judge runner, judged mode (`--judge`), validators, and release automation** — all domain-agnostic.
+- **Seven modes** — every request is classified into exactly one: web page concept, web user flow, responsive UI spec, page review, type/spacing/grid system, handoff rationale, or marketing landing page (conversion/CRO).
+- **Two scope axes** — `Responsive/breakpoint scope:` and `Browser/engine scope:`, so guidance respects both the breakpoint ladder (320 → 1920+) and the target engines (Chromium/WebKit/Gecko).
+- **Web foundations** — a 16px/rem type baseline with fluid `clamp()` and ~65ch measure, a 4px spacing scale, WCAG 2.2 AA success criteria (reflow at 320px, target size, contrast, forced-colors), keyboard operability, and Core Web Vitals budgets. See [`docs/quality-bars.md`](docs/quality-bars.md).
+- **The Mode D review engine** — causal Findings (observation → violated principle → user consequence → change → predicted effect + confidence → Nielsen 0–4 severity → score moves), a current→projected design-quality score, and a gated Bold move.
+- **A 1–5 design-quality rubric** with caps (responsive-flattening, keyboard-inoperability) and median scoring — see [`docs/design-quality-rubric.md`](docs/design-quality-rubric.md) — plus a weakness preflight ([`docs/weaknesses.md`](docs/weaknesses.md)), hard guardrails, a mandatory self-review, a clarification policy ([`docs/clarification-policy.md`](docs/clarification-policy.md)), and an inspiration-vs-evidence firewall.
 
 ## Modes
 
@@ -58,18 +55,24 @@ Then in Claude Code:
 /web-design-skill review this pricing page for usability and accessibility
 ```
 
-See [`docs/commands.md`](docs/commands.md) for Codex / Claude API integration.
+Run an independent judge pass with `/web-design-skill --judge ...` (judged mode). See [`docs/commands.md`](docs/commands.md) for Codex / Claude API integration.
 
-## Architecture
+## What's inside
 
-Mirrors `mobile-design-skill`: `SKILL.md` (canonical entrypoint) + `skill/` (modes, templates, metadata) + `docs/` (workflow, methodology, quality bars, sources, patterns, domain packs) + `examples/` (golden, case studies, visual fixtures, eval fixtures) + `scripts/` (validators, judge runner, install) + `.claude/` (Claude Code wrapper + judge agent).
+- **Skill spine:** [`SKILL.md`](SKILL.md) (entrypoint), [`skill/modes.md`](skill/modes.md), [`skill/templates.md`](skill/templates.md), [`docs/workflow.md`](docs/workflow.md).
+- **Foundations:** [`docs/quality-bars.md`](docs/quality-bars.md), [`docs/sources.md`](docs/sources.md), [`docs/heuristics.md`](docs/heuristics.md), [`docs/patterns-catalog.md`](docs/patterns-catalog.md), [`docs/context-defaults.md`](docs/context-defaults.md), [`docs/principles.md`](docs/principles.md), [`docs/guardrails.md`](docs/guardrails.md).
+- **Quality system:** [`docs/design-quality.md`](docs/design-quality.md), [`docs/design-quality-rubric.md`](docs/design-quality-rubric.md), [`docs/weaknesses.md`](docs/weaknesses.md), [`docs/self-review.md`](docs/self-review.md), [`docs/evals.md`](docs/evals.md).
+- **Calibration corpus:** [`docs/golden-examples.md`](docs/golden-examples.md) + [`examples/golden/`](examples/golden/); [`docs/synthetic-case-studies.md`](docs/synthetic-case-studies.md) + [`examples/case-studies/`](examples/case-studies/); [`docs/visual-review-fixtures.md`](docs/visual-review-fixtures.md) + [`examples/visual-review-fixtures/`](examples/visual-review-fixtures/); the five web domain packs in [`docs/domain-packs/`](docs/domain-packs/index.md); and the rubric fixtures in [`examples/evals/`](examples/evals/) with the upgrade example [`examples/rubric-before-after.md`](examples/rubric-before-after.md).
+- **Inspiration (non-authoritative):** [`docs/inspiration-sources.md`](docs/inspiration-sources.md), [`docs/visual-benchmark-playbooks.md`](docs/visual-benchmark-playbooks.md), [`docs/benchmark-report-format.md`](docs/benchmark-report-format.md).
+- **Rendered-output QA (optional, Playwright-first):** [`docs/rendered-output-qa.md`](docs/rendered-output-qa.md) + [`examples/rendered-output-qa/`](examples/rendered-output-qa/).
+- **Tooling:** the LLM-as-judge runner [`scripts/run_rubric_judge.py`](scripts/run_rubric_judge.py) (documented in [`docs/llm-judge-runner.md`](docs/llm-judge-runner.md)), the repo validator, and deterministic release validation in [`scripts/validate_release.py`](scripts/validate_release.py).
 
 ## Validation
 
 ```bash
-python3 scripts/validate_repo.py        # structural checks (Iteration 1)
-WDS_STRICT=1 python3 scripts/validate_repo.py   # full content-depth checks (Iteration 2)
-python3 scripts/validate_release.py
+python3 scripts/validate_repo.py                # structure, links, and content-depth checks
+python3 scripts/run_rubric_judge.py --dry-run   # rubric fixture coverage
+python3 scripts/validate_release.py             # version/tag sanity + self-tests
 ```
 
 ## License
@@ -78,6 +81,4 @@ MIT — see [`LICENSE`](LICENSE).
 
 ## Rubric eval pack
 
-Design-quality is calibrated against score-graded fixtures in `examples/evals/` and the before/after upgrade example in [`examples/rubric-before-after.md`](examples/rubric-before-after.md). (Iteration 1: placeholders; Iteration 2 authors calibrated web scores.)
-
-The LLM-as-judge runner (`scripts/run_rubric_judge.py`, documented in [`docs/llm-judge-runner.md`](docs/llm-judge-runner.md)) provides provider-agnostic semantic rubric calibration and powers judged mode (`/web-design-skill --judge`).
+Design quality is calibrated against the score-graded fixtures in [`examples/evals/`](examples/evals/) and the before/after upgrade example in [`examples/rubric-before-after.md`](examples/rubric-before-after.md). The LLM-as-judge runner (`scripts/run_rubric_judge.py`, documented in [`docs/llm-judge-runner.md`](docs/llm-judge-runner.md)) provides provider-agnostic semantic rubric calibration and powers judged mode (`/web-design-skill --judge`). Release automation is documented in [`docs/release-automation.md`](docs/release-automation.md).

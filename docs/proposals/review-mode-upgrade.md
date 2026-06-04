@@ -1,8 +1,6 @@
-<!-- TODO(iteration-2): CROWN-JEWEL Mode D methodology (Russian narrative + EN templates). Port to web: keep the engine claims verbatim (causal Finding chain, Nielsen 0-4 severity, flat-median projection, gated Bold move, generative method, inspiration firewall); re-derive the worked example on a WEB screen; swap de-risk checklist to web a11y (axe/WAVE, keyboard pass, 320px reflow, forced-colors). -->
-
 # Предложение: усиление режима дизайн-ревью (Mode D)
 
-> Статус: **предложение к обсуждению**, не внедрено. Нарратив — на русском; конкретные артефакты (шаблоны, поля, пример ревью) — на английском, потому что они уйдут в англоязычные файлы скилла как есть.
+> Статус (web, v1.0.0): **внедрено**. Движок (причинная цепочка Finding, severity Нильсена 0–4, прогноз по плоской медиане, карантинный Bold move, генеративный метод, firewall «инспирация ≠ доказательство») теперь живёт в `skill/templates.md`, `skill/modes.md`, `docs/design-quality-rubric.md` и `docs/self-review.md` в веб-формулировке. Этот документ сохранён как методологическое обоснование; цитаты `file:line` описывают состояние ДО внедрения, а worked example и de-risk-чеклист ниже переведены на веб-артефакт (axe/WAVE, keyboard pass, 320px reflow, forced-colors, focus order). Нарратив — на русском; конкретные артефакты (шаблоны, поля, пример ревью) — на английском, потому что они уходят в англоязычные файлы скилла как есть.
 >
 > Как получено: 6 агентов с ролями. Фаза 1 — три аналитика (практик-критик, аудитор системы оценки, креативный директор) нашли сильные/слабые стороны Mode D с цитатами `file:line`. Фаза 2 — три исследователя (методолог UX-критики, бренд-стратег, куратор источников) нашли проверяемые внешние методики. Фаза 3 — этот синтез.
 
@@ -75,9 +73,9 @@
 > Observation → Change → Severity. Never split an issue from its fix.
 
 ### F1 — [short title]
-- Lens: [Usability / Accessibility / Hierarchy & readability / Design quality / Navigation]
+- Lens: [Usability / Accessibility / Keyboard operability / Hierarchy & readability / Design quality / Navigation & interaction / Performance (Core Web Vitals) / Responsive (breakpoints) / SEO & semantics / Forced-colors]
 - Observation: [what is there now — evidence-bound; for D2, structure & behavior only, no visual assertions]
-- Violated principle: [named — e.g. Nielsen #5 Error prevention · Hick's Law · Cognitive load (extraneous) · Gestalt proximity · Wroblewski form-design]
+- Violated principle: [named — e.g. Nielsen #5 Error prevention · Hick's Law · WCAG 2.4.11 Focus Not Obscured · Cognitive load (extraneous) · Gestalt proximity · Wroblewski form-design]
 - User consequence: [the mechanism by which it hurts the user — not a restatement of the observation]
 - Change: [the specific edit]
 - Predicted effect: [directional + confidence — "should reduce mis-submits; confidence M (D2 text-only)". NEVER a fabricated %]
@@ -172,7 +170,7 @@
 - Карваут в `docs/guardrails.md` и заметка к анти-паттерну 4 (`examples/anti-patterns.md:197`): «противоречие задаче = провал ТОЛЬКО при эстетическом оправдании; обоснованное названным UX-механизмом и вынесенное в Bold move — поощряется».
 - Self-review (`docs/self-review.md`): «придержал ли я UX-усиливающую рекомендацию только потому, что она противоречит текущему продукту? Если да — перенеси в Bold move с trade-off».
 - Bold move **не может** появляться в `Severity` или `Recommended fixes` и **не может** служить поводом пропустить фикс.
-- Пара Bad/Good в `examples/anti-patterns.md` (Bad: «сделать дашборд премиальнее жирным героем» — нет механизма; Good: «заменить 5-табовую нижнюю навигацию на 3 таба + контекстный action bar; ломает принцип "всё в один тап"; служит работе X; апсайд — снижение выбора (Хик) и освобождение зоны большого пальца (Фиттс); риск — два раздела на уровень глубже; проверка — tree-test находимости + коуч-марк; балл: safe→4/5, цель 5/5 при подтверждении; conviction: worth a spike»).
+- Пара Bad/Good в `examples/anti-patterns.md` (Bad: «сделать дашборд премиальнее жирным героем» — нет механизма; Good: «заменить спрятанную за гамбургером навигацию на десктопе постоянным top-nav плюс командной палитрой (Cmd/Ctrl-K); ломает текущую модель "одно скрытое меню на все ширины"; служит работе X; апсайд — снижение цены выбора (Хик), recognition-over-recall, и более короткий путь курсора к разделам (Фиттс: края/углы экрана); риск — раздел навигации становится виднее, но плотнее; проверка — tree-test находимости + axe/keyboard pass + 320px reflow; балл: safe→4/5, цель 5/5 при подтверждении; conviction: worth a spike»).
 
 ---
 
@@ -227,7 +225,7 @@
 
 ## 8. Полный пример: ревью ДО и ПОСЛЕ апгрейда
 
-Один и тот же экран — профиль-форма из `examples/review-screen.md` (D2, текст). Показаны 2 находки из ~8, блок баллов и Bold move — чтобы разница была видна, без полного простыня.
+Один и тот же артефакт — профиль-форма (страница) из `examples/review-page.md` (D2, текст). Показаны 2 находки из ~8, блок баллов и Bold move — чтобы разница была видна, без полного простыня.
 
 ### ДО (текущий стиль — «плавает»)
 
@@ -286,9 +284,9 @@
   - The move: Split the 8-field form into a 3-step progressive flow (Personal → Contact → Work) with a persistent save.
   - Deviates from: the product's "everything on one screen" edit model.
   - Job served (JTBD): "When I update my profile occasionally, I want to finish without re-checking what I missed, so I can trust my data is correct." Outcome: minimize the number of fields visible at once while keeping completion obvious.
-  - UX upside: Cuts per-screen cognitive load (Miller/Hick), makes required-field recovery local, fits one-handed older-user use.
-  - Risk / cost: More taps; power users lose the single-scroll edit; dev cost of step state + partial save.
-  - De-risk / validate: Prototype A/B vs. grouped single form on completion rate + error rate; kill if completion drops. Must still pass large-text + focus-order checks.
+  - UX upside: Cuts per-step cognitive load (Miller/Hick), makes required-field recovery local, and keeps each step keyboard- and screen-reader-operable on a long page.
+  - Risk / cost: More clicks/route changes; power users lose the single-scroll edit; dev cost of step state, URL-per-step, and partial save.
+  - De-risk / validate: Prototype A/B vs. grouped single form on completion rate + error rate; kill if completion drops. Must still pass an axe + keyboard pass, 200% zoom (1.4.4), forced-colors, and focus-management-on-route-change checks.
 - Score impact: safe fixes (grouped single form) → 4/5; this stepped flow targets 5/5 on resilience but does NOT raise the score until validated.
 - Conviction: Worth a spike.
 ```
@@ -313,7 +311,7 @@
 - `docs/guardrails.md` + `examples/anti-patterns.md` — карваут для Bold move + пара Bad/Good.
 
 **Фаза C — Калибровка (иначе модель воспроизведёт старый формат). ~ полдня.**
-- `examples/review-screen.md` + `examples/golden/settings.md` — перегенерить в новый формат (это де-факто спецификация — модель копирует пример надёжнее, чем парсит шаблон).
+- `examples/review-page.md` + `examples/golden/settings-account.md` — перегенерить в новый формат (это де-факто спецификация — модель копирует пример надёжнее, чем парсит шаблон).
 - `examples/visual-review-fixtures/*` — добавить ожидаемый current **и** projected балл.
 - `docs/evals.md` — checks: условная грамматика, потолок 4/5, provisional D2/D3, нет числа при Fail, фикс называет принцип+эффект.
 

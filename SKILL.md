@@ -1,11 +1,8 @@
 ---
 name: web-design-skill
 description: Use when designing, reviewing, specifying, or justifying website UI/UX for responsive web (desktop, tablet, mobile-web) and marketing or web-app surfaces. Produces structured, breakpoint- and browser-aware outputs for pages, flows, UI specs, typography systems, accessibility-aware reviews, and handoff rationale.
-version: 0.1.0
+version: 1.0.0
 ---
-
-<!-- TODO(iteration-2): mode CONTRACT is web-reframed (titles + two scope axes), but deep per-mode BODY content is still mobile-shaped. Author for web: "Platform-specific notes / iOS / Android" → "Responsive behavior (breakpoint) + Browser/engine notes"; touch-target → hover/focus/keyboard + pointer; add web sections (semantic HTML/heading outline, SEO for marketing, Core Web Vitals). -->
-<!-- INVERSION-WATCH(iter2): any mode rule treating hover/right-click/keyboard-first as a problem must be FLIPPED (required on web). "one-screen-at-a-time" → multi-pane/long-scroll. -->
 
 # Website Design Skill
 
@@ -13,41 +10,42 @@ Use this skill for practical website design work across responsive web (desktop,
 
 This skill prioritizes:
 - usability
-- navigation predictability
-- readability and typography
-- spacing and touch ergonomics
-- accessibility
-- platform conventions
+- navigation predictability (URLs, back/forward, deep links)
+- readability and typography (fluid type, measure, scaling)
+- spacing, density, and responsive layout across breakpoints
+- accessibility and keyboard operability
+- web-platform and browser conventions
+- performance (Core Web Vitals)
 - implementation-ready structure
 
 If deeper detail is needed during a task, load only the relevant references:
 - `skill/modes.md` for per-mode requirements and validation checklists
 - `skill/templates.md` for output skeletons
-- `docs/workflow.md` for the full internal workflow
+- `docs/workflow.md` for the full internal workflow and universal review lenses
 - `docs/clarification-policy.md` for deciding when to ask questions vs proceed with assumptions
 - `docs/judged-mode.md` for `/web-design-skill --judge` orchestration with an independent judge pass
-- `docs/principles.md` for durable mobile design principles
-- `docs/guardrails.md` for hard safety, evidence, accessibility, and platform constraints
-- `docs/sources.md` for source hierarchy and canonical URLs
-- `docs/quality-bars.md` for concrete numeric thresholds (typography, touch, contrast, motion, spacing)
+- `docs/principles.md` for durable web design principles
+- `docs/guardrails.md` for hard safety, evidence, accessibility, and convention constraints
+- `docs/sources.md` for the source hierarchy and canonical URLs
+- `docs/quality-bars.md` for concrete numeric thresholds (typography, target size, contrast, motion, spacing, Core Web Vitals)
 - `docs/design-quality.md` for visual hierarchy, composition, density, typography craft, color semantics, interaction polish, and production-readiness calibration
-- `docs/design-quality-rubric.md` for 1-5 quality scoring, target levels, caps, and improvement ladder
-- `docs/golden-examples.md` and `examples/golden/` for taste and domain calibration across premium UI, enterprise SaaS, fintech, health, onboarding, settings, and checkout
+- `docs/design-quality-rubric.md` for 1-5 quality scoring, target levels, caps, and the improvement ladder
+- `docs/golden-examples.md` and `examples/golden/` for taste and domain calibration across marketing landing, ecommerce PDP + checkout, content article, docs / dev portal, web-app dashboard, web form, and settings / account
 - `docs/synthetic-case-studies.md` and `examples/case-studies/` for synthetic bad-to-good calibration cases when tuning output quality
-- `docs/domain-packs/index.md` and `docs/domain-packs/` for domain-specific mobile playbooks covering fintech, health, SaaS, marketplace, social, and education
-- `docs/weaknesses.md` for known failure modes and prevention checks that keep outputs from becoming generic, overconfident, aesthetic-only, or weakly buildable
+- `docs/domain-packs/index.md` and `docs/domain-packs/` for domain playbooks covering marketing/landing, ecommerce, content/publishing, docs/dev-portal, and web-app/dashboard
+- `docs/weaknesses.md` for known failure modes and prevention checks that keep outputs from becoming generic, overconfident, aesthetic-only, responsive-flattened, or weakly buildable
 - `docs/evals.md` for structural, content, and fail-condition evaluation criteria
 - `docs/llm-judge-runner.md` and `scripts/run_rubric_judge.py` for semantic rubric fixture calibration, including external-agent command runs during maintenance
-- `docs/context-defaults.md` for audience, domain, platform, and use-context defaults
-- `docs/heuristics.md` for the usability heuristics catalog with mobile applications and red-flag patterns
-- `docs/patterns-catalog.md` for mobile pattern decision matrices (navigation, overlays, lists, inputs, feedback, forms, search, auth)
-- `docs/inspiration-sources.md` for visual inspiration and production reference sources, used only after UX/platform/accessibility reasoning is grounded
-- `docs/visual-benchmark-playbooks.md` for source-specific Mobbin, Page Flows, Apple Design Awards, and Awwwards benchmark checklists
+- `docs/context-defaults.md` for audience, domain, breakpoint/browser, and use-context defaults
+- `docs/heuristics.md` for the usability heuristics catalog with web applications and red-flag patterns
+- `docs/patterns-catalog.md` for web pattern decision matrices (navigation, overlays, lists/grids/tables, actions, forms, feedback, states, search, auth)
+- `docs/inspiration-sources.md` for visual inspiration and production reference sources, used only after UX/convention/accessibility reasoning is grounded
+- `docs/visual-benchmark-playbooks.md` for source-specific Awwwards, CSS Design Awards / FWA / Webby, Land-book / SiteInspire / Godly, and Mobbin Web / Refero / Page Flows benchmark checklists
 - `docs/benchmark-report-format.md` and `examples/benchmark-report.md` for turning 3-5 references into borrow / do-not-copy / token-component-state guidance
-- `docs/visual-review-fixtures.md` and `examples/visual-review-fixtures/` for text-only Figma-like review fixtures and expected critique discipline
-- `docs/rendered-output-qa.md` and `examples/rendered-output-qa/` for optional QA after a design exists as HTML, app build, prototype, screenshot, or recording
+- `docs/visual-review-fixtures.md` and `examples/visual-review-fixtures/` for text-only review fixtures and expected critique discipline
+- `docs/rendered-output-qa.md` and `examples/rendered-output-qa/` for optional QA after a design exists as HTML, prototype, screenshot, or rendered URL
 - `docs/self-review.md` for the mandatory self-review pass run before any response is returned
-- `examples/` for regression-style examples
+- `examples/` for regression-style worked examples
 - `examples/evals/` and `examples/rubric-before-after.md` for design-quality rubric score calibration
 - `examples/anti-patterns.md` for calibration on ambiguous or hallucination-inviting inputs
 
@@ -83,307 +81,117 @@ Do not ask the user to run `scripts/run_rubric_judge.py` manually for interactiv
 Choose exactly one primary mode.
 
 ### 2. Identify context
-Extract or infer:
-- product/domain
-- user goal
-- platform
-- screen or flow scope
-- constraints
-- density or complexity level
-- accessibility sensitivity
-- whether the user needs exploration, critique, or handoff structure
+Extract or infer product/domain, user goal, breakpoint and browser targets, page or flow scope, constraints, density level, accessibility sensitivity, and whether the user needs exploration, critique, or handoff structure.
 
-Apply the context-aware defaults in `docs/context-defaults.md`. Precedence when signals conflict: safety/accessibility > regulated domain > use-context > audience > platform. State the resolution in `Assumptions`.
+Apply the context-aware defaults in `docs/context-defaults.md`. Precedence when signals conflict: safety/accessibility > regulated domain > use-context > audience > breakpoint/browser. State the resolution in `Assumptions`.
 
-If the request matches fintech, health, SaaS, marketplace, social, or education, load the closest domain pack from `docs/domain-packs/` before drafting. Domain packs are synthetic calibration material: they can shape hierarchy, trust language, states, and handoff checks, but they do not prove compliance, user preference, safety, or business performance.
+If the request matches marketing/landing, ecommerce, content/publishing, docs/dev-portal, or web-app/dashboard, load the closest domain pack from `docs/domain-packs/` before drafting. Domain packs are synthetic calibration material: they can shape hierarchy, trust language, states, and handoff checks, but they do not prove compliance, user preference, safety, or business performance.
 
-### 3. Determine platform scope
-Identify whether the request is:
-- iOS
-- Android
-- cross-platform
-- unspecified
-
-If platform is unspecified:
-- ask only if it is necessary to avoid misleading guidance
-- otherwise continue with a minimal labeled assumption
-
-Good example:
-- `Assumption: Cross-platform output requested unless native divergence is later specified.`
+### 3. Determine scope (the two axes)
+Identify, separately, the **Responsive/breakpoint scope** (mobile-web / tablet / desktop / wide / unspecified) and the **Browser/engine scope** (Chromium / WebKit / Gecko / unspecified, plus Baseline gating). If unspecified, ask only when necessary, or continue with a minimal labeled assumption such as:
+- `Assumption: Responsive, working down to 320px, on modern evergreen engines unless legacy support is specified.`
 
 ### 4. Check information sufficiency and clarification need
-Apply `docs/clarification-policy.md`.
-
-If the request is underspecified but safe to answer:
-- continue with minimal labeled assumptions
-- do not invent research findings
-- do not invent validated behavior
-- do not invent states, flows, or business rules as facts
-
-If missing information would materially change the recommendation:
-- ask at most three clarifying questions
-- explain why they block reliable output
-- offer a fast path with the smallest safe assumption when useful
+Apply `docs/clarification-policy.md`. Proceed with minimal labeled assumptions when safe; do not invent research, behavior, states, flows, or business rules as facts. If missing information would materially change the recommendation, ask at most three clarifying questions, explain why they block reliable output, and offer a fast path.
 
 ### 5. Apply source priority
 Use this order:
 
-1. Official platform guidance and standards
-2. Accessibility and usability standards
-3. Public-sector and enterprise-grade design systems
-4. Established research and case-study sources
-5. Workflow and tooling references
+1. Web platform standards & reference (WHATWG HTML, WAI-ARIA APG, MDN)
+2. Accessibility, usability & measurement tooling (WCAG 2.2, ISO 9241, Lighthouse/CrUX, axe-core, Playwright — tooling is first-class evidence)
+3. Public-sector and enterprise design systems (GOV.UK/NHS/USWDS; Carbon/Polaris/Fluent/Material Web/Primer; Tailwind/shadcn/Radix)
+4. Established research and case-study sources (Baymard, NN/g, Wroblewski)
+5. Browser support & capability data (caniuse, MDN Baseline, Browserslist)
 
-Preferred source families:
-- Apple Human Interface Guidelines
-- Material Design 3
-- Android Developers Navigation
-- WCAG 2.2
-- W3C guidance for applying WCAG 2.2 to mobile apps
-- ISO 9241-210
-- ISO 9241-11
-- GOV.UK Design System patterns
-- NHS Design System
-- Fluent 2 typography/accessibility
-- Figma Variables guidance
-- Material Partner Studies
+When web standards/accessibility guidance conflicts with trend-based aesthetics, prefer the standards. See `docs/sources.md`.
 
-Use `docs/design-quality.md` when the output proposes, critiques, specifies, or rationalizes the quality of a design artifact. This layer improves visual hierarchy, composition, density, typography, color semantics, motion/feedback, brand expression, and production readiness without replacing usability and accessibility reasoning.
+Use `docs/design-quality.md` when the output proposes, critiques, specifies, or rationalizes a design artifact. Use `docs/design-quality-rubric.md` to score 1-5: target 4/5 for generated/specified artifacts; expose the current score in reviews.
 
-Use `docs/design-quality-rubric.md` to score the design-quality level from 1-5. For generated or specified artifacts, target 4/5 before returning; if a draft scores 3/5 or below and can be improved without inventing facts, revise it. For reviews, expose the current design-quality score with a short reason.
-
-Use `docs/synthetic-case-studies.md` and `examples/case-studies/` during maintenance, calibration, or quality-sensitive drafting to compare weak vs strong answer shapes. Treat these examples as synthetic fixtures, not real-world validation.
-
-Use `docs/clarification-policy.md` when the request is underspecified, risky, or precision-sensitive. Ask only when the answer would change the design decision; otherwise proceed with assumptions and surface the unknowns in the appropriate section.
-
-If the user asks for visual inspiration, moodboards, benchmark references, or "best-in-class" examples, use `docs/inspiration-sources.md` as a separate non-authoritative layer. Inspiration sources can inform visual direction and comparison examples, but they must not justify usability, accessibility, platform, or compliance claims.
-
-Use `docs/visual-benchmark-playbooks.md` when the user asks for Mobbin, Page Flows, Apple Design Awards, Awwwards, or source-specific benchmark guidance. Extract visual and flow inspiration, then translate it into implementable mechanisms. Never treat benchmark sources as evidence for usability, accessibility, platform correctness, compliance, user preference, or business performance.
-
-Use `docs/benchmark-report-format.md` when the user asks to compare 3-5 references, benchmark a category, or turn inspiration into design direction. Ask for references only when they materially improve the answer; otherwise proceed with labeled assumptions and keep the output useful.
-
-Use `docs/visual-review-fixtures.md` only as calibration/evaluation material for Mode D text-description reviews. In live reviews, apply the same discipline: qualify visual claims when no screenshot or Figma evidence is provided.
-
-Use `docs/rendered-output-qa.md` only when a rendered artifact exists or the user asks for post-implementation QA. Do not block normal design generation waiting for screenshots, builds, or Playwright. When no artifact exists, list rendered QA as a next action.
-
-Use `docs/weaknesses.md` as an internal preflight whenever a task is ambiguous, high-risk, critique-oriented, or likely to produce a generic design answer. Identify the likely weakness pattern before drafting, then prevent it through tighter assumptions, clearer decisions, evidence limits, state coverage, and buildable mechanisms.
+Use `docs/synthetic-case-studies.md` and `examples/case-studies/` for weak-vs-strong calibration (synthetic, not real-world validation). Use `docs/clarification-policy.md` for underspecified or precision-sensitive requests. Use `docs/inspiration-sources.md`, `docs/visual-benchmark-playbooks.md`, and `docs/benchmark-report-format.md` as a separate non-authoritative inspiration layer. Use `docs/visual-review-fixtures.md` for Mode D evidence discipline. Use `docs/rendered-output-qa.md` only when a rendered artifact exists. Use `docs/weaknesses.md` as an internal preflight.
 
 ### 6. Build the response by mode
-Use the matching structure from `skill/templates.md` when needed.
+Use the matching structure from `skill/modes.md` and `skill/templates.md`.
 
 ### 7. Apply universal review lenses
-Before finalizing, check:
-- task clarity
-- clarification need
-- known weakness prevention
-- information hierarchy
-- design quality and visual craft
-- navigation predictability
-- platform alignment
-- readability and typography quality
-- spacing and touch suitability
-- accessibility implications
-- edge states
-- implementation usefulness
+Before finalizing, check: task clarity; clarification need; known weakness prevention; information hierarchy; design quality and visual craft; navigation predictability; web-convention alignment; readability and typography; spacing, density, and responsive behavior; accessibility implications; keyboard operability; performance (Core Web Vitals); SEO & semantics; forced-colors resilience; edge states; implementation usefulness.
 
 ### 8. Apply design reasoning
-For every major design decision:
-- state the choice explicitly
-- name at least one alternative that was considered
-- give a reason the chosen option wins, tied to user goal, task, platform, accessibility, or implementation
-- when a heuristic drives the decision (Fitts, Hick, Jakob, Zeigarnik, Gestalt, Nielsen), cite it by name from `docs/heuristics.md`
-- for pattern-level decisions (navigation, overlays, list/grid, picker, feedback, search), use the decision matrices in `docs/patterns-catalog.md` — never invent a novel pattern when an established one applies
-
-If a decision has no alternative, it was not a decision — it was a default. Flag defaults as such.
-
-For design-quality decisions, state the concrete mechanism: size, spacing, alignment, contrast, density, color role, motion duration, state treatment, or token. Avoid taste words unless they are translated into implementation guidance.
-
-When inspiration sources are used, keep them in a distinct `Inspiration references` section or clearly labeled note. Do not let portfolio or award examples replace the reasoning above.
+For every major design decision: state the choice explicitly; name at least one alternative considered; give a reason the chosen option wins, tied to user goal, task, breakpoint/browser, accessibility, or implementation; cite the heuristic by name (Fitts, Hick, Doherty, Jakob, Zeigarnik, goal-gradient, Gestalt, Nielsen) from `docs/heuristics.md`; use the decision matrices in `docs/patterns-catalog.md` for pattern-level choices — never invent a novel pattern when an established one applies. If a decision has no alternative, it was a default — flag it. State the concrete mechanism for design-quality decisions. Keep inspiration in a labeled `Inspiration references` block.
 
 ### 9. Check concrete quality bars
-Compare against `docs/quality-bars.md`:
-- typography sizes, line-height, line length
-- touch targets and gaps (44pt iOS / 48dp Android minimums)
-- WCAG 2.2 AA contrast
-- motion durations and reduced-motion respect
-- state coverage (default, loading, empty, error)
-- spacing from the canonical 4- or 8-based scale
-- design quality calibration from `docs/design-quality.md` when the response proposes or packages a design artifact
-- design quality score or target from `docs/design-quality-rubric.md` when the response reviews, proposes, specifies, or rationalizes a design artifact
-- likely weakness patterns from `docs/weaknesses.md`, especially generic output, first-idea bias, evidence overreach, platform flattening, happy-path-only design, and weak handoff
+Compare against `docs/quality-bars.md`: typography (16px/1rem body minimum), line-height, ~65ch measure; target size (24px / 44px AAA) and pointer-aware spacing; WCAG 2.2 AA contrast; motion durations and reduced-motion; Core Web Vitals (LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1); state coverage; the 4px spacing scale, breakpoint ladder, and 320px reflow; design-quality calibration/score; likely weakness patterns from `docs/weaknesses.md` (generic output, first-idea bias, evidence overreach, responsive flattening, happy-path-only design, weak handoff).
 
 ### 10. Run mandatory self-review
-Run the pass defined in `docs/self-review.md`. Silently answer every prompt. If any answer is "no" or "not sure", revise and re-run. Never return a response that fails self-review with a disclaimer.
+Run the pass defined in `docs/self-review.md`. Silently answer every prompt. If any answer is "no" or "not sure", revise and re-run.
 
 ### 11. Finalize responsibly
-- state assumptions clearly
-- distinguish facts from recommendations
-- keep outputs structured and reusable
-- end with practical next actions
+State assumptions; distinguish facts from recommendations; keep outputs structured and reusable; end with practical next actions.
 
 ## Output contract
 
 Every response must:
 - begin with `Mode:`
-- include `Responsive/breakpoint scope:`
+- include `Responsive/breakpoint scope:` and `Browser/engine scope:`
 - include `Assumptions:`
 - include accessibility considerations by default
-- include platform-specific notes when relevant
+- include responsive and browser behavior notes when relevant
 - separate known facts from recommendations
 - ask clarifying questions only when missing information would materially change the recommendation; otherwise proceed with labeled assumptions
 - include design quality calibration when the response proposes, specifies, reviews, or rationalizes a design artifact
-- apply the 1-5 design-quality rubric internally; expose the score in reviews and expose the target only when useful for generated artifacts
-- apply known weakness prevention before returning; do not expose it as a separate section unless the user asks for a failure-mode analysis
-- separate inspiration references from UX, accessibility, and platform rationale when inspiration is used
+- apply the 1-5 design-quality rubric internally; expose the score in reviews and the target when useful
+- apply known weakness prevention before returning; do not expose it as a separate section unless asked
+- separate inspiration references from UX, accessibility, and convention rationale
 - end with `Next actions:`
 
 ## Mode output requirements
 
 ### Mode 1: Generate web page concept
-Include:
-- Screen goal
-- Primary user task
-- Information hierarchy
-- Recommended layout structure
-- Suggested components
-- Interaction notes
-- Empty/loading/error states
-- Platform-specific notes
-- Accessibility considerations
-- Design quality calibration
-- Rationale for major choices
+Include: Page goal · Primary user task · Information hierarchy · Recommended layout structure · Suggested components · Interaction notes · Empty / loading / error states · Responsive and browser behavior · Accessibility considerations · Design quality calibration · Rationale for major choices · Alternatives considered.
 
 ### Mode 2: Design web user flow
-Include:
-- Flow goal
-- Entry points
-- Ordered steps or screens
-- Decision points
-- Back-navigation logic
-- Failure and recovery paths
-- Platform behavior notes
-- Accessibility and usability risks
-- Simplification opportunities
+Include: Flow goal · Entry points · Ordered steps / views · Decision points · Back/forward and URL state · Failure and recovery paths · Responsive and browser behavior · Accessibility and usability risks · Simplification opportunities.
 
 ### Mode 3: Create responsive UI spec
-Include:
-- Screen or flow scope
-- Structural zones
-- Components by section
-- State definitions
-- Behavior rules
-- Content guidance
-- Spacing and layout notes
-- Typography rules
-- Accessibility requirements
-- Design quality requirements
-- Platform-specific implementation notes
+Include: Screen or flow scope · Structural zones · Components by section · State definitions · Behavior rules · Content guidance · Spacing and layout notes · Typography rules · Accessibility requirements · Design quality requirements · Responsive and browser implementation notes · Key decision tradeoffs.
 
 ### Mode 4: Review page for usability/accessibility
-Include:
-- Quick summary
-- Strengths
-- Usability issues
-- Accessibility issues
-- Hierarchy and readability issues
-- Design quality issues
-- Navigation and interaction issues
-- Severity or priority
-- Recommended fixes
-- Platform-convention mismatches
-- Unresolved assumptions
+A review is a set of causal-chain findings, not two separate lists of problems and fixes. Include: Sub-case (D1–D4) · Quick summary · Strengths · Findings (each one chain: Lens, Observation, Violated principle, User consequence, Change, Predicted effect + confidence, Severity Nielsen 0–4, Moves) · Design quality score (current → projected, per-dimension table) · Severity index · Bold move (optional, only when the trigger is met) · Platform-convention mismatches · Unresolved assumptions. The Lens enum includes the web lenses: Keyboard operability, Performance (Core Web Vitals), Responsive (breakpoints), SEO & semantics, and Forced-colors.
 
 ### Mode 5: Create typography, spacing and grid system
-Include:
-- Type roles
-- Size hierarchy
-- Weight usage
-- Line-height guidance
-- Spacing scale
-- Density rules
-- Visual rhythm rules
-- Touch-target implications
-- Accessibility considerations for scaling and readability
-- Usage examples for common screen areas
+Include: Type roles · Size hierarchy · Weight usage · Line-height guidance · Spacing scale · Density rules · Visual rhythm rules · Pointer, target-size and input implications · Accessibility considerations · Usage examples.
 
 ### Mode 6: Prepare design rationale / handoff
-Include:
-- Design objective
-- Target users and context
-- Key design decisions
-- Pattern choices and why
-- Design quality rationale
-- Platform alignment
-- Accessibility and usability considerations
-- States and edge cases
-- Implementation notes
-- Open questions
-- Validation plan or recommended testing focus
+Include: Design objective · Target users and context · Key design decisions · Pattern choices and why · Design quality rationale · Responsive and browser alignment · Accessibility and usability considerations · States and edge cases · Implementation notes · Open questions · Validation plan or recommended testing focus.
 
 ### Mode 7: Generate / critique a marketing landing page (conversion / CRO)
-<!-- TODO(iteration-2): author full web CRO content; scaffold only. -->
-Include:
-- Conversion goal and primary CTA
-- Above-the-fold (hero) structure
-- Scroll narrative and section rhythm
-- Value proposition and messaging hierarchy
-- Social proof and trust signals
-- CTA hierarchy and placement
-- Objection handling / FAQ
-- Accessibility considerations
-- Performance considerations (Core Web Vitals, media weight)
-- SEO and shareability
-- Design quality calibration
-- Conversion-rate reasoning (mechanisms, not guarantees)
+Include: Conversion goal and primary CTA · Above-the-fold (hero) structure · Scroll narrative and section rhythm · Value proposition and messaging hierarchy · Social proof and trust signals · CTA hierarchy and placement · Objection handling / FAQ · Accessibility considerations · Performance considerations (Core Web Vitals, media weight) · SEO and shareability · Design quality calibration · Conversion-rate reasoning (mechanisms, not guarantees). Respect the marketing-vs-web-app split: expressive, editorial craft is appropriate here; dense task efficiency belongs to the web-app modes.
 
 ## Hard constraints
 
 Do not:
-- invent official platform rules
+- invent web standards or browser behavior
 - invent research findings or usability test results
 - claim accessibility compliance unless explicitly verified
-- treat inspiration galleries, award sites, portfolios, or moodboards as proof of usability, accessibility, platform correctness, or compliance
+- treat inspiration galleries, award sites, portfolios, or moodboards as proof of usability, accessibility, performance, or compliance
 - give aesthetic-only advice without usability reasoning
 - use visual polish, brand expression, motion, or illustration to hide weak hierarchy, missing states, or inaccessible interaction
 - return template-complete but decision-empty output
-- ignore typography, spacing, navigation, or touch behavior
-- blur iOS and Android when conventions differ
+- ignore typography, spacing, navigation, keyboard operability, or state coverage
+- pour the same layout into every breakpoint or ignore hover/focus/keyboard operability
 - overcomplicate when the user needs a design artifact
 - invent components, flows, or states unless clearly labeled as assumptions
 - block useful output with nonessential questions
 
-## Platform policy
+## Responsive and browser policy
 
-When platform scope is cross-platform:
-- provide a shared structure first
-- split iOS and Android guidance only where conventions materially differ
-
-When platform scope is iOS:
-- align with Apple interaction, layout, and accessibility expectations
-
-When platform scope is Android:
-- align with Material and Android navigation behavior
+When the scope spans breakpoints: provide a shared structure first, then specify behavior changes across the ladder (not just visual reflow), verify 320px reflow and 200% zoom, and exploit desktop density where the task rewards it. When the browser/engine scope is constrained: gate non-trivial features against `caniuse` / MDN Baseline and name the fallback; call out engine-specific behavior where it matters.
 
 ## Accessibility policy
 
-Accessibility is built in by default. At minimum, consider:
-- readable hierarchy
-- text scaling
-- contrast and non-color cues
-- touch targets
-- focus order
-- labels and semantics
-- predictable navigation
-- gesture alternatives where relevant
-- error clarity and recovery
-
-Use careful phrasing such as:
-- `Accessibility considerations`
-- `Potential accessibility risks`
-- `Cannot verify compliance from the provided description`
+Accessibility is built in by default. At minimum consider: semantic HTML and heading outline (one h1) + landmarks; keyboard operability (tab order, focus-visible, focus management, trap+restore, skip links, ESC); text scaling (rem, 200% zoom, text spacing); contrast and non-color cues; forced-colors resilience; target size; predictable navigation; error clarity and recovery; `aria-live` for async. Use careful phrasing such as `Accessibility considerations`, `Potential accessibility risks`, `Cannot verify compliance from the provided description`.
 
 ## Final reminder
 
-This skill is for usable, explainable, responsive, browser-aware website design output.
+This skill is for usable, explainable, responsive, browser-aware, accessible, performant website design output.
 
 If the answer sounds stylish but not buildable, it failed.

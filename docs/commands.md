@@ -5,7 +5,7 @@ This skill supports two invocation styles, depending on the host:
 - in Claude Code: invoke it directly with `/web-design-skill`
 - in Codex: use the installed skill normally via `Use the web-design-skill...` or `$web-design-skill`, depending on your Codex surface
 
-The six operating modes below behave like reusable commands once the skill is active.
+The seven operating modes below behave like reusable commands once the skill is active.
 
 ---
 
@@ -13,9 +13,7 @@ The six operating modes below behave like reusable commands once the skill is ac
 
 ### Claude Code
 
-As of March 26, 2026, Claude Code officially supports direct skill invocation with `/skill-name` and documents that a skill at `.claude/skills/<skill-name>/SKILL.md` can be invoked with `/skill-name`.
-
-For this repository, the direct command is:
+A skill at `.claude/skills/<skill-name>/SKILL.md` can be invoked with `/skill-name`. For this repository, the direct command is:
 
 ```text
 /web-design-skill
@@ -24,16 +22,16 @@ For this repository, the direct command is:
 With inline arguments:
 
 ```text
-/web-design-skill create a platform-aware UI spec for a package tracking screen
+/web-design-skill create a responsive UI spec for an order-tracking page
 ```
 
 With judged mode:
 
 ```text
-/web-design-skill --judge create a platform-aware UI spec for a fitness tracker app
+/web-design-skill --judge create a responsive UI spec for a billing dashboard
 ```
 
-`--judge` asks the skill to draft privately, run an independent rubric judge pass in the same session when the host supports subagents, revise if needed, and return the final answer with a compact `Judge summary`. It should not require the user to run a separate script manually.
+`--judge` asks the skill to draft privately, run an independent rubric judge pass in the same session when the host supports subagents, revise if needed, and return the final answer with a compact `Judge summary`. It should not require the user to run a separate script manually. See [`judged-mode.md`](judged-mode.md).
 
 This repository includes the Claude Code wrapper at:
 
@@ -45,7 +43,8 @@ This repository includes the Claude Code wrapper at:
 Use the web-design-skill.
 
 Task: [what you need]
-Platform: [iOS / Android / cross-platform / unknown]
+Breakpoints: [mobile-web / tablet / desktop / wide / unknown]
+Browsers: [evergreen / specific engines / unknown]
 User goal: [goal]
 Context: [product, audience, constraints]
 ```
@@ -55,23 +54,18 @@ Context: [product, audience, constraints]
 ```text
 Use the web-design-skill.
 
-Review this Android settings screen for usability and accessibility.
+Review this account settings page for usability and accessibility.
 ```
 
 ### Codex skill mention
 
 ```text
-Use $web-design-skill to create a platform-aware UI spec for a package tracking screen.
+Use $web-design-skill to create a responsive UI spec for an order-tracking page.
 ```
 
-### Important compatibility note
+### Compatibility note
 
-As of March 26, 2026:
-
-- I verified official Anthropic documentation that Claude Code supports direct `/skill-name` invocation for custom skills.
-- I found official OpenAI documentation confirming that skills are supported in Codex, but I did not find an official OpenAI source documenting `/skill-name` as the standard custom-skill invocation pattern for Codex.
-
-So this repository is packaged to support both products, but the invocation UX is not identical:
+This repository is packaged to support both products, but the invocation UX is not identical:
 
 - Claude Code: `/web-design-skill`
 - Codex: standard skill usage or explicit skill mention
@@ -80,255 +74,150 @@ So this repository is packaged to support both products, but the invocation UX i
 
 ## Important note
 
-The skill classifies every request into exactly one primary mode.
-
-That means you can use it in two ways:
-
-1. ask explicitly for the mode you want
-2. describe the task and let the skill classify it automatically
-
-For public documentation, it is usually better to show explicit mode phrasing because it is easier for first-time users to understand.
-
-Use `--judge` for higher-confidence outputs when the extra latency of an independent judge pass is acceptable.
+The skill classifies every request into exactly one primary mode. You can either ask explicitly for the mode you want, or describe the task and let the skill classify it automatically. Use `--judge` for higher-confidence outputs when the extra latency of an independent judge pass is acceptable.
 
 ---
 
-## 1. Generate mobile screen concept
+## 1. Generate web page concept
 
-Use this when you need a first-pass screen concept for a mobile interface.
+Use this when you need a first-pass concept for a web page.
 
-Best for:
-- new screens
-- layout direction
-- hierarchy planning
-- component recommendations
-
-Example:
+Best for: new pages, layout direction, hierarchy planning, component recommendations.
 
 ```text
 Use the web-design-skill.
 
-Generate a mobile screen concept for a medication refill screen.
-Platform: iOS
-Audience: older adults
-Constraints: accessibility-sensitive, high trust, dense medical content
+Generate a web page concept for a project overview page in a SaaS tool.
+Breakpoints: desktop-first, must work down to 320px
+Audience: project managers, frequent return users
+Constraints: dense status data, keyboard-operable, accessibility-sensitive
 ```
 
-What the skill returns:
-- screen goal
-- primary user task
-- information hierarchy
-- recommended layout structure
-- suggested components
-- interaction notes
-- empty/loading/error states
-- accessibility considerations
-- rationale and next actions
+Returns: page goal, primary user task, information hierarchy, layout structure, suggested components, interaction notes, empty/loading/error states, responsive and browser behavior, accessibility considerations, design quality calibration, rationale, next actions.
 
 ---
 
-## 2. Design mobile user flow
+## 2. Design web user flow
 
-Use this when you need a multi-step task flow rather than a single screen.
+Use this when you need a multi-step task flow across views rather than a single page.
 
-Best for:
-- onboarding
-- booking
-- checkout
-- account recovery
-- verification flows
-
-Example:
+Best for: onboarding, checkout, signup, account recovery, verification flows.
 
 ```text
 Use the web-design-skill.
 
-Design a mobile user flow for resetting a forgotten password.
-Platform: Android
-Audience: enterprise employees
-Constraints: MFA required, older user base, regulated environment
+Design a web user flow for guest checkout from cart to confirmation.
+Breakpoints: mobile-web and desktop
+Constraints: reduce abandonment, address + payment autocomplete, accessibility-sensitive
 ```
 
-What the skill returns:
-- flow goal
-- entry points
-- ordered steps or screens
-- decision points
-- back-navigation logic
-- failure and recovery paths
-- accessibility and usability risks
-- simplification opportunities
+Returns: flow goal, entry points, ordered steps/views, decision points, back/forward and URL state, failure and recovery paths, responsive and browser behavior, accessibility and usability risks, simplification opportunities.
 
 ---
 
-## 3. Create platform-aware UI spec
+## 3. Create responsive UI spec
 
-Use this when you already know the screen or flow and want an implementation-friendly spec.
+Use this when you know the page or flow and want an implementation-friendly spec across breakpoints.
 
-Best for:
-- turning wireframes into specs
-- preparing design handoff
-- making states and behavior explicit
-- documenting platform-specific behavior
-
-Example:
+Best for: turning wireframes into specs, preparing handoff, making states and behavior explicit.
 
 ```text
 Use the web-design-skill.
 
-Create a platform-aware UI spec for a package tracking detail screen.
-Platform: Android
-User goal: check delivery progress and contact support if needed
-Current screen: top app bar, progress steps, package details, address, support actions
+Create a responsive UI spec for an admin users page with a sortable, selectable data table.
+Breakpoints: desktop-first, usable on mobile-web
+Constraints: thousands of rows, keyboard power-users, existing tokens
 ```
 
-What the skill returns:
-- structural zones
-- components by section
-- state definitions
-- behavior rules
-- content guidance
-- spacing and typography notes
-- accessibility requirements
-- iOS or Android implementation notes
+Returns: structural zones, components by section, state definitions, behavior rules, content guidance, spacing/typography rules, accessibility requirements, design quality requirements, responsive and browser implementation notes, key decision tradeoffs.
 
 ---
 
-## 4. Review screen for usability/accessibility
+## 4. Review page for usability/accessibility
 
-Use this when you already have a screen description, wireframe, or UI summary and want critique.
+Use this when you have a page description, wireframe, rendered URL, or UI summary and want critique.
 
-Best for:
-- design review
-- accessibility-aware critique
-- finding usability problems
-- prioritizing fixes
-
-Example:
+Best for: design review, accessibility-aware critique, finding usability problems, prioritizing fixes.
 
 ```text
 Use the web-design-skill.
 
-Review this cross-platform profile edit screen for usability and accessibility.
-Screen description:
-- long stacked form
-- save button only at bottom
+Review this account settings page for usability, keyboard operability, and accessibility.
+Page description:
+- long single-column form
+- save button only at the bottom
 - placeholders used as labels
-- errors appear only in red text
-Constraints: enterprise app, high density, many older users
+- errors appear only after submit
+Constraints: accessibility-sensitive, keyboard users common
 ```
 
-What the skill returns:
-- quick summary
-- strengths
-- usability issues
-- accessibility issues
-- hierarchy and readability issues
-- navigation and interaction issues
-- severity or priority
-- recommended fixes
+Returns: sub-case (D1–D4), quick summary, strengths, causal findings (with the web lenses), current→projected design-quality score, severity index, optional bold move, convention mismatches, unresolved assumptions.
 
 ---
 
-## 5. Create typography and spacing system
+## 5. Create typography, spacing and grid system
 
-Use this when you need a mobile-friendly type and spacing foundation rather than a single screen.
+Use this when you need a type, spacing, and grid foundation rather than a single page.
 
-Best for:
-- defining type roles
-- spacing scales
-- readability systems
-- token preparation
-- density guidance
-
-Example:
+Best for: defining type roles, fluid scales, spacing, a grid, density guidance, token preparation.
 
 ```text
 Use the web-design-skill.
 
-Create a typography and spacing system for a cross-platform mobile banking app.
-Audience: broad consumer base, including older adults
-Constraints: readability-first, moderate data density, brand font may be applied later
+Create a typography, spacing and grid system for a documentation website.
+Audience: developers, scanning + deep reading
+Constraints: long-form readability, code blocks, sidebar nav, accessibility-sensitive
 ```
 
-What the skill returns:
-- type roles
-- size hierarchy
-- weight usage
-- line-height guidance
-- spacing scale
-- density rules
-- touch-target implications
-- accessibility considerations
-- usage examples
+Returns: type roles, size hierarchy, weight usage, line-height guidance, spacing scale, density rules, visual rhythm rules, pointer/target-size implications, accessibility considerations, usage examples.
 
 ---
 
 ## 6. Prepare design rationale / handoff
 
-Use this when the design direction already exists and you need to explain or package it for a team.
+Use this when the design direction exists and you need to explain or package it for a team.
 
-Best for:
-- handoff notes
-- design rationale
-- cross-functional review
-- documenting why a solution was chosen
-
-Example:
+Best for: handoff notes, design rationale, cross-functional review, documenting why a solution was chosen.
 
 ```text
 Use the web-design-skill.
 
-Prepare a design rationale and handoff for a redesign of a mobile appointment booking confirmation screen.
-Platform: iOS and Android
-Audience: older and anxious users
-Constraints: high trust, accessibility-sensitive, limited engineering time
-Design changes:
-- simplified layout
-- clearer summary
-- more explicit preparation instructions
+Prepare a design rationale and handoff for a primary-navigation redesign (top nav + mega-menu on
+desktop, off-canvas drawer on mobile-web).
+Breakpoints: mobile-web through wide desktop
+Constraints: SEO matters, accessibility-sensitive, existing tokens
 ```
 
-What the skill returns:
-- design objective
-- target users and context
-- key decisions
-- pattern choices and why
-- platform alignment
-- accessibility and usability considerations
-- states and edge cases
-- implementation notes
-- open questions
-- validation plan
+Returns: design objective, target users and context, key decisions, pattern choices and why, design quality rationale, responsive and browser alignment, accessibility and usability considerations, states and edge cases, implementation notes, open questions, validation plan.
+
+---
+
+## 7. Generate / critique a marketing landing page (conversion / CRO)
+
+Use this when the primary job is persuasion and conversion, not task completion.
+
+Best for: landing pages, hero structure, scroll narrative, CTA hierarchy, social proof, conversion paths.
+
+```text
+Use the web-design-skill.
+
+Critique our SaaS landing page and propose changes to improve free-trial signups.
+Breakpoints: mobile-web and desktop
+Constraints: fast LCP, reduced-motion respected, accessibility-sensitive, SEO matters
+```
+
+Returns: conversion goal and primary CTA, above-the-fold hero structure, scroll narrative, value-proposition hierarchy, social proof, CTA hierarchy, objection handling, accessibility, Core Web Vitals, SEO/shareability, design quality calibration, conversion-rate reasoning.
 
 ---
 
 ## How to write better prompts
 
-The skill works best when your prompt includes:
+The skill works best when your prompt includes product or domain, user goal, breakpoint and browser scope, page or flow scope, audience, constraints, and an existing wireframe or page summary if available. If some of that is missing, the skill proceeds with minimal labeled assumptions.
 
-- product or domain
-- user goal
-- platform
-- screen or flow scope
-- audience
-- constraints
-- existing wireframe or screen summary if available
-
-If some of that is missing, the skill will proceed with minimal labeled assumptions.
-
-If the missing information would materially change the recommendation, the skill follows `docs/clarification-policy.md`: it asks at most three blocking clarifying questions, explains why they matter, and offers a fast path when a provisional draft is still useful.
+If the missing information would materially change the recommendation, the skill follows [`clarification-policy.md`](clarification-policy.md): it asks at most three blocking clarifying questions, explains why they matter, and offers a fast path when a provisional draft is still useful.
 
 ---
 
 ## What not to expect
 
-This skill is not meant for:
-
-- pure visual inspiration
-- aesthetic-only feedback
-- fabricated UX research claims
-- fake accessibility compliance statements
-- generic “make it more modern” advice
-
-It is designed for structured, explainable, implementation-friendly mobile design output.
+This skill is not meant for pure visual inspiration, aesthetic-only feedback, fabricated UX research claims, fake accessibility compliance statements, or generic "make it more modern" advice. It is designed for structured, explainable, implementation-friendly website design output.

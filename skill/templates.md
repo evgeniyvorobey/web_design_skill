@@ -1,11 +1,13 @@
-<!-- TODO(iteration-2): mode CONTRACT is web-reframed (titles + two scope axes), but deep per-mode BODY content is still mobile-shaped. Author for web: "Platform-specific notes / iOS / Android" → "Responsive behavior (breakpoint) + Browser/engine notes"; touch-target → hover/focus/keyboard + pointer; add web sections (semantic HTML/heading outline, SEO for marketing, Core Web Vitals). -->
-<!-- INVERSION-WATCH(iter2): any mode rule treating hover/right-click/keyboard-first as a problem must be FLIPPED (required on web). "one-screen-at-a-time" → multi-pane/long-scroll. -->
-
 # Output Templates
 
 Use these templates as the response skeleton for each mode.
 
 Templates are structure, not quality. Before returning any filled template, run the known-weakness preflight from `docs/weaknesses.md` and the 1-5 design-quality rubric from `docs/design-quality-rubric.md`; do not expose the preflight as a separate output section unless the user explicitly asks for failure-mode analysis.
+
+Every response carries two scope axes, never a single "platform":
+
+- `Responsive/breakpoint scope:` — which viewports/breakpoints this answer targets (mobile-web, tablet, desktop, wide).
+- `Browser/engine scope:` — which engines this answer targets (Chromium, WebKit, Gecko) and any Baseline/`caniuse` gating.
 
 ---
 
@@ -27,7 +29,7 @@ Assumptions:
 3. [blocking question if needed]
 
 ## Why this blocks
-- [reason tied to task/platform/accessibility/safety/implementation]
+- [reason tied to task / breakpoint / browser / accessibility / safety / implementation]
 
 ## Fast path
 - [smallest safe assumption for a provisional draft]
@@ -49,64 +51,65 @@ Assumptions:
 - [assumption 1]
 - [assumption 2]
 
-## Screen goal
-[what the screen is for]
+## Page goal
+[what the page is for]
 
 ## Primary user task
 [the main action the user needs to complete]
 
 ## Information hierarchy
-1. [highest priority content/action]
+1. [highest priority content/action — first glance]
 2. [secondary content/action]
 3. [supporting content/action]
 
 ## Recommended layout structure
-- Header:
-- Primary content area:
-- Secondary content area:
-- Persistent actions / navigation:
-- Footer or bottom area if relevant:
+- Header / global nav:
+- Above-the-fold primary content:
+- Main content column (measure capped ~65ch where text-heavy):
+- Secondary / sidebar content:
+- Footer:
 
 ## Suggested components
-- [component] — [why]
+- [component] — [why; native element or named design-system component]
 - [component] — [why]
 
 ## Interaction notes
-- [behavior]
+- [behavior — hover/focus/click/keyboard, optimistic feedback]
 - [behavior]
 
 ## Empty / loading / error states
 - Empty:
-- Loading:
-- Error:
+- Loading (skeleton/spinner within ~100ms):
+- Error (inline + retry; plus 404/500/offline/session-expired if relevant):
 
-## Platform-specific notes
-### iOS
-- [only if relevant]
-
-### Android
-- [only if relevant]
+## Responsive and browser behavior
+### Breakpoint behavior
+- 320–767 (mobile-web): [reflow, stacked layout, off-canvas nav]
+- 768–1023 (tablet): [columns, condensed nav]
+- 1024+ (desktop/wide): [multi-column, exploit density where it helps]
+### Browser/engine notes
+- [engine-specific behavior or feature gated via Baseline/caniuse + fallback]
 
 ## Accessibility considerations
-- [consideration]
-- [consideration]
-- [consideration]
+- [semantic structure: one h1, landmarks, heading outline]
+- [keyboard operability: tab order, :focus-visible, skip link]
+- [contrast / non-color cues / reduced-motion / forced-colors]
 
 ## Design quality calibration
 - Quality target: [4/5 by default unless context blocks it]
-- Attention path:
-- Composition and spacing:
-- Typography:
-- Color and state:
-- Interaction polish:
-- Production checks:
+- Attention path: [first → second → primary action]
+- Composition and spacing: [grid, spacing-scale values, responsive placement]
+- Typography: [roles, clamp() range, measure, line-height, font-loading]
+- Color and state: [semantic roles, contrast, dark theme + forced-colors, state colors]
+- Interaction polish: [feedback timing, motion budget, reduced-motion]
+- Production checks: [tokens, states, breakpoints, semantic outline, CWV budget, axe/keyboard]
 
 ## Rationale for major choices
 - [decision] because [reason]
 - [decision] because [reason]
 
 ## Alternatives considered
-- [alternative] — rejected because [reason tied to user goal, task, platform, accessibility, or implementation]
+- [alternative] — rejected because [reason tied to user goal, task, breakpoint, accessibility, or implementation]
 - [alternative] — rejected because [reason]
 
 ## Next actions
@@ -130,36 +133,34 @@ Assumptions:
 [what the flow needs to accomplish]
 
 ## Entry points
-- [entry point]
+- [entry point — direct URL / deep link / referral / in-app]
 - [entry point]
 
-## Ordered steps / screens
-1. [screen/step]
-2. [screen/step]
-3. [screen/step]
+## Ordered steps / views
+1. [route or view — what the user sees and can do]
+2. [route or view]
+3. [route or view]
 
 ## Decision points
 - [condition] → [branch]
 - [condition] → [branch]
 
-## Back-navigation logic
-- [rule]
-- [rule]
+## Back/forward and URL state
+- [each step's URL is shareable/bookmarkable; History API push vs replace]
+- [browser back/forward behavior; beforeunload guard on unsaved input; scroll restoration]
 
 ## Failure and recovery paths
-- [failure case] → [recovery]
+- [failure case — network/validation/timeout/session-expired] → [recovery, data preserved]
 - [failure case] → [recovery]
 
-## Platform behavior notes
-### iOS
-- [note]
-
-### Android
-- [note]
+## Responsive and browser behavior
+- [how the flow adapts across breakpoints — multi-pane on desktop, stepwise on mobile-web]
+- [engine/browser considerations: autofill, passkeys, back-forward cache]
 
 ## Accessibility and usability risks
-- [risk]
-- [risk]
+- [focus management on step/route change]
+- [keyboard operability and aria-live status]
+- [error clarity and recovery]
 
 ## Simplification opportunities
 - [opportunity]
@@ -186,14 +187,14 @@ Assumptions:
 [scope]
 
 ## Structural zones
-- Top area:
+- Header / global nav:
 - Main content area:
-- Supporting area:
-- Bottom actions / navigation:
+- Supporting / sidebar area:
+- Footer / sticky action bar:
 
 ## Components by section
 ### Section 1
-- [component]
+- [component — native element or design-system component]
 - [component]
 
 ### Section 2
@@ -202,33 +203,34 @@ Assumptions:
 
 ## State definitions
 - Default:
-- Focused / active:
+- Hover / focus-visible / active:
 - Loading:
 - Empty:
 - Error:
 - Success:
 - Disabled if applicable:
+- System: 404 / 500 / offline / session-expired (where relevant)
 
 ## Behavior rules
-- [rule]
+- [If X, then Y]
 - [rule]
 
 ## Content guidance
-- [content principle]
+- [content principle, microcopy]
 - [content principle]
 
 ## Spacing and layout notes
-- [note]
-- [note]
+- [grid: 12-col desktop, gutters; spacing-scale values in px/rem, e.g. 24px / 1.5rem]
+- [max content width / ~65ch measure; container queries where used]
 
 ## Typography rules
-- [role] → [usage]
+- [role] → [size in px/rem, line-height, clamp() range]
 - [role] → [usage]
 
 ## Accessibility requirements
-- [requirement]
-- [requirement]
-- [requirement]
+- [semantic structure + heading outline + landmarks]
+- [keyboard operability: tab order, focus-visible, focus management, trap+restore]
+- [contrast / target size 24px (2.5.8) / non-color cues / forced-colors]
 
 ## Design quality requirements
 - Quality target: [4/5 by default unless context blocks it]
@@ -239,12 +241,11 @@ Assumptions:
 - Interaction polish:
 - Production checks:
 
-## Platform-specific implementation notes
-### iOS
-- [note]
-
-### Android
-- [note]
+## Responsive and browser implementation notes
+### Breakpoint behavior
+- [how each zone reflows across 320 → 768 → 1024 → 1440+; 320px reflow verified]
+### Browser/engine notes
+- [feature support gated via Baseline/caniuse with fallback]
 
 ## Key decision tradeoffs
 - [decision] chosen over [alternative] because [reason]
@@ -279,9 +280,9 @@ Assumptions:
 > Each finding is one causal chain, ordered by severity. High-severity (3–4) findings use all fields. Low/cosmetic (0–2) may compress to Observation → Change → Severity. Never split an issue from its fix.
 
 ### F1 — [short title]
-- Lens: [Usability / Accessibility / Hierarchy & readability / Design quality / Navigation & interaction]
+- Lens: [Usability / Accessibility / Keyboard operability / Hierarchy & readability / Design quality / Navigation & interaction / Performance (Core Web Vitals) / Responsive (breakpoints) / SEO & semantics / Forced-colors]
 - Observation: [what is there now — evidence-bound; for D2, structure & behavior only, no visual assertions]
-- Violated principle: [named — e.g. Nielsen #5 Error prevention · Hick's Law · Cognitive load (extraneous) · Gestalt proximity · Wroblewski form-design]
+- Violated principle: [named — e.g. Nielsen #5 Error prevention · Hick's Law · WCAG 2.4.11 Focus Not Obscured · Gestalt proximity · Wroblewski form-design]
 - User consequence: [the mechanism by which it hurts the user — not a restatement of the observation]
 - Change: [the specific edit]
 - Predicted effect: [directional + confidence — "should reduce mis-submits; confidence M (D2 text-only)". Never a fabricated %]
@@ -329,18 +330,19 @@ Assumptions:
 - 1 (cosmetic): [F..]
 
 ## Bold move (optional — omit unless the trigger is met)
-> Use only when ALL hold: the screen is already competent (current ≥3/5) but inert (loses no major points yet has no point of view); there is no unresolved severity-3 or severity-4 finding (fix those first); and there is a concrete UX upside. Allowed in D1/D3; D2 = structure/flow only; D4 = only if the new context unlocks it. This is NOT a fix and NOT required to ship. At most one (two only if genuinely distinct). If unsure, omit.
+> Use only when ALL hold: the page is already competent (current ≥3/5) but inert (loses no major points yet has no point of view); there is no unresolved severity-3 or severity-4 finding (fix those first); and there is a concrete UX upside. Allowed in D1/D3; D2 = structure/flow only; D4 = only if the new context unlocks it. This is NOT a fix and NOT required to ship. At most one (two only if genuinely distinct). If unsure, omit.
 
 - The move: [one buildable sentence — a component/layout/flow/interaction change, not an adjective]
-- Deviates from: [the product assumption / current direction / brand rule / platform convention it contradicts]
+- Deviates from: [the product assumption / current direction / brand rule / web convention it contradicts]
 - Job served (JTBD): [the job + one desired-outcome statement: minimize/increase [metric] of [object] when [context]]
 - UX upside: [concrete, checkable benefit — tie to a named heuristic or quality bar]
 - Risk / cost: [learnability, discoverability, accessibility exposure, or dev cost if this is wrong]
-- De-risk / validate: [the cheap test before committing + kill criterion + the contrast/large-text/reduced-motion checks it must still pass]
+- De-risk / validate: [the cheap test before committing + kill criterion + the contrast / reduced-motion / keyboard / 320px-reflow checks it must still pass]
 - Score impact: safe fixes alone → [X]/5; this move targets [Y]/5; it does NOT raise the score until validated.
 - Conviction: [Speculative / Worth a spike / High-confidence]
 
 ## Platform-convention mismatches
+> Web-platform and browser conventions (Jakob's Law): native control behavior, back/forward, link vs button semantics, engine-specific rendering.
 - [mismatch]
 - [mismatch]
 
@@ -367,8 +369,8 @@ Assumptions:
 
 ## Type roles
 - Display:
-- Screen title:
-- Section title:
+- Page title (h1):
+- Section title (h2/h3):
 - Body:
 - Secondary body:
 - Label:
@@ -376,7 +378,7 @@ Assumptions:
 - Button / action label:
 
 ## Size hierarchy
-- [role] → [size guidance]
+- [role] → [size in px/rem, e.g. 16px / 1rem; fluid clamp() range]
 - [role] → [size guidance]
 
 ## Weight usage
@@ -384,8 +386,8 @@ Assumptions:
 - [weight] for [purpose]
 
 ## Line-height guidance
-- [guidance]
-- [guidance]
+- Body → [1.5]
+- Headings → [1.2–1.35]
 
 ## Spacing scale
 - 4
@@ -394,31 +396,33 @@ Assumptions:
 - 16
 - 24
 - 32
-- 40
+- 48
+- 64
 
 ## Density rules
-- [rule]
+- [comfortable vs compact presets; when to tighten one step for dense tables/dashboards]
 - [rule]
 
 ## Visual rhythm rules
 - Quality target: [4/5 by default unless context blocks it]
-- [rule]
-- [rule]
+- [vertical rhythm: spacing multiples; baseline consistency across components]
+- [measure cap ~65ch; section spacing on long-scroll pages]
 
-## Touch-target implications
-- [implication]
-- [implication]
+## Pointer, target-size and input implications
+- Minimum target size 24×24px (WCAG 2.5.8); 44×44px (2.5.5 AAA) for primary/touch-first actions
+- Pointer-aware sizing: @media (pointer: coarse) bumps targets/spacing; (pointer: fine) allows denser targets
+- Input font-size ≥ 16px to avoid mobile zoom-on-focus; ≥ 8px spacing between adjacent targets
 
 ## Accessibility considerations
-- [consideration]
-- [consideration]
+- [text spacing 1.4.12 survives; 200% zoom; rem-based scaling honors user root size]
+- [contrast; non-color cues; forced-colors]
 
 ## Usage examples
-- App bar:
-- List row:
-- Form:
-- Detail screen:
-- Bottom action area:
+- Global header / nav:
+- Content card / list row:
+- Form field + label + help + error:
+- Data table cell + header:
+- Article body / long-form reading column:
 
 ## Next actions
 - [action]
@@ -444,7 +448,7 @@ Assumptions:
 [users and context]
 
 ## Key design decisions
-- [decision] — alternative considered: [alternative] — chosen because [reason tied to user goal, task, platform, accessibility, or implementation]
+- [decision] — alternative considered: [alternative] — chosen because [reason tied to user goal, task, breakpoint, accessibility, or implementation]
 - [decision] — alternative considered: [alternative] — chosen because [reason]
 
 ## Pattern choices and why
@@ -453,26 +457,26 @@ Assumptions:
 
 ## Design quality rationale
 - Quality target: [4/5 by default unless context blocks it]
-- [quality decision] — [mechanism: size/spacing/alignment/color/density/motion/token] — [why it fits context]
-- [quality decision] — [mechanism] — [why]
+- [quality decision] — mechanism: [size/spacing/alignment/color role/density/motion/token] — [why it fits context]
+- [quality decision] — mechanism: [mechanism] — [why]
 
-## Platform alignment
-### iOS
-- [alignment note]
-
-### Android
-- [alignment note]
+## Responsive and browser alignment
+### Breakpoint behavior
+- [how the design holds across the breakpoint ladder; 320px reflow]
+### Browser/engine notes
+- [feature support / Baseline gating / fallbacks for the named engines]
 
 ## Accessibility and usability considerations
-- [consideration]
-- [consideration]
+- [semantic structure + keyboard operability + focus management]
+- [contrast / reduced-motion / forced-colors / target size]
+- [error clarity and recovery]
 
 ## States and edge cases
 - [state]
 - [state]
 
 ## Implementation notes
-- [note]
+- [tokens, component/state mapping, performance/CWV, analytics, focus management]
 - [note]
 
 ## Open questions
@@ -480,7 +484,7 @@ Assumptions:
 - [question]
 
 ## Validation plan / recommended testing focus
-- [test focus]
+- [what to test, how — method, metric, acceptance: axe/keyboard pass, Lighthouse budget, 320px reflow]
 - [test focus]
 
 ## Next actions
@@ -492,36 +496,57 @@ Assumptions:
 
 ## Template G: Generate / critique a marketing landing page (conversion / CRO)
 
-<!-- TODO(iteration-2): flesh out with web CRO guidance. Scaffold mirrors Mode G output structure. -->
-
+```md
 Mode: Generate / critique a marketing landing page (conversion / CRO)
 Responsive/breakpoint scope: [Mobile-web / Tablet / Desktop / Wide / Assumed]
 Browser/engine scope: [Chromium / WebKit / Gecko / Assumed]
-
-## Assumptions
+Assumptions:
+- [assumption 1]
+- [assumption 2]
 
 ## Conversion goal and primary CTA
+[the single primary conversion goal + the one dominant CTA]
 
 ## Above-the-fold (hero) structure
+[value proposition visible without scrolling: headline, subhead, primary CTA, supporting visual]
 
 ## Scroll narrative and section rhythm
+[ordered by visitor questions: problem → solution → proof → how it works → objections → final CTA]
 
 ## Value proposition and messaging hierarchy
+[headline hierarchy, benefit-led copy, specificity over adjectives]
 
 ## Social proof and trust signals
+[logos, testimonials, metrics, security/trust badges — specific, not generic]
 
 ## CTA hierarchy and placement
+[one dominant CTA repeated down the page; secondary CTAs visually subordinate]
 
 ## Objection handling / FAQ
+[the top objections answered inline or in an accordion]
 
 ## Accessibility considerations
+[semantic structure, keyboard operability, contrast on hero overlays, reduced-motion for scroll effects, forced-colors]
 
 ## Performance considerations (Core Web Vitals, media weight)
+[LCP from hero image/text, INP from interactive elements, CLS from media/fonts; image art-direction, lazy-load below fold]
 
 ## SEO and shareability
+[semantic heading outline (one h1), meta title/description, Open Graph/Twitter cards, structured data, canonical]
 
 ## Design quality calibration
+- Quality target: [4/5 by default unless context blocks it]
+- Attention path:
+- Composition and spacing:
+- Typography:
+- Color and state:
+- Interaction polish:
+- Production checks:
 
 ## Conversion-rate reasoning
+[mechanisms and hypotheses tied to heuristics (goal-gradient, social proof, clarity) — never fabricated lift percentages or A/B results]
 
 ## Next actions
+- [action]
+- [action]
+```

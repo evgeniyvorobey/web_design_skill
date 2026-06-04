@@ -1,30 +1,35 @@
 {
-  "id": "rubric-score-2-PLACEHOLDER-web",
+  "id": "rubric-score-2-web-concept-responsive-flattening",
   "rubric_version": "1.0",
-  "mode": "Create responsive UI spec",
-  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 2/5].",
-  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 2/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "mode": "Generate web page concept",
+  "prompt": "Concept for an admin orders page with a table of orders and per-row actions. Desktop and mobile-web.",
+  "response_excerpt": "Put the orders in a table. Show the row actions (view, refund, cancel) on hover so the table stays clean. On mobile, keep the same table and just let it scroll sideways inside the page so the desktop layout still fits. Highlight the selected row in light blue. Header has the page title and a search box.",
   "expected_score": 2,
   "expected_verdict": "needs major revision",
-  "expected_cap": "Structurally weak",
-  "hard_limits": [],
+  "expected_cap": "Capped at 2/5 — keyboard inoperability (hover-only actions) and responsive flattening (no 320px reflow)",
+  "hard_limits": [
+    "keyboard inoperability — actions reachable only on hover",
+    "responsive flattening — desktop table forced to horizontal scroll, no 320px reflow",
+    "selection conveyed by color alone"
+  ],
   "dimension_scores": {
     "attention_path_and_hierarchy": 2,
     "composition_and_spacing": 2,
     "typography_craft": 2,
     "color_state_and_contrast": 2,
     "density_and_rhythm": 2,
-    "interaction_polish_and_motion": 2,
+    "interaction_polish_and_motion": 1,
     "context_and_brand_fit": 2,
-    "production_readiness": 2
+    "production_readiness": 1
   },
   "expected_failed_dimensions": [
-    "production readiness",
-    "responsive/breakpoint behavior"
+    "interaction_polish_and_motion",
+    "production_readiness",
+    "color_state_and_contrast"
   ],
-  "expected_rationale": "PLACEHOLDER iter1 stub for the 2/5 calibration slot; re-author with a real web example in iteration 2.",
+  "expected_rationale": "Structurally present but capped low by two web failures: row actions exist only on hover (invisible to keyboard and touch — a 2.1.1 operability cap), and the mobile story is to horizontally scroll the desktop table (responsive flattening that breaks 1.4.10 reflow at 320px). Selection is light-blue only, failing 1.4.1 use of color. No states beyond default and no concrete values, so it is not buildable.",
   "improvement_suggestions": [
-    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
-    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+    "Make row actions a persistent, tab-order menu button (APG menu) visible on touch; treat hover/focus-within reveal as enhancement only.",
+    "Reflow the table to stacked label/value cards below 768px and verify no horizontal scroll at 320px; add a non-color selection cue (checkbox + outline) and define loading/empty/error states."
   ]
 }

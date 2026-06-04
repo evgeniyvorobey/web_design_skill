@@ -1,5 +1,3 @@
-<!-- TODO(iteration-2): usage examples still describe mobile tasks. Re-author with web tasks (responsive page spec, landing-page review, data-table dashboard, etc.). -->
-
 # Usage Guide
 
 This guide explains how to invoke `web-design-skill` in Claude Code or Codex.
@@ -41,23 +39,23 @@ If you want the expanded reference pack available during use, keep these files n
 The skill will:
 
 1. classify the request into one mode
-2. determine platform scope
+2. determine the two scope axes (responsive/breakpoint and browser/engine)
 3. identify missing information
 4. apply clarification policy: ask only blocking questions, otherwise proceed with assumptions
 5. apply judged mode when invoked with `--judge`
 6. make only minimal labeled assumptions
 7. return a structured mode-specific output
-8. include accessibility and usability by default
+8. include accessibility and keyboard operability by default
 9. include design-quality calibration for visual hierarchy, rhythm, craft, and production readiness when producing design artifacts
-10. apply a 1-5 design-quality rubric, targeting 4/5 for generated artifacts and exposing current score in reviews
+10. apply a 1-5 design-quality rubric, targeting 4/5 for generated artifacts and exposing the current score in reviews
 11. use `examples/evals/`, `examples/rubric-before-after.md`, `examples/golden/`, and `examples/case-studies/` as calibration references when tuning quality and taste
-12. use domain packs for fintech, health, SaaS, marketplace, social, and education when the product category materially changes risk, hierarchy, state coverage, or trust language
+12. use domain packs for marketing/landing, ecommerce, content/publishing, docs/dev-portal, and web-app/dashboard when the product category materially changes risk, hierarchy, state coverage, or trust language
 13. use visual benchmark playbooks and benchmark report format to keep references separate from evidence claims
 14. use visual-review fixtures to calibrate text-only review discipline and avoid unsupported visual overclaims
 15. use rendered-output QA only after a rendered artifact exists; do not block normal design generation waiting for screenshots or builds
 16. use `scripts/run_rubric_judge.py` for provider-agnostic LLM-as-judge calibration, including external-agent command runs
-17. run known-weakness preflight to avoid generic output, first-idea bias, evidence overreach, platform flattening, happy-path-only design, and weak handoff
-18. keep inspiration references separate from UX, accessibility, and platform rationale when inspiration is requested
+17. run known-weakness preflight from `docs/weaknesses.md` to avoid generic output, first-idea bias, evidence overreach, responsive flattening, happy-path-only design, and weak handoff
+18. keep inspiration references separate from UX, accessibility, and web-convention rationale when inspiration is requested
 
 ---
 
@@ -67,7 +65,8 @@ The skill will:
 Use the web-design-skill.
 
 Task: [describe the request]
-Platform: [iOS / Android / cross-platform / unknown]
+Breakpoints: [mobile-web / tablet / desktop / wide / unknown]
+Browsers: [evergreen Chromium/WebKit/Gecko / specific / unknown]
 User goal: [goal]
 Context: [audience, product, constraints]
 ```
@@ -80,109 +79,79 @@ Context: [audience, product, constraints]
 Use the web-design-skill.
 
 Task:
-Create a responsive UI spec for a recurring invoice detail screen.
+Create a responsive UI spec for an invoice detail page in a small-business billing web app.
 
 Inputs:
-- Product: small business invoicing app
+- Product: small-business invoicing web app
 - User goal: review invoice status and send a reminder
-- Platform: cross-platform
+- Breakpoints: desktop-first, must work down to 320px
+- Browsers: evergreen Chromium/WebKit/Gecko
 - Audience: busy owners with moderate financial literacy
-- Screen type: detail screen
-- Constraints: dense content, touch-friendly, accessibility-sensitive, existing token system
-- Current wireframe: header with status, totals, line items, timeline, CTA row
+- Page type: detail page with a line-item table
+- Constraints: dense content, keyboard-operable, accessibility-sensitive, existing token system
+- Current wireframe: header with status, totals, line-item table, activity timeline, action row
 ```
 
 ---
 
 ## Choosing the right mode intentionally
 
-You can let the skill classify automatically, or specify intent more directly.
+You can let the skill classify automatically, or specify intent directly.
 
 ### Generate web page concept
-Use for:
-- new screens
-- early structure
-- component and layout direction
+Use for new pages, early structure, and component/layout direction.
 
-Example:
 ```text
-Design a first-pass web page concept for a medication refill screen.
+Design a first-pass concept for a SaaS pricing page.
 ```
 
-### Design mobile user flow
-Use for:
-- onboarding
-- checkout
-- booking
-- verification
-- multi-step tasks
+### Design web user flow
+Use for onboarding, checkout, signup, verification, and multi-step tasks across views.
 
-Example:
 ```text
-Map the mobile user flow from install to first success.
+Map the web user flow from signup to first activated workspace.
 ```
 
 ### Create responsive UI spec
-Use for:
-- turning wireframes into structured specs
-- implementation-ready handoff
-- platform-specific component and behavior notes
+Use for turning wireframes into structured, breakpoint-by-breakpoint specs.
 
-Example:
 ```text
-Turn this wireframe into a responsive UI spec.
+Turn this wireframe into a responsive UI spec for desktop and mobile-web.
 ```
 
 ### Review page for usability/accessibility
-Use for:
-- critiquing existing designs
-- identifying hierarchy, navigation, readability, or accessibility issues
-- prioritizing fixes
+Use for critiquing existing pages and prioritizing fixes.
 
-Example:
 ```text
-Review this Android settings screen for usability and accessibility.
+Review this account settings page for usability, keyboard operability, and accessibility.
 ```
 
-### Create typography and spacing system
-Use for:
-- defining type roles
-- density guidance
-- spacing scales
-- readable mobile systems
+### Create typography, spacing and grid system
+Use for type roles, fluid scale, spacing, grid, and density guidance.
 
-Example:
 ```text
-Create a typography and spacing system for a finance app used by older adults.
+Create a typography, spacing and grid system for a documentation site.
 ```
 
 ### Prepare design rationale / handoff
-Use for:
-- documenting decisions
-- preparing design review notes
-- helping engineering handoff
-- summarizing why a solution was chosen
+Use for documenting decisions and engineering handoff.
 
-Example:
 ```text
-Prepare a design rationale and handoff for this onboarding redesign.
+Prepare a design rationale and handoff for this dashboard redesign.
+```
+
+### Generate / critique a marketing landing page (conversion / CRO)
+Use when the primary job is persuasion and conversion.
+
+```text
+Critique our landing page and propose changes to improve signups.
 ```
 
 ---
 
 ## Input quality tips
 
-The skill works best when the prompt includes:
-
-- product or domain
-- user goal
-- platform
-- screen or flow scope
-- constraints
-- audience
-- current screen or wireframe summary if available
-
-But because humans adore missing context, the skill will still proceed with minimal labeled assumptions when necessary.
+The skill works best when the prompt includes product or domain, user goal, breakpoint and browser targets, page or flow scope, constraints, audience, and a current wireframe summary if available. It will still proceed with minimal labeled assumptions when context is missing.
 
 ---
 
@@ -192,83 +161,62 @@ But because humans adore missing context, the skill will still proceed with mini
 ```text
 Use the web-design-skill.
 
-Create a web page concept for a ride-booking pickup confirmation screen.
-Platform: iOS
-Audience: commuters in a hurry
-Constraints: one-handed use, high time pressure, location uncertainty
+Create a web page concept for a flight-booking results page.
+Breakpoints: desktop + mobile-web
+Audience: travelers comparing options under time pressure
+Constraints: faceted filters, URL-shareable state, accessibility-sensitive
 ```
 
 ### Example 2
 ```text
 Use the web-design-skill.
 
-Design the flow for resetting a forgotten password in an enterprise Android app.
-Constraints: regulated environment, MFA required, older employee base
+Design the flow for resetting a forgotten password in an enterprise web app.
+Constraints: regulated environment, passkeys + MFA, session-expiry handling, older employee base
 ```
 
 ### Example 3
 ```text
 Use the web-design-skill.
 
-Review a cross-platform profile edit screen.
-Screen description:
+Review a profile edit page.
+Page description:
 - avatar at top
-- long stacked form
-- save button at very bottom
+- long single-column form
+- save button at the very bottom
 - optional fields mixed with required
-- weak error messaging
-Constraints: accessibility-sensitive
+- weak inline error messaging
+Constraints: accessibility-sensitive, keyboard-operable
 ```
 
 ### Example 4
 ```text
 Use the web-design-skill.
 
-Generate a web page concept for a premium habit tracker and include inspiration references.
-Platform: iOS
+Generate a marketing landing page concept for a premium habit-tracker web app and include inspiration references.
 Audience: general consumer
-Constraints: calm visual direction, accessibility-sensitive, no gamification overload
+Constraints: calm visual direction, reduced-motion respected, accessibility-sensitive, fast LCP
 ```
 
 ---
 
 ## What the skill will not do
 
-The skill will not:
-
-- invent official platform guidance
-- invent validated research findings
-- claim verified accessibility compliance without sufficient evidence
-- block useful output with nonessential questions
-- provide aesthetic-only advice detached from task clarity or usability
-- return a section-complete response with no real decisions, tradeoffs, or buildable mechanisms
-- ignore typography, spacing, navigation, touch behavior, or states
+The skill will not invent web standards or browser behavior, invent validated research, claim verified accessibility compliance without evidence, block useful output with nonessential questions, provide aesthetic-only advice, return a section-complete response with no real decisions, or ignore typography, spacing, navigation, keyboard operability, or states.
 
 ---
 
 ## Interpreting the output
 
-Every response starts with:
-
-- `Mode:`
-- `Platform scope:`
-- `Assumptions:`
-
-Every response ends with:
-
-- `Next actions:`
-
-This makes outputs easy to reuse in product docs, design reviews, tickets, or handoff notes.
+Every response starts with `Mode:`, `Responsive/breakpoint scope:`, `Browser/engine scope:`, and `Assumptions:`, and ends with `Next actions:`. This makes outputs easy to reuse in product docs, design reviews, tickets, or handoff notes.
 
 ---
 
 ## Best practices for teams
 
-For team use:
-
-1. keep prompts tied to a user task, not just a screen name
-2. include constraints early
-3. state platform clearly if native behavior matters
+1. keep prompts tied to a user task, not just a page name
+2. include constraints and the breakpoint/browser scope early
+3. state when keyboard-first or dense desktop behavior matters
 4. use the review mode before final handoff
 5. use the rationale mode after major design changes
-6. use the typography/spacing mode before components start drifting into chaos, as they always do when nobody is watching
+6. use the typography/spacing/grid mode before components drift into chaos

@@ -1,6 +1,3 @@
-<!-- TODO(iteration-2): terminology pass — this file was copied verbatim from mobile-design-skill. Normalize framing (mobile→web, screen→page) WITHOUT a blind find-replace (keep "screen reader", etc.). See ITERATION_2_HANDOFF.md. -->
-<!-- INVERSION-WATCH(iter2): 1-5 scoring MECHANICS + caps + median method are CORE (keep verbatim). But the per-dimension BANDS are mobile-coded and the 'platform-flattening cap' must become 'responsive-flattening cap'. Re-author bands for web; keep the cap/median governance. -->
-
 # Design Quality Rubric
 
 This document turns design quality into a 1-5 scoring system. Use it to raise the quality of proposed designs, not only to critique existing ones.
@@ -26,13 +23,14 @@ The rubric complements:
 
 Score design quality when the response:
 
-- proposes a screen concept
-- creates a UI spec
-- reviews a screen or screen description
-- creates a typography and spacing system
+- proposes a page concept
+- creates a responsive UI spec
+- reviews a page or page description
+- creates a typography, spacing and grid system
 - prepares a rationale or handoff
+- proposes or critiques a marketing / landing page (Mode G)
 
-Mode B user flows normally do not need a visual quality score unless screen pacing, progress feedback, or transition quality materially affects the flow.
+Mode B user flows normally do not need a visual quality score unless page pacing, progress feedback, or transition quality materially affects the flow.
 
 ---
 
@@ -82,14 +80,14 @@ Score each relevant dimension from 1-5.
 
 | Dimension | 1-2 signals | 3 signals | 4-5 signals |
 |-----------|-------------|-----------|-------------|
-| Attention path and hierarchy | unclear first glance; competing focal points | main task visible but secondary hierarchy is rough | first glance, second glance, and action path are deliberate and visible |
-| Composition and spacing | grouping depends on decoration or breaks with large text | spacing mostly works but lacks rhythm | spacing, grouping, alignment, and safe-area behavior communicate structure |
-| Typography craft | ad-hoc sizes, weak readability, too many styles | basic roles exist | role-based type, line-height, scaling, truncation, and emphasis rules are clear |
-| Color, state, and contrast | color carries meaning alone or weakens contrast | semantic colors are mostly present | color roles, non-color cues, dark/increased-contrast implications, and state treatments are defined |
-| Density and rhythm | density fights the task | density is acceptable | density matches context and repeats predictably across groups/screens |
-| Interaction polish and motion | missing feedback or motion hides problems | basic feedback exists | pressed/loading/saving/success/error feedback is clear, fast, and reduced-motion-aware |
-| Context and brand fit | visual language contradicts trust, domain, or platform | broadly appropriate | brand supports task, trust, and platform conventions without overriding semantics |
-| Production readiness | vague handoff; no tokens/states/QA | enough to discuss | token-ready values, component/state mapping, platform notes, and QA checks are present |
+| Attention path and hierarchy | unclear first glance; competing focal points; no dominant element above the fold | main task visible but secondary hierarchy is rough; per-section hierarchy on long pages is weak | first glance, second glance, and action path are deliberate per viewport and per scroll section |
+| Composition and spacing | grouping depends on decoration or breaks with text-spacing overrides; ad-hoc gaps | spacing mostly works but lacks rhythm or a consistent grid | spacing scale, grid, alignment, and responsive placement across the breakpoint ladder communicate structure |
+| Typography craft | ad-hoc sizes, weak readability, runaway measure, too many styles | basic roles exist; measure and line-height roughly right | role-based scale, `clamp()` sizing, ~65ch measure, line-height, and font-loading (swap/no-CLS) are deliberate |
+| Color, state, and contrast | color carries meaning alone or fails contrast | semantic colors mostly present; one theme considered | color roles, non-color cues, real dark theme, forced-colors survival, and full state colors are defined |
+| Density and rhythm | density fights the task; desktop space wasted or cramped | density is acceptable | density matches task and viewport — exploits desktop density where it helps — and repeats predictably across components |
+| Interaction polish and motion | missing feedback; motion hides problems or jacks scroll | basic feedback exists | hover/focus-visible/active/loading/success/error feedback is clear, fast, and reduced-motion-aware |
+| Context and brand fit | visual language contradicts trust, domain, or the marketing-vs-app spectrum | broadly appropriate | brand supports task and trust through tokens, fits its end of the marketing↔app spectrum, without overriding semantics |
+| Production readiness | vague handoff; no tokens/states/QA; no perf or a11y budget | enough to discuss | token-ready values, component/state mapping, breakpoint behavior, semantic outline, CWV budget, and axe/keyboard QA are present |
 
 ---
 
@@ -103,7 +101,8 @@ Apply these caps before calculating the final score:
 - Unsupported accessibility compliance claims make the response **Fail**.
 - Visual assertions from text-only review input cap Mode D score confidence; label the score as provisional or restrict it to structural quality.
 - Aesthetic-only recommendations cap the design-quality score at **2/5** until translated into task, accessibility, or implementation mechanisms.
-- Platform flattening in materially different iOS/Android behavior caps cross-platform outputs at **3/5**.
+- Responsive flattening caps responsive outputs at **3/5**: the same layout poured into every breakpoint with no behavior change, hover/`:focus-visible` operability ignored, or no working 320px reflow.
+- Keyboard inoperability — focus not visible, focus lost on route/overlay change, a modal without focus trap + restore, or actions reachable only by hover — caps at **2/5** until fixed.
 - An inert screen — competent on all dimensions but failing the inert-screen test in `docs/design-quality.md` — caps at **3/5** with an upside note (not a quiet 4/5) until it carries at least one owned distinctive asset or a justified signature moment.
 
 ---
@@ -126,8 +125,8 @@ Use this ladder when a draft is below the target:
 
 - 1 → 2: remove misleading claims, fix hard guardrails, define the actual user task
 - 2 → 3: clarify hierarchy, add states, qualify assumptions, remove aesthetic-only advice
-- 3 → 4: add concrete mechanisms, alternatives, platform notes, accessibility behavior, and production checks
-- 4 → 5: add resilience across edge cases, tokenization, dark/large-text behavior, localization, and design-system scaling
+- 3 → 4: add concrete mechanisms, alternatives, responsive/browser notes, accessibility behavior, and production checks
+- 4 → 5: add resilience — 320px reflow, dark theme + forced-colors, text-spacing/200% zoom, tokenization, CWV budget, localization, and design-system scaling
 
 For most skill outputs, **4/5 is the default target**. Use 5/5 as a stretch target when the user provides enough context for strong system-level guidance.
 
@@ -172,11 +171,11 @@ Use these fixtures when tuning prompts, judging generated responses, or adding L
 
 For human calibration, use `examples/rubric-before-after.md`. It shows the upgrade path from a 2/5 template-complete UI spec to a 4/5 shippable spec.
 
-For taste and domain calibration, use `docs/golden-examples.md` and `examples/golden/`. These examples show compact 4/5-style patterns for premium UI, enterprise SaaS, fintech, health, onboarding, settings, and checkout.
+For taste and domain calibration, use `docs/golden-examples.md` and `examples/golden/`. These examples show compact 4/5-style patterns for marketing landing, ecommerce PDP + checkout, content article, docs / dev portal, web-app dashboard, web form, and settings / account.
 
-For broader synthetic calibration, use `docs/synthetic-case-studies.md` and `examples/case-studies/`. These cases show plausible weak responses, stronger 4/5 responses, and regression checks across domains and modes. They are not real-world validation.
+For broader synthetic calibration, use `docs/synthetic-case-studies.md` and `examples/case-studies/`. These cases show plausible weak responses, stronger 4/5 responses, and regression checks across web domains and modes. They are not real-world validation.
 
-For domain-aware calibration, use `docs/domain-packs/index.md` and `docs/domain-packs/`. Domain packs raise quality by improving hierarchy, state coverage, trust language, and handoff checks for fintech, health, SaaS, marketplace, social, and education. They do not prove compliance or business impact.
+For domain-aware calibration, use `docs/domain-packs/index.md` and `docs/domain-packs/`. Domain packs raise quality by improving hierarchy, state coverage, trust language, and handoff checks for marketing/landing, ecommerce, content/publishing, docs/dev-portal, and web-app/dashboard. They do not prove compliance or business impact.
 
 For review calibration, use `docs/visual-review-fixtures.md` and `examples/visual-review-fixtures/` to test whether Mode D reviews avoid unsupported visual claims from text-only evidence.
 

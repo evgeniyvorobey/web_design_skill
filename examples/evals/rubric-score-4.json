@@ -1,12 +1,12 @@
 {
-  "id": "rubric-score-4-PLACEHOLDER-web",
+  "id": "rubric-score-4-web-spec-strong-shippable",
   "rubric_version": "1.0",
   "mode": "Create responsive UI spec",
-  "prompt": "[TODO(iteration-2): replace with a calibrated WEB prompt for score 4/5].",
-  "response_excerpt": "[TODO(iteration-2): replace with a WEB response excerpt that genuinely earns 4/5. Score-1/2 must demonstrate web caps (responsive-flattening, keyboard-inoperability); score-5 must cite rem/clamp values, breakpoints, focus management, INP/CLS budgets, axe-clean, 320px reflow.]",
+  "prompt": "Spec a data-table page for an admin users list with sort, row select, and bulk actions. Desktop-first, usable on mobile-web.",
+  "response_excerpt": "Real <table> with <th scope> and aria-sort; sticky header (position: sticky). Body 14px/0.875rem, line-height 1.4; page title clamp(1.5rem, 1.3rem + 1vw, 2rem). 12-col grid, 24px gutters, cell padding 12px/16px (space tokens). States: default, hover, :focus-visible, loading skeleton, empty (clear-filters link), error banner with retry, disabled bulk bar until selection. Keyboard: arrow-key cell nav, Space selects a row, row menu opens on Enter and closes on ESC with focus restored; skip link. Selection announced via aria-live; status badges are text + icon + color (>=4.5:1; badges 3:1). Below 768px the table reflows to stacked cards; verified no horizontal scroll at 320px. Server-paginated, URL-encoded sort/filter so views are shareable.",
   "expected_score": 4,
   "expected_verdict": "strong and shippable",
-  "expected_cap": "Strong web spec",
+  "expected_cap": "No cap",
   "hard_limits": [],
   "dimension_scores": {
     "attention_path_and_hierarchy": 4,
@@ -15,13 +15,15 @@
     "color_state_and_contrast": 4,
     "density_and_rhythm": 4,
     "interaction_polish_and_motion": 4,
-    "context_and_brand_fit": 4,
+    "context_and_brand_fit": 3,
     "production_readiness": 4
   },
-  "expected_failed_dimensions": [],
-  "expected_rationale": "PLACEHOLDER iter1 stub for the 4/5 calibration slot; re-author with a real web example in iteration 2.",
+  "expected_failed_dimensions": [
+    "context_and_brand_fit"
+  ],
+  "expected_rationale": "Strong and shippable: real table semantics with aria-sort, a full state set, complete keyboard operability with focus restore, non-color status cues at stated contrast, a genuine 320px card reflow, and shareable URL-encoded state. Density is exploited where it helps. It lands at 4/5 rather than 5/5 because brand/context fit is generic (no owned visual character) and it does not yet name the dark-theme/forced-colors tokens, localization, or a measured Core Web Vitals/INP budget under interaction.",
   "improvement_suggestions": [
-    "TODO(iteration-2): author the first calibrated web improvement suggestion.",
-    "TODO(iteration-2): author the second calibrated web improvement suggestion."
+    "Add resilience for 5/5: dark-theme + forced-colors token values, localization of column headers, and a measured INP budget for sort/select under large datasets (virtualization).",
+    "Give the table one owned visual asset (a considered density preset or a signature empty state) so it is not template-generic."
   ]
 }

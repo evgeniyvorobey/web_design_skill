@@ -140,12 +140,13 @@ EXAMPLE_OUTPUT_RE = re.compile(
 )
 
 EXAMPLE_RESPONSE_FILES = [
-    "examples/generate-screen.md",
-    "examples/design-flow.md",
+    "examples/generate-page.md",
+    "examples/web-flow.md",
     "examples/ui-spec.md",
-    "examples/review-screen.md",
-    "examples/typography-spacing.md",
+    "examples/review-page.md",
+    "examples/type-spacing-grid.md",
     "examples/rationale-handoff.md",
+    "examples/marketing-landing.md",
 ]
 
 RUBRIC_EVAL_FIXTURES = [
@@ -184,16 +185,16 @@ RUBRIC_FIXTURE_REQUIRED_FIELDS = {
 }
 
 MODE_REQUIREMENTS = {
-    "Generate mobile screen concept": {
+    "Generate web page concept": {
         "sections": [
-            "Screen goal",
+            "Page goal",
             "Primary user task",
             "Information hierarchy",
             "Recommended layout structure",
             "Suggested components",
             "Interaction notes",
             "Empty / loading / error states",
-            "Platform-specific notes",
+            "Responsive and browser behavior",
             "Accessibility considerations",
             "Design quality calibration",
             "Rationale for major choices",
@@ -208,22 +209,22 @@ MODE_REQUIREMENTS = {
             ("Design quality calibration", r"\b[1-5]/5\b"),
         ],
     },
-    "Design mobile user flow": {
+    "Design web user flow": {
         "sections": [
             "Flow goal",
             "Entry points",
-            "Ordered steps / screens",
+            "Ordered steps / views",
             "Decision points",
-            "Back-navigation logic",
+            "Back/forward and URL state",
             "Failure and recovery paths",
-            "Platform behavior notes",
+            "Responsive and browser behavior",
             "Accessibility and usability risks",
             "Simplification opportunities",
             "Next actions",
         ],
         "accessibility_sections": ["Accessibility and usability risks"],
     },
-    "Create platform-aware UI spec": {
+    "Create responsive UI spec": {
         "sections": [
             "Screen or flow scope",
             "Structural zones",
@@ -235,20 +236,20 @@ MODE_REQUIREMENTS = {
             "Typography rules",
             "Accessibility requirements",
             "Design quality requirements",
-            "Platform-specific implementation notes",
+            "Responsive and browser implementation notes",
             "Key decision tradeoffs",
             "Next actions",
         ],
         "accessibility_sections": ["Accessibility requirements"],
         "must_contain": [
-            ("Spacing and layout notes", r"\b\d+\s?(dp|pt|sp|px)\b|space-\d+"),
-            ("Typography rules", r"\b\d+\s?(sp|pt|px)\b|body|title|label|caption"),
+            ("Spacing and layout notes", r"\b\d+(?:\.\d+)?\s?(px|rem)\b|space-\d+"),
+            ("Typography rules", r"\b\d+(?:\.\d+)?\s?(px|rem)\b|body|title|label|caption"),
             ("Design quality requirements", r"Attention path:"),
             ("Design quality requirements", r"Production checks:"),
             ("Design quality requirements", r"\b[1-5]/5\b"),
         ],
     },
-    "Review screen for usability/accessibility": {
+    "Review page for usability/accessibility": {
         "sections": [
             "Quick summary",
             "Strengths",
@@ -273,7 +274,7 @@ MODE_REQUIREMENTS = {
             ("Design quality score (current → projected)", r"Projected:\s*up to"),
         ],
     },
-    "Create typography and spacing system": {
+    "Create typography, spacing and grid system": {
         "sections": [
             "Type roles",
             "Size hierarchy",
@@ -282,17 +283,17 @@ MODE_REQUIREMENTS = {
             "Spacing scale",
             "Density rules",
             "Visual rhythm rules",
-            "Touch-target implications",
+            "Pointer, target-size and input implications",
             "Accessibility considerations",
             "Usage examples",
             "Next actions",
         ],
         "accessibility_sections": ["Accessibility considerations"],
         "must_contain": [
-            ("Size hierarchy", r"\b\d+\s?(sp|pt|px)\b"),
-            ("Line-height guidance", r"\b1\.[0-9]\b|\b\d+\s?(sp|pt|px)\b"),
-            ("Touch-target implications", r"44\s?pt.*48\s?dp|48\s?dp.*44\s?pt"),
-            ("Visual rhythm rules", r"\b(4|8|12|16|24|32|40)\b"),
+            ("Size hierarchy", r"\b\d+(?:\.\d+)?\s?(px|rem)\b"),
+            ("Line-height guidance", r"\b1\.[0-9]\b|\b\d+(?:\.\d+)?\s?(px|rem)\b"),
+            ("Pointer, target-size and input implications", r"24\s?px|2\.5\.8|44\s?px"),
+            ("Visual rhythm rules", r"\b(4|8|12|16|24|32|48|64)\b"),
             ("Visual rhythm rules", r"\b[1-5]/5\b"),
         ],
     },
@@ -303,7 +304,7 @@ MODE_REQUIREMENTS = {
             "Key design decisions",
             "Pattern choices and why",
             "Design quality rationale",
-            "Platform alignment",
+            "Responsive and browser alignment",
             "Accessibility and usability considerations",
             "States and edge cases",
             "Implementation notes",
@@ -317,6 +318,33 @@ MODE_REQUIREMENTS = {
             ("Pattern choices and why", r"\bover\b"),
             ("Design quality rationale", r"mechanism:"),
             ("Design quality rationale", r"\b[1-5]/5\b"),
+        ],
+    },
+    "Generate / critique a marketing landing page (conversion / CRO)": {
+        "sections": [
+            "Conversion goal and primary CTA",
+            "Above-the-fold (hero) structure",
+            "Scroll narrative and section rhythm",
+            "Value proposition and messaging hierarchy",
+            "Social proof and trust signals",
+            "CTA hierarchy and placement",
+            "Objection handling / FAQ",
+            "Accessibility considerations",
+            "Performance considerations (Core Web Vitals, media weight)",
+            "SEO and shareability",
+            "Design quality calibration",
+            "Conversion-rate reasoning",
+            "Next actions",
+        ],
+        "accessibility_sections": ["Accessibility considerations"],
+        "must_contain": [
+            ("Design quality calibration", r"Attention path:"),
+            ("Design quality calibration", r"Production checks:"),
+            ("Design quality calibration", r"\b[1-5]/5\b"),
+            (
+                "Performance considerations (Core Web Vitals, media weight)",
+                r"\bLCP\b|\bINP\b|\bCLS\b",
+            ),
         ],
     },
 }
@@ -337,7 +365,7 @@ GENERIC_NEXT_ACTIONS = {
 
 WEAKNESS_REFERENCE_FILES = [
     "SKILL.md",
-    ".claude/skills/mobile-design-skill/SKILL.md",
+    ".claude/skills/web-design-skill/SKILL.md",
     "README.md",
     "skill/skill.md",
     "skill/metadata.yaml",
@@ -357,14 +385,14 @@ WEAKNESS_REQUIRED_PATTERNS = [
     "first-idea bias",
     "aesthetic laundering",
     "evidence overreach",
-    "platform flattening",
+    "responsive flattening",
     "happy-path-only design",
     "weak handoff",
 ]
 
 DESIGN_QUALITY_RUBRIC_REFERENCE_FILES = [
     "SKILL.md",
-    ".claude/skills/mobile-design-skill/SKILL.md",
+    ".claude/skills/web-design-skill/SKILL.md",
     "README.md",
     "skill/skill.md",
     "skill/metadata.yaml",
@@ -399,13 +427,13 @@ RUBRIC_EVAL_REFERENCE_FILES = [
 ]
 
 GOLDEN_EXAMPLE_FILES = [
-    "examples/golden/premium-ui.md",
-    "examples/golden/enterprise-saas.md",
-    "examples/golden/fintech.md",
-    "examples/golden/health.md",
-    "examples/golden/onboarding.md",
-    "examples/golden/settings.md",
-    "examples/golden/checkout.md",
+    "examples/golden/marketing-landing.md",
+    "examples/golden/ecommerce-pdp-checkout.md",
+    "examples/golden/content-article.md",
+    "examples/golden/docs-portal.md",
+    "examples/golden/webapp-dashboard.md",
+    "examples/golden/web-form.md",
+    "examples/golden/settings-account.md",
 ]
 
 LLM_JUDGE_RUNNER_REFERENCE_FILES = [
@@ -418,7 +446,7 @@ LLM_JUDGE_RUNNER_REFERENCE_FILES = [
 
 CLARIFICATION_POLICY_REFERENCE_FILES = [
     "SKILL.md",
-    ".claude/skills/mobile-design-skill/SKILL.md",
+    ".claude/skills/web-design-skill/SKILL.md",
     "README.md",
     "skill/skill.md",
     "skill/metadata.yaml",
@@ -434,8 +462,8 @@ CLARIFICATION_POLICY_REFERENCE_FILES = [
 
 JUDGED_MODE_REFERENCE_FILES = [
     "SKILL.md",
-    ".claude/skills/mobile-design-skill/SKILL.md",
-    ".claude/agents/mobile-design-judge.md",
+    ".claude/skills/web-design-skill/SKILL.md",
+    ".claude/agents/web-design-judge.md",
     "README.md",
     "skill/skill.md",
     "skill/metadata.yaml",
@@ -448,7 +476,7 @@ JUDGED_MODE_REQUIRED_PATTERNS = [
     "--judge",
     "Judge summary",
     "independent judge",
-    "mobile-design-judge",
+    "web-design-judge",
     "Single-agent fallback",
 ]
 
@@ -462,17 +490,26 @@ VISUAL_BENCHMARK_REFERENCE_FILES = [
 ]
 
 VISUAL_BENCHMARK_REQUIRED_PATTERNS = [
-    "Mobbin",
-    "Page Flows",
-    "Apple Design Awards",
     "Awwwards",
+    "CSS Design Awards",
+    "Land-book",
+    "Mobbin Web",
     "Do not use benchmarks as evidence",
     "Translate references into implementable mechanisms",
 ]
 
+# Per-source playbook sections that must each carry the full sub-section structure.
+# These map to `## <source>` headings in docs/visual-benchmark-playbooks.md.
+VISUAL_BENCHMARK_PLAYBOOK_SOURCES = [
+    "Awwwards",
+    "CSS Design Awards / FWA / Webby",
+    "Land-book / SiteInspire / Godly",
+    "Mobbin Web / Refero / Page Flows",
+]
+
 GOLDEN_EXAMPLE_REFERENCE_FILES = [
     "SKILL.md",
-    ".claude/skills/mobile-design-skill/SKILL.md",
+    ".claude/skills/web-design-skill/SKILL.md",
     "README.md",
     "skill/skill.md",
     "skill/metadata.yaml",
@@ -482,13 +519,13 @@ GOLDEN_EXAMPLE_REFERENCE_FILES = [
 ]
 
 GOLDEN_EXAMPLE_AREAS = {
-    "Premium UI": "examples/golden/premium-ui.md",
-    "Enterprise SaaS": "examples/golden/enterprise-saas.md",
-    "Fintech": "examples/golden/fintech.md",
-    "Health": "examples/golden/health.md",
-    "Onboarding": "examples/golden/onboarding.md",
-    "Settings": "examples/golden/settings.md",
-    "Checkout": "examples/golden/checkout.md",
+    "Marketing landing": "examples/golden/marketing-landing.md",
+    "Ecommerce PDP + checkout": "examples/golden/ecommerce-pdp-checkout.md",
+    "Content article": "examples/golden/content-article.md",
+    "Docs / dev portal": "examples/golden/docs-portal.md",
+    "Web-app dashboard": "examples/golden/webapp-dashboard.md",
+    "Web form": "examples/golden/web-form.md",
+    "Settings / account": "examples/golden/settings-account.md",
 }
 
 RELEASE_AUTOMATION_REFERENCE_FILES = [
@@ -507,18 +544,18 @@ RELEASE_AUTOMATION_REQUIRED_PATTERNS = [
 ]
 
 SYNTHETIC_CASE_STUDY_FILES = [
-    "examples/case-studies/fintech-account-overview.md",
-    "examples/case-studies/health-medication-refill.md",
-    "examples/case-studies/saas-approval-queue.md",
-    "examples/case-studies/marketplace-checkout-substitution.md",
-    "examples/case-studies/social-privacy-settings.md",
-    "examples/case-studies/education-lesson-progress.md",
-    "examples/case-studies/onboarding-permissions.md",
-    "examples/case-studies/settings-consent-destructive-action.md",
-    "examples/case-studies/search-results-filtering.md",
-    "examples/case-studies/empty-error-state-recovery.md",
-    "examples/case-studies/typography-spacing-system.md",
-    "examples/case-studies/rationale-handoff.md",
+    "examples/case-studies/ecommerce-product-detail.md",
+    "examples/case-studies/ecommerce-checkout-funnel.md",
+    "examples/case-studies/marketing-landing-hero.md",
+    "examples/case-studies/saas-pricing-page.md",
+    "examples/case-studies/webapp-data-table-dashboard.md",
+    "examples/case-studies/webapp-settings-account.md",
+    "examples/case-studies/content-article-readability.md",
+    "examples/case-studies/docs-dev-portal-navigation.md",
+    "examples/case-studies/web-form-multi-step.md",
+    "examples/case-studies/search-results-faceted-web.md",
+    "examples/case-studies/empty-error-state-web.md",
+    "examples/case-studies/responsive-reflow-breakpoints.md",
 ]
 
 SYNTHETIC_CASE_STUDY_SECTIONS = [
@@ -531,41 +568,40 @@ SYNTHETIC_CASE_STUDY_SECTIONS = [
 ]
 
 DOMAIN_PACK_FILES = [
-    "docs/domain-packs/fintech.md",
-    "docs/domain-packs/health.md",
-    "docs/domain-packs/saas.md",
-    "docs/domain-packs/marketplace.md",
-    "docs/domain-packs/social.md",
-    "docs/domain-packs/education.md",
+    "docs/domain-packs/marketing-landing.md",
+    "docs/domain-packs/ecommerce.md",
+    "docs/domain-packs/content-publishing.md",
+    "docs/domain-packs/docs-dev-portal.md",
+    "docs/domain-packs/webapp-dashboard.md",
 ]
 
 DOMAIN_PACK_SECTIONS = [
     "## When To Use",
     "## Primary User Jobs",
     "## Trust And Safety Risks",
-    "## Common Mobile Surfaces",
+    "## Common Web Surfaces",
     "## Hierarchy Guidance",
     "## State And Recovery Requirements",
     "## Accessibility Notes",
-    "## Platform Notes",
+    "## Responsive And Browser Notes",
     "## Evidence And Compliance Boundaries",
     "## Design-Quality Traps",
     "## Handoff Checks",
 ]
 
 VISUAL_REVIEW_FIXTURE_FILES = [
-    "examples/visual-review-fixtures/fintech-dashboard-dense-summary.md",
-    "examples/visual-review-fixtures/health-appointment-booking.md",
-    "examples/visual-review-fixtures/enterprise-saas-mobile-table-card-list.md",
-    "examples/visual-review-fixtures/marketplace-product-detail-checkout-edge.md",
-    "examples/visual-review-fixtures/social-profile-privacy-control.md",
-    "examples/visual-review-fixtures/education-quiz-results.md",
+    "examples/visual-review-fixtures/ecommerce-pdp-desktop.md",
+    "examples/visual-review-fixtures/webapp-dashboard-data-table.md",
+    "examples/visual-review-fixtures/marketing-landing-above-fold.md",
+    "examples/visual-review-fixtures/saas-pricing-comparison.md",
+    "examples/visual-review-fixtures/content-article-longform.md",
+    "examples/visual-review-fixtures/web-form-checkout-desktop.md",
 ]
 
 VISUAL_REVIEW_FIXTURE_SECTIONS = [
     "## Review setup",
-    "## Screen description",
-    "## Frame specs",
+    "## Page description",
+    "## Viewport specs",
     "## Visible hierarchy",
     "## Components",
     "## Typography",
@@ -591,13 +627,18 @@ BENCHMARK_REPORT_REQUIRED_PATTERNS = [
 
 RENDERED_OUTPUT_QA_REQUIRED_PATTERNS = [
     "optional workflow",
-    "mobile viewport",
+    "Playwright",
+    "breakpoint ladder",
+    "320px reflow",
     "overlap",
     "clipping",
     "text overflow",
-    "tap target",
+    "target size",
     "contrast risk",
     "reduced-motion",
+    "forced-colors",
+    "axe-core",
+    "focus order",
     "rendered-output-qa/v1",
 ]
 
@@ -867,7 +908,7 @@ def validate_visual_benchmark_playbooks() -> None:
         if pattern not in doc:
             errors.append(f"docs/visual-benchmark-playbooks.md: missing `{pattern}`")
 
-    for source in ["Mobbin", "Page Flows", "Apple Design Awards", "Awwwards"]:
+    for source in VISUAL_BENCHMARK_PLAYBOOK_SOURCES:
         section = extract_section(doc, source)
         if not section:
             errors.append(f"docs/visual-benchmark-playbooks.md: missing `## {source}` section")
@@ -1257,8 +1298,12 @@ def validate_example_responses() -> None:
         if not response.startswith(f"Mode: {mode}"):
             errors.append(f"{relative_path}: response must start with exact `Mode: {mode}`")
 
-        if not re.search(r"^Platform scope:\s+\S", response, re.MULTILINE):
-            errors.append(f"{relative_path}: missing `Platform scope:` line")
+        if not re.search(r"^Responsive/breakpoint scope:\s+\S", response, re.MULTILINE):
+            errors.append(
+                f"{relative_path}: missing `Responsive/breakpoint scope:` line"
+            )
+        if not re.search(r"^Browser/engine scope:\s+\S", response, re.MULTILINE):
+            errors.append(f"{relative_path}: missing `Browser/engine scope:` line")
 
         assumptions = extract_assumptions(response)
         if bullet_count(assumptions) < 2:
@@ -1318,11 +1363,9 @@ def extract_assumptions(text: str) -> str:
     return match.group("body").strip() if match else ""
 
 
-# Iteration-1 transfer: the WEB domain layer is stubbed. Content-depth checks
-# (which assert mobile-shaped section/pattern content) are GATED behind WDS_STRICT.
-# Iteration 2 re-points these checks to web and turns strict mode on by default.
-# STRICT(iter2): default this to True once the web domain layer is authored.
-STRICT = os.environ.get("WDS_STRICT") == "1"
+# Iteration 2: the web domain layer is authored, so content-depth checks run by
+# default. The WDS_STRICT gate is removed — strict validation is always on.
+STRICT = True
 
 
 def main() -> None:

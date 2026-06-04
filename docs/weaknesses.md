@@ -1,6 +1,3 @@
-<!-- TODO(iteration-2): terminology pass — this file was copied verbatim from mobile-design-skill. Normalize framing (mobile→web, screen→page) WITHOUT a blind find-replace (keep "screen reader", etc.). See ITERATION_2_HANDOFF.md. -->
-<!-- INVERSION-WATCH(iter2): weakness pattern 'platform flattening (iOS/Android)' → recast as 'responsive flattening' (identical desktop/mobile, hover/focus ignored, no 320px reflow). Keep the literal string in sync with validate_repo.py WEAKNESS_REQUIRED_PATTERNS. -->
-
 # Known Weaknesses and Failure-Mode Prevention
 
 This document names the predictable weaknesses of the skill and turns them into prevention checks.
@@ -30,8 +27,8 @@ During maintenance:
 
 | Severity | Meaning | Examples |
 |----------|---------|----------|
-| P0 | Harmful or misleading | invented platform rules, fake research, unsupported compliance claims |
-| P1 | Product-breaking | missing recovery paths, inaccessible interaction, platform flattening in native behavior |
+| P0 | Harmful or misleading | invented web-standard or browser rules, fake research, unsupported compliance claims |
+| P1 | Product-breaking | missing recovery paths, keyboard-inoperable interaction, responsive flattening (one layout in every breakpoint, no 320px reflow) |
 | P2 | Quality regression | generic output, weak hierarchy, vague handoff, visual polish without mechanism |
 | P3 | Craft issue | verbosity, unnecessary theory, weak next actions |
 
@@ -44,7 +41,7 @@ P0 and P1 weaknesses must block the response. P2 and P3 weaknesses should be fix
 ### 1. Generic artifact disguised as a design answer
 
 Trigger:
-- user gives a short prompt with little product, audience, platform, or task context
+- user gives a short prompt with little product, audience, breakpoint/browser, or task context
 
 Failure signals:
 - the answer could fit any app
@@ -75,10 +72,11 @@ Prevention:
 ### 3. First-idea bias
 
 Trigger:
-- a familiar screen type suggests an obvious pattern
+- a familiar page type suggests an obvious pattern
 
 Failure signals:
-- bottom nav, cards, modal sheets, carousels, or sticky CTAs are chosen automatically
+- hamburger nav, cards, modals, carousels, or accordions are chosen automatically
+- a desktop table is collapsed to phone cards by reflex instead of by task fit
 - no pattern matrix or heuristic is used
 - losing alternatives are missing
 
@@ -105,32 +103,36 @@ Prevention:
 ### 5. Evidence overreach
 
 Trigger:
-- the task involves platform behavior, accessibility, research, compliance, or benchmark claims
+- the task involves web-standard or browser behavior, accessibility, research, compliance, or benchmark claims
 
 Failure signals:
-- "Apple requires", "Material mandates", "research proves", or "WCAG compliant" without evidence
+- "HTML requires", "Safari mandates", "research proves", or "WCAG compliant" without evidence
+- a Lighthouse/axe result is treated as a compliance verdict rather than a recommendation to verify
 - user-provided claims are echoed as verified facts
-- exact metrics appear without a cited source or provided data
+- exact metrics or conversion lifts appear without a cited source or provided data
 
 Prevention:
 - separate `Known from input`, `Assumption`, `Recommendation`, and `Cannot verify`
 - frame unsourced guidance as recommendation, not rule
 - never claim compliance unless the user provided verified evidence for the exact artifact and state
 
-### 6. Platform flattening
+### 6. Responsive flattening
 
 Trigger:
-- cross-platform request or unspecified platform
+- multi-breakpoint request or unspecified breakpoint/browser scope
 
 Failure signals:
-- iOS and Android sections repeat the same content
-- native back behavior, navigation, picker, permission, or system-bar differences are ignored
-- platform conventions are treated as aesthetic themes
+- the same layout is poured into every breakpoint with no behavior change
+- there is no working 320px reflow, or the page two-dimensionally scrolls on small viewports
+- hover/`:focus-visible` operability is ignored, or a desktop table is reflexively collapsed to phone cards regardless of task
+- desktop density is wasted (a phone layout stretched across a wide viewport) instead of exploited
+- browser/engine differences (form controls, scrollbars, back-forward cache, font rendering) are ignored
 
 Prevention:
-- share structure first, split only where conventions materially differ
-- call out when conventions align instead of padding both platform sections
-- ask for platform only when divergence changes the recommendation
+- share structure first, then specify behavior changes across the breakpoint ladder (not just visual reflow)
+- verify the 320px reflow and 200% zoom; exploit desktop density where the task rewards it
+- gate non-trivial features against caniuse / MDN Baseline and name the fallback
+- treat hover, right-click, and keyboard operability as required web affordances, not problems
 
 ### 7. Context blindness
 
@@ -138,13 +140,13 @@ Trigger:
 - task includes audience, domain, risk, or use-context signals
 
 Failure signals:
-- older adults, children, regulated domains, power users, emergency use, outdoor use, or one-handed use produce the same answer as a generic consumer app
+- older adults, children, regulated domains, power users, low-bandwidth, keyboard-only/screen-reader, or wide-viewport contexts produce the same answer as a generic consumer site
 - high-trust flows use playful patterns without justification
-- dense comparison tasks are made sparse by default
+- dense comparison tasks (pricing tables, dashboards) are made sparse by default
 
 Prevention:
 - apply `docs/context-defaults.md`
-- resolve conflicts in the documented order: safety/accessibility > regulated domain > use-context > audience > platform
+- resolve conflicts in the documented order: safety/accessibility > regulated domain > use-context > audience > breakpoint/browser
 - make density a task decision, not an aesthetic decision
 
 ### 8. Happy-path-only design
@@ -155,7 +157,7 @@ Trigger:
 Failure signals:
 - default state is described, but empty/loading/error/partial/success states are absent
 - recovery paths say "retry" without data persistence, user messaging, or next state
-- back-navigation is vague
+- back/forward and URL state are vague
 
 Prevention:
 - define default, loading, empty, error, success, disabled, and partial states where relevant
@@ -183,7 +185,7 @@ Trigger:
 - Mode D with text description only or incomplete visual evidence
 
 Failure signals:
-- review asserts spacing, visual weight, contrast, balance, color, or touch size from text alone
+- review asserts spacing, visual weight, contrast, balance, color, or target size from text alone
 - severity is based on taste instead of user impact
 - no real strength is identified
 
@@ -198,7 +200,7 @@ Trigger:
 - UI spec, typography system, design rationale, or engineering handoff request
 
 Failure signals:
-- component names do not map to platform, design-system, or explicit assumptions
+- component names do not map to a design system, native element, or explicit assumption
 - spacing and typography are relative, not token-ready
 - states and accessibility semantics are implied
 
@@ -228,12 +230,13 @@ Prevention:
 
 | Mode | Most likely weaknesses | Required prevention |
 |------|------------------------|---------------------|
-| A. Screen concept | generic artifact, first-idea bias, weak design-quality calibration | singular task, hierarchy order, states, alternatives, quality calibration |
-| B. User flow | happy-path-only design, platform flattening, invented business rules | end-to-end success path, back behavior, failure/recovery paths, assumptions |
-| C. UI spec | weak handoff, template completion, platform flattening | concrete states, behavior rules, tokens/values, platform implementation notes |
+| A. Page concept | generic artifact, first-idea bias, weak design-quality calibration | singular task, hierarchy order, states, alternatives, quality calibration |
+| B. User flow | happy-path-only design, responsive flattening, invented business rules | end-to-end success path, URL/back-forward behavior, failure/recovery paths, assumptions |
+| C. UI spec | weak handoff, template completion, responsive flattening | concrete states, behavior rules, tokens/values, breakpoint + browser implementation notes |
 | D. Review | visual overclaim, severity-by-taste, no strengths | D sub-case, evidence limits, user-impact severity, actionable fixes |
-| E. Typography/spacing | aesthetic laundering, weak buildability, accessibility afterthought | type roles, numeric scale, scaling behavior, touch implications |
+| E. Typography/spacing | aesthetic laundering, weak buildability, accessibility afterthought | type roles, numeric scale, fluid scaling, target-size implications |
 | F. Rationale/handoff | reverse-engineered rationale, fake validation, weak implementation notes | decisions with alternatives, validation method/metric, engineering concerns |
+| G. Marketing/CRO | aesthetic laundering, evidence overreach, performance ignored | single CTA + hierarchy, specific proof, Core Web Vitals, mechanisms not lift % |
 
 ---
 

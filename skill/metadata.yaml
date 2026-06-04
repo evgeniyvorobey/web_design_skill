@@ -1,9 +1,6 @@
-# TODO(iteration-2): primary_sources, tags, domain_pack/fixture paths still reference mobile. Re-point to web sources/inspiration and the 5 web domain packs.
-# INVERSION-WATCH(iter2): response_contract still has include_platform_notes_when_relevant etc.; recast to responsive/browser. The 7th mode (marketing/CRO) is scaffolded in Phase 4.
-
 name: web-design-skill
 title: Website Design Skill
-version: 0.1.0
+version: 1.0.0
 status: production-ready
 owner: repository-maintained
 entrypoint: SKILL.md
@@ -22,13 +19,13 @@ domain:
     - design-systems
     - ux-review
 modes:
-  - id: generate-screen
+  - id: page-concept
     title: Generate web page concept
-  - id: design-flow
+  - id: web-flow
     title: Design web user flow
   - id: ui-spec
     title: Create responsive UI spec
-  - id: review-screen
+  - id: review-page
     title: Review page for usability/accessibility
     sub_cases:
       - id: D1
@@ -39,24 +36,23 @@ modes:
         title: Review with problem statement
       - id: D4
         title: Review with context change
-  - id: typography-spacing
+  - id: type-spacing-grid
     title: Create typography, spacing and grid system
   - id: rationale-handoff
     title: Prepare design rationale / handoff
   - id: marketing-landing
     title: Generate / critique a marketing landing page (conversion / CRO)
 accepted_inputs:
-  - app idea
-  - feature description
+  - product or feature idea
   - user goal
   - target audience
-  - platform
-  - screen type
+  - breakpoint and browser targets
+  - page type
   - wireframe description
   - flow description
   - constraints
   - benchmark references
-  - rendered artifact description
+  - rendered artifact or URL description
   - local URL or prototype reference
 responsive_scope:
   - mobile-web
@@ -77,39 +73,40 @@ response_contract:
   ask_only_blocking_clarifying_questions: true
   max_clarifying_questions: 3
   include_accessibility_by_default: true
-  include_platform_notes_when_relevant: true
+  include_keyboard_operability_by_default: true
+  include_responsive_and_browser_notes_when_relevant: true
   distinguish_facts_from_recommendations: true
   separate_inspiration_from_evidence: true
   apply_domain_packs_when_relevant: true
   support_benchmark_report_format: true
   support_optional_rendered_output_qa: true
 guardrails:
-  - do not invent official platform rules
+  - do not invent web standards or browser rules
   - do not invent research findings or usability test results
   - do not claim accessibility compliance unless explicitly verified
-  - do not treat inspiration sources as evidence for usability accessibility platform correctness or compliance
+  - do not treat inspiration sources as evidence for usability accessibility performance or compliance
   - do not give aesthetic advice without usability reasoning
-  - do not ignore typography spacing navigation or touch behavior
-  - do not blur ios and android when conventions differ
+  - do not ignore typography spacing navigation keyboard operability or state coverage
+  - do not flatten breakpoints browsers or pointer types (responsive flattening)
   - do not invent missing flows or states unless labeled as assumptions
 source_priority:
-  - official platform guidance and standards
-  - accessibility and usability standards
-  - public-sector and enterprise-grade design systems
+  - web platform standards and reference
+  - accessibility usability and measurement tooling
+  - public-sector and enterprise design systems
   - established research and case-study sources
-  - workflow and tooling references
+  - browser support and capability data
 clarification_policy:
   role: decide when to ask clarifying questions vs proceed with assumptions
   max_questions: 3
   ask_when_missing_info_changes:
-    - platform behavior
+    - breakpoint or browser behavior
     - primary user task
     - safety accessibility or compliance risk
     - regulated domain state handling
     - visual evidence for visual review
     - production implementation behavior
   proceed_with_assumptions_when:
-    - conservative cross-platform default is safe
+    - conservative responsive default is safe
     - general audience default is safe
     - brand direction is not central to the task
     - policy can be labeled as assumption
@@ -147,13 +144,13 @@ design_quality_rubric:
     before_after_example: examples/rubric-before-after.md
     golden_examples_index: docs/golden-examples.md
     golden_examples:
-      - examples/golden/premium-ui.md
-      - examples/golden/enterprise-saas.md
-      - examples/golden/fintech.md
-      - examples/golden/health.md
-      - examples/golden/onboarding.md
-      - examples/golden/settings.md
-      - examples/golden/checkout.md
+      - examples/golden/marketing-landing.md
+      - examples/golden/ecommerce-pdp-checkout.md
+      - examples/golden/content-article.md
+      - examples/golden/docs-portal.md
+      - examples/golden/webapp-dashboard.md
+      - examples/golden/web-form.md
+      - examples/golden/settings-account.md
     fixtures:
       - examples/evals/rubric-score-1.json
       - examples/evals/rubric-score-2.json
@@ -162,18 +159,18 @@ design_quality_rubric:
       - examples/evals/rubric-score-5.json
     synthetic_case_studies_index: docs/synthetic-case-studies.md
     synthetic_case_studies:
-      - examples/case-studies/fintech-account-overview.md
-      - examples/case-studies/health-medication-refill.md
-      - examples/case-studies/saas-approval-queue.md
-      - examples/case-studies/marketplace-checkout-substitution.md
-      - examples/case-studies/social-privacy-settings.md
-      - examples/case-studies/education-lesson-progress.md
-      - examples/case-studies/onboarding-permissions.md
-      - examples/case-studies/settings-consent-destructive-action.md
-      - examples/case-studies/search-results-filtering.md
-      - examples/case-studies/empty-error-state-recovery.md
-      - examples/case-studies/typography-spacing-system.md
-      - examples/case-studies/rationale-handoff.md
+      - examples/case-studies/ecommerce-product-detail.md
+      - examples/case-studies/ecommerce-checkout-funnel.md
+      - examples/case-studies/marketing-landing-hero.md
+      - examples/case-studies/saas-pricing-page.md
+      - examples/case-studies/webapp-data-table-dashboard.md
+      - examples/case-studies/webapp-settings-account.md
+      - examples/case-studies/content-article-readability.md
+      - examples/case-studies/docs-dev-portal-navigation.md
+      - examples/case-studies/web-form-multi-step.md
+      - examples/case-studies/search-results-faceted-web.md
+      - examples/case-studies/empty-error-state-web.md
+      - examples/case-studies/responsive-reflow-breakpoints.md
   levels:
     "1": broken or misleading
     "2": structurally weak
@@ -224,7 +221,7 @@ weakness_prevention:
     - first-idea bias
     - aesthetic laundering
     - evidence overreach
-    - platform flattening
+    - responsive flattening
     - context blindness
     - happy-path-only design
     - weak design-quality calibration
@@ -237,60 +234,65 @@ inspiration_sources:
   benchmark_report_format: docs/benchmark-report-format.md
   benchmark_report_example: examples/benchmark-report.md
   production_references:
-    - Mobbin
+    - Mobbin Web
     - Page Flows
-    - UI Sources
-    - Pttrns
-    - Screenlane
-  platform_and_awards:
-    - Apple Design Awards
-    - Material Design blog and case studies
+    - Refero
+  craft_galleries_and_awards:
     - Awwwards
+    - CSS Design Awards
+    - FWA
+    - Webby Awards
+  curated_galleries:
+    - Land-book
+    - SiteInspire
+    - Godly
+    - Lapa Ninja
+    - One Page Love
   visual_portfolios_and_moodboards:
     - Behance
     - Dribbble
     - Pinterest
     - Figma Community
 domain_packs:
-  role: synthetic domain-aware mobile design playbooks
+  role: synthetic domain-aware web design playbooks
   index: docs/domain-packs/index.md
   packs:
-    fintech: docs/domain-packs/fintech.md
-    health: docs/domain-packs/health.md
-    saas: docs/domain-packs/saas.md
-    marketplace: docs/domain-packs/marketplace.md
-    social: docs/domain-packs/social.md
-    education: docs/domain-packs/education.md
+    marketing-landing: docs/domain-packs/marketing-landing.md
+    ecommerce: docs/domain-packs/ecommerce.md
+    content-publishing: docs/domain-packs/content-publishing.md
+    docs-dev-portal: docs/domain-packs/docs-dev-portal.md
+    webapp-dashboard: docs/domain-packs/webapp-dashboard.md
   boundaries:
     - recommendations not proof
     - no compliance verdicts
     - no business metric claims
     - confirm regulated requirements with qualified owners
 visual_review_fixtures:
-  role: synthetic Figma-like text fixtures for Mode D review calibration
+  role: synthetic text fixtures standing in for screenshots or rendered pages for Mode D review calibration
   index: docs/visual-review-fixtures.md
   fixtures:
-    - examples/visual-review-fixtures/fintech-dashboard-dense-summary.md
-    - examples/visual-review-fixtures/health-appointment-booking.md
-    - examples/visual-review-fixtures/enterprise-saas-mobile-table-card-list.md
-    - examples/visual-review-fixtures/marketplace-product-detail-checkout-edge.md
-    - examples/visual-review-fixtures/social-profile-privacy-control.md
-    - examples/visual-review-fixtures/education-quiz-results.md
+    - examples/visual-review-fixtures/ecommerce-pdp-desktop.md
+    - examples/visual-review-fixtures/webapp-dashboard-data-table.md
+    - examples/visual-review-fixtures/marketing-landing-above-fold.md
+    - examples/visual-review-fixtures/saas-pricing-comparison.md
+    - examples/visual-review-fixtures/content-article-longform.md
+    - examples/visual-review-fixtures/web-form-checkout-desktop.md
 rendered_output_qa:
-  role: optional post-implementation QA workflow for rendered mobile artifacts
+  role: optional post-implementation QA workflow for rendered web artifacts, Playwright-first
   documentation: docs/rendered-output-qa.md
   schema: examples/rendered-output-qa/report-schema.json
   sample_report: examples/rendered-output-qa/sample-report.json
   required_by_default: false
   checks:
-    - mobile viewports
+    - resize across the breakpoint ladder
+    - 320px reflow
     - overlap clipping and text overflow
-    - tap target hints
+    - target size hints
     - contrast hints
-    - responsive behavior
-    - state coverage
+    - focus order capture
     - keyboard and focus behavior
-    - reduced motion
+    - forced-colors and reduced motion
+    - Core Web Vitals and Lighthouse hints
 release_automation:
   role: deterministic release validation without network or model credentials
   workflow: .github/workflows/release-validate.yml
@@ -302,29 +304,33 @@ release_automation:
     - external command oracle self-test
     - version and tag sanity
 primary_sources:
-  - Apple Human Interface Guidelines
-  - Material Design 3
-  - Android Developers Navigation
+  - WHATWG HTML Living Standard
+  - W3C WAI-ARIA Authoring Practices Guide (APG)
+  - MDN Web Docs
   - WCAG 2.2
-  - W3C Applying WCAG 2.2 to Mobile Applications
+  - web.dev Core Web Vitals
+  - Lighthouse / PageSpeed Insights / CrUX
+  - axe-core / WAVE
+  - Playwright
   - ISO 9241-210
   - ISO 9241-11
-  - GOV.UK Design System patterns
-  - NHS Design System typography
-  - Fluent 2 typography and accessibility
-  - Figma Variables guidance
-  - Material Partner Studies
+  - GOV.UK Design System
+  - NHS service manual
+  - U.S. Web Design System (USWDS)
+  - IBM Carbon / Shopify Polaris / Microsoft Fluent / Material Web / GitHub Primer
+  - Baymard Institute / Nielsen Norman Group / Luke Wroblewski Web Form Design
+  - caniuse / MDN Baseline / Browserslist
 tags:
-  - mobile
-  - mobile-web
-  - tablet
-  - desktop
-  - wide
+  - web
+  - responsive
+  - marketing-landing
+  - web-app
   - ux
   - ui
   - accessibility
   - design-system
   - typography
+  - core-web-vitals
   - handoff
 quality_bar:
   concise_operational_guidance: true

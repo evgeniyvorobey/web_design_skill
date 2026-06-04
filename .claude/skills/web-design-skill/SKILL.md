@@ -3,7 +3,7 @@ name: web-design-skill
 description: Generate, review, and structure website UI/UX decisions for responsive web (desktop, tablet, mobile-web), marketing/landing pages, and web apps. Use when you want to invoke the web design workflow directly in Claude Code with /web-design-skill.
 argument-hint: "[--judge] [task / page / flow]"
 disable-model-invocation: true
-version: 0.1.0
+version: 1.0.0
 ---
 
 # Website Design Skill
@@ -41,8 +41,6 @@ When invoked:
    - `${CLAUDE_SKILL_DIR}/../../../docs/commands.md`
 3. If `$ARGUMENTS` begins with `--judge`, strip that flag from the design task and apply `${CLAUDE_SKILL_DIR}/../../../docs/judged-mode.md`. Prefer the companion `web-design-judge` agent for the independent judge pass when available.
 4. Apply the workflow to the current request.
-
-<!-- NOTE(iteration-1 transfer): chassis + methodology are in place; the web domain layer (quality-bars, sources, patterns, heuristics, calibration corpus, Mode G content) is STUBBED. Until Iteration 2 is complete this skill produces structurally-correct but content-incomplete web guidance. See ITERATION_2_HANDOFF.md. -->
 
 Invocation payload:
 
