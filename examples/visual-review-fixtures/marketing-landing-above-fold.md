@@ -83,18 +83,18 @@ Body minimum of 16px is met on both frames. The h1 does not use a fluid `clamp()
 
 Palette and stated contrast pairs (ratios are asserted, computed from the stated hexes):
 
-- Body text `#1D1D1F` on canvas `#FBFBFD` → ~15.8:1. Passes 1.4.3 (AA, normal) comfortably.
-- h1 `#1D1D1F` on `#FBFBFD` → ~15.8:1. Passes.
-- Primary CTA: white `#FFFFFF` label on indigo `#4F46E5` → ~5.9:1. Passes 1.4.3 AA for normal text and 1.4.11 for the button shape vs canvas.
-- Secondary CTA text `#4F46E5` on `#FBFBFD` → ~4.6:1. Passes AA normal (just over 4.5:1).
-- Eyebrow pill: indigo `#4F46E5` text on 10%-tint indigo fill `#ECEBFC` → ~4.0:1. FAILS 1.4.3 AA for 12px normal text (needs 4.5:1).
-- Trust caption `#8A8A8E` on `#FBFBFD` → ~3.1:1. FAILS 1.4.3 AA for 13px normal text.
+- Body text `#1D1D1F` on canvas `#FBFBFD` → ~16.3:1. Passes 1.4.3 (AA, normal) comfortably.
+- h1 `#1D1D1F` on `#FBFBFD` → ~16.3:1. Passes.
+- Primary CTA: white `#FFFFFF` label on indigo `#4F46E5` → ~6.3:1. Passes 1.4.3 AA for normal text and 1.4.11 for the button shape vs canvas.
+- Secondary CTA text `#4F46E5` on `#FBFBFD` → ~6.1:1. Passes AA normal comfortably.
+- Eyebrow pill: indigo `#6D5FE8` text on 10%-tint indigo fill `#ECEBFC` → ~4.0:1. FAILS 1.4.3 AA for 12px normal text (needs 4.5:1).
+- Trust caption `#8A8A8E` on `#FBFBFD` → ~3.3:1. FAILS 1.4.3 AA for 13px normal text.
 - Trust logos rendered at 40% opacity gray → effective contrast well under 3:1 against canvas. As decorative brand marks this is tolerable, but they carry meaning ("who trusts us"), and that meaning is conveyed by the logos plus a low-contrast caption only.
 - Secondary CTA is distinguished from the primary by fill vs no-fill plus weight, not by color alone, so 1.4.1 (use of color) is satisfied for the CTA pair specifically.
 
 State notes that ARE specified:
 
-- Primary CTA hover: background darkens to `#4338CA` (~7.0:1 with white). Specified.
+- Primary CTA hover: background darkens to `#4338CA` (~7.9:1 with white). Specified.
 - Primary CTA `:focus-visible`: 2px indigo ring with a 2px white offset. Specified.
 - Disabled state for CTAs: not specified.
 - Loading state for "Start free trial" (it submits to a sign-up flow): not specified.
@@ -126,22 +126,22 @@ Stated target sizes:
 
 A good reviewer SHOULD surface these (each maps to a named criterion/heuristic and a severity):
 
-1. Eyebrow pill contrast fails AA. Indigo `#4F46E5` on `#ECEBFC` ≈ 4.0:1 at 12px normal weight — below the 4.5:1 floor of WCAG 2.2 1.4.3. Severity 3. Fix: darken the text to ~`#3730A3` or deepen the fill.
-2. Trust caption contrast fails AA. `#8A8A8E` on `#FBFBFD` ≈ 3.1:1 at 13px — below 4.5:1 (1.4.3). Severity 3. Fix: use `#636366` or darker.
+1. Eyebrow pill contrast fails AA. Indigo `#6D5FE8` on `#ECEBFC` ≈ 4.0:1 at 12px normal weight — below the 4.5:1 floor of WCAG 2.2 1.4.3. Severity 3. Fix: darken the text to ~`#3730A3` or deepen the fill.
+2. Trust caption contrast fails AA. `#8A8A8E` on `#FBFBFD` ≈ 3.3:1 at 13px — below 4.5:1 (1.4.3). Severity 3. Fix: use `#636366` or darker.
 3. h1 is not fluid. It hard-switches between 48px and 34px at one breakpoint with no `clamp()` and a rem term, risking awkward sizing on the 480–640px band and missing the skill's fluid-type bar. Relates to 1.4.4 (resize) robustness. Severity 2.
 4. Focus-visible coverage is incomplete. Only the primary CTA has a stated `:focus-visible` ring; nav links, the secondary CTA, and the hamburger lack one, risking a 2.4.7 / 2.4.11 keyboard-visibility gap and missing "visible focus on every interactive element." Severity 3.
 5. Hamburger target is borderline. A 24px glyph with no stated padding sits exactly at the 2.5.8 minimum with zero margin; on a 390px touch frame this is uncomfortable. Severity 2. Fix: pad to a 44px box.
 6. Off-canvas menu behavior is unspecified. No stated focus trap, focus restore, ESC-to-close, or scroll-lock for the mobile menu (2.1.1 keyboard operability, 2.1.2 no keyboard trap, WAI-ARIA APG disclosure/menu pattern). Severity 3 as a production-readiness gap.
 7. Missing CTA states. No disabled and no loading/skeleton state for "Start free trial", which submits to sign-up; users get no feedback on a slow network (Nielsen H1 visibility of system status). Severity 2.
 8. LCP image not prioritized. The hero screenshot is the likely LCP element but lacks `fetchpriority="high"` and a preload; the above-the-fold font weight is not preloaded. Risks the LCP <= 2.5s budget. Severity 2.
-9. Secondary CTA / link contrast is marginal. `#4F46E5` on `#FBFBFD` ≈ 4.6:1 only just clears AA; any future tint shift would drop it below. Severity 1 (advisory, currently passing).
+9. Trust logos carry meaning but render at ~40% opacity (well under 3:1), conveying "who trusts us" via low-contrast marks plus a sub-4.5:1 caption only. Severity 1 (advisory): give the logo row an accessible group label and a readable caption.
 
 ## Prohibited critique
 
 Do not claim the following — the text does not support them. "Synthetic fixture only" means absence of a detail in this file is NOT evidence of a defect unless the file explicitly says the detail is missing.
 
-- Do not claim the primary CTA text fails contrast. White on `#4F46E5` is ~5.9:1 and passes; do not assert otherwise.
-- Do not claim the h1 or body text fails contrast. Both are ~15.8:1 and pass.
+- Do not claim the primary CTA text fails contrast. White on `#4F46E5` is ~6.3:1 and passes; do not assert otherwise.
+- Do not claim the h1 or body text fails contrast. Both are ~16.3:1 and pass.
 - Do not claim there is a horizontal scrollbar or a reflow failure at 320px. The fixture states reflow holds and the 320px frame is not provided; you cannot measure it from this text.
 - Do not claim LCP, INP, or CLS measured values. No real measurement exists here; only budgets and risk factors are stated. Speak in terms of risk, not measured numbers.
 - Do not claim the screenshot causes layout shift. The fixture explicitly reserves `width`/`height` and `aspect-ratio`.

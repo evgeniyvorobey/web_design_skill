@@ -101,7 +101,7 @@ Apply these caps before calculating the final score:
 - Unsupported accessibility compliance claims make the response **Fail**.
 - Visual assertions from text-only review input cap Mode D score confidence; label the score as provisional or restrict it to structural quality.
 - Aesthetic-only recommendations cap the design-quality score at **2/5** until translated into task, accessibility, or implementation mechanisms.
-- Responsive flattening caps responsive outputs at **3/5**: the same layout poured into every breakpoint with no behavior change, hover/`:focus-visible` operability ignored, or no working 320px reflow.
+- Responsive flattening caps responsive outputs at **3/5** in its milder form — the same layout poured into every breakpoint with no behavior change, or hover/`:focus-visible` operability ignored, while the layout still reflows. The **severe** form — no working 320px reflow (two-dimensional scrolling) — is a P1 weakness and caps at **2/5** (per the P1 rule above), not 3/5.
 - Keyboard inoperability — focus not visible, focus lost on route/overlay change, a modal without focus trap + restore, or actions reachable only by hover — caps at **2/5** until fixed.
 - An inert screen — competent on all dimensions but failing the inert-screen test in `docs/design-quality.md` — caps at **3/5** with an upside note (not a quiet 4/5) until it carries at least one owned distinctive asset or a justified signature moment.
 

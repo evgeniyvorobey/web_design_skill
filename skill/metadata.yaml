@@ -126,14 +126,16 @@ judged_mode:
   revision_rule: revise below target when issues can be fixed without inventing facts
 design_quality:
   role: visual hierarchy composition density typography color motion brand and production-readiness calibration
+  # Canonical 8-dimension set — kept identical to design_quality_rubric.dimensions
+  # and the validator's RUBRIC_DIMENSIONS.
   dimensions:
     - attention path and hierarchy
-    - composition spacing and grouping
+    - composition and spacing
     - typography craft
-    - color contrast and semantic meaning
+    - color state and contrast
     - density and rhythm
     - interaction polish and motion
-    - brand expression and visual character
+    - context and brand fit
     - production readiness
 design_quality_rubric:
   role: 1-5 scoring system for raising proposed design quality and reviewing existing design quality

@@ -58,7 +58,7 @@ To explore visual direction without copying:
 | Reference signal | Transferable mechanism (what you actually borrow) |
 |------------------|---------------------------------------------------|
 | "Bold editorial hero" | type scale ratio + measure cap + a single dominant headline weight |
-| "Calm, premium feel" | restrained palette, generous whitespace scale, slow 200–300ms easing |
+| "Calm, premium feel" (the user's words) | restrained 3-hue palette with one accent role, spacing scale stepped up one level (e.g. 24/32/48px section rhythm), 200–300ms ease-out |
 | "Dense, powerful dashboard" | token spacing tightened one step, sticky table header, keyboard row nav |
 | "Playful scroll story" | scroll-triggered opacity reveals **with a reduced-motion fallback** |
 | "Trustworthy checkout" | clear step indicator, persistent order summary, inline validation |

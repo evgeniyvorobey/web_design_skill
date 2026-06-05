@@ -95,14 +95,14 @@ Font stack: `Inter, system-ui, sans-serif`, `font-display: swap`, Inter preloade
 
 Contrast pairs (the reviewer should trust these numbers):
 
-- Body text `#202124` on `#FFFFFF`: **15.8:1** — passes 1.4.3 AA.
+- Body text `#202124` on `#FFFFFF`: **16.1:1** — passes 1.4.3 AA.
 - Field label `#5F6368` on `#FFFFFF`: **5.9:1** — passes.
-- Helper hint `#80868B` on `#FFFFFF`: **3.5:1** — **fails 1.4.3** for 13px text
+- Helper hint `#80868B` on `#FFFFFF`: **3.7:1** — **fails 1.4.3** for 13px text
   (needs 4.5:1).
 - Input border `#9AA0A6` on `#FFFFFF`: **2.6:1** — **fails 1.4.11** non-text
   contrast (needs 3:1) for the resting field boundary.
 - Primary button: white `#FFFFFF` on `#1A73E8`: **4.6:1** — passes 1.4.3 (large/UI).
-- Selected radio border `#1A73E8` on `#FFFFFF`: 3.6:1 — passes 1.4.11.
+- Selected radio border `#1A73E8` on `#FFFFFF`: 4.5:1 — passes 1.4.11.
 - Placeholder text `#9AA0A6` on `#FFFFFF`: 2.6:1 — fails if placeholder is the only
   label, but labels are persistent here, so this is informational.
 
@@ -143,7 +143,7 @@ A good reviewer should surface these (severity = Nielsen 0-4):
 1. **[Sev 3] Input border fails non-text contrast.** Resting field border `#9AA0A6`
    on white is 2.6:1, below the 3:1 floor of WCAG 1.4.11. Fields read as low-affordance
    and the boundary may vanish in bright conditions. Fix: darken to >=`#74787D`.
-2. **[Sev 3] Helper hint text fails AA.** 13px `#80868B` on white is 3.5:1 (needs
+2. **[Sev 3] Helper hint text fails AA.** 13px `#80868B` on white is 3.7:1 (needs
    4.5:1, 1.4.3) and is below the 16px body minimum. Bump size to 16px and darken to
    >=`#5F6368`.
 3. **[Sev 2] Required-field meaning carried by color alone.** Red asterisk only
@@ -169,7 +169,7 @@ The reviewer must NOT make these claims from this fixture alone:
 - **Do not claim** the focus ring is missing or invisible — the spec states a 2px
   `#1A73E8` `:focus-visible` ring at 2px offset; only the card-number field shows it
   because it is the focused element in this still.
-- Do not claim body text fails contrast — `#202124` on white is 15.8:1.
+- Do not claim body text fails contrast — `#202124` on white is 16.1:1.
 - Do not claim there is no error handling — per-field errors and an `aria-live`
   summary are specified; they are simply not triggered in this captured state.
 - Do not claim the primary button contrast fails — white on `#1A73E8` is 4.6:1.

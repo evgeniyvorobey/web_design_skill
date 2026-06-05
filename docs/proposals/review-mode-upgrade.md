@@ -11,7 +11,7 @@
 Ревью сейчас «плавает» не из-за тона, а из-за **структуры**: шаблон называет проблемы в одних секциях, а фиксы — в другой, между ними нет связи; во всём репозитории **ноль** формулировок предсказанного эффекта; балл показывается только текущий; смелые ходы запрещены by design. Пять предложений, каждое закрывает конкретный разрыв:
 
 1. **Единый блок Finding** — каждая находка становится одной причинной цепочкой: *что вижу → какой принцип нарушен → чем вредит пользователю → что изменить → к чему это приведёт → severity → какой балл двигает*. Закрывает требование «измени это, потому что X, что приведёт к Y».
-2. **Оценка before/after** — текущий балл + спрогнозированный балл после правок, по измерениям, честно-условный («4/5, ЕСЛИ зайдут фиксы F1, F3 и подтвердятся допущения»). Закрывает требование «оценка сейчас и после правок».
+2. **Оценка before/after** — текущий балл + спрогнозированный балл после правок, по измерениям, честно-условный («4/5, ЕСЛИ зайдут фиксы F1, F2 и подтвердятся допущения»). Закрывает требование «оценка сейчас и после правок».
 3. **Блок Bold move** — отдельный, карантинный канал для смелого хода, который *противоречит продукту*, но усиливает UX, с явным trade-off и планом проверки. Закрывает требование «предложить и указать, что тут уходим в сторону, но усиливаем вот это».
 4. **Операционализация креатива** — «красивее/лучше/отличительнее» переведены в проверяемые рычаги (счётчик/токен/да-нет), а не вкусовые слова. Плюс тест «безликого экрана», из-за которого технически-корректный-но-забываемый экран теряет балл.
 5. **Inspiration v2 + генеративный метод** — источники вне Apple/Google (3 уровня) и пошаговый метод *выведения* свежего направления вместо листания галерей.
@@ -263,11 +263,11 @@
 - Change: Group into Personal / Contact / Work / Address with section headers.
 - Predicted effect: Should reduce scanning effort and perceived length; confidence M.
 - Severity: 2 (minor) — frequent, moderate impact, persistent.
-- Moves: Attention path 2→3, Composition 2→4.
+- Moves: Attention path 2→3. (Composition is a visual dimension and stays n/v in a D2 text-only review — never projected upward.)
 
 ## Design quality score (current → projected)
 - Current: 2/5 — provisional (D2 text-only); pinned by late-required-fields (P1-class) + placeholder-as-label.
-- Projected: 3/5 — median of the assessable dimensions once F1–F3 land; conditional on those fixes. Provisional (D2): visual dimensions stay n/v.
+- Projected: 3/5 — median of the assessable dimensions once F1–F2 land; conditional on those fixes. Provisional (D2): visual dimensions stay n/v.
 - Ceiling note: with a visual pass confirming contrast/spacing/large-text, the ceiling is 4/5 (resilience such as dark mode and AT semantics still unverified from description).
 - Primary lever(s): F1 (lifts the P1 cap pinning the score at 2).
 

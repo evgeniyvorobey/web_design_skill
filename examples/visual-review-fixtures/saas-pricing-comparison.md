@@ -61,15 +61,15 @@ Heading outline as described: h1 -> h3 (x4) -> h2 -> h2. **There is a skipped le
 
 Stated contrast pairs (treat these as ground truth for this fixture):
 
-- **Body text** #1F2933 on #FFFFFF = **12.6:1** (passes 1.4.3 AA for normal text).
-- **h1** #0B1220 on #FFFFFF = **18.1:1** (passes).
-- **"Most popular" badge** text #FFFFFF on accent #3B82F6 = **3.1:1** — text is 11px, so it is "normal" text and needs 4.5:1. **Fails 1.4.3 AA.**
-- **Primary button label** #FFFFFF on #2563EB = **4.7:1** (passes for normal text).
-- **Secondary/outline button** label #2563EB on #FFFFFF = **4.5:1** (just passes); its 1px border #93C5FD on #FFFFFF = **1.9:1** (the border is the only thing delimiting the control — **fails 1.4.11 non-text contrast 3:1**).
-- **Muted helper text** ("Cancel anytime") #8A94A6 on #FFFFFF = **2.7:1** — **fails 1.4.3 AA.**
+- **Body text** #1F2933 on #FFFFFF = **14.8:1** (passes 1.4.3 AA for normal text).
+- **h1** #0B1220 on #FFFFFF = **18.7:1** (passes).
+- **"Most popular" badge** text #FFFFFF on accent #3B82F6 = **3.7:1** — text is 11px, so it is "normal" text and needs 4.5:1. **Fails 1.4.3 AA.**
+- **Primary button label** #FFFFFF on #2563EB = **5.2:1** (passes for normal text).
+- **Secondary/outline button** label #2563EB on #FFFFFF = **5.2:1** (passes); its 1px border #93C5FD on #FFFFFF = **1.8:1** (the border is the only thing delimiting the control — **fails 1.4.11 non-text contrast 3:1**).
+- **Muted helper text** ("Cancel anytime") #8A94A6 on #FFFFFF = **3.1:1** — **fails 1.4.3 AA.**
 - **Table em-dash "not included"** glyph #C4CDD9 on #FFFFFF = **1.6:1** — **fails 1.4.11** (it is meaningful non-text content distinguishing excluded features).
 - **Annual savings indicated only by green** check color #16A34A vs the monthly state — color is the sole differentiator on the toggle's "save 20%" emphasis. Potential **1.4.1 use of color** concern (see Expected critique for the exact scope).
-- **Focus ring:** 2px solid #2563EB at 2px offset on buttons and links = **3.0:1** against white (meets 1.4.11). Focus ring color is stated; focus IS visible.
+- **Focus ring:** 2px solid #2563EB at 2px offset on buttons and links = **5.2:1** against white (passes 1.4.11). Focus ring color is stated; focus IS visible.
 
 ## Interaction states
 
@@ -91,10 +91,10 @@ Stated contrast pairs (treat these as ground truth for this fixture):
 
 A good reviewer should surface most of these. Severity uses the Nielsen 0–4 scale (see **Severity expectations**).
 
-1. **(Sev 3) "Most popular" badge fails text contrast.** White on #3B82F6 = 3.1:1 at 11px normal text; needs 4.5:1 (WCAG 1.4.3). The promoted plan's badge is the least readable label on the page — fix the accent or darken to the #2563EB token (4.7:1).
+1. **(Sev 3) "Most popular" badge fails text contrast.** White on #3B82F6 = 3.7:1 at 11px normal text; needs 4.5:1 (WCAG 1.4.3). The promoted plan's badge is the least readable label on the page — fix the accent or darken to the #2563EB token (≈5.2:1).
 2. **(Sev 3) Boolean inclusion relies on a check glyph alone.** Included vs excluded is conveyed only by check-vs-em-dash with no text/`aria-label` and the em dash is #C4CDD9 (1.6:1). This implicates 1.4.1 (use of color/shape alone) AND 1.4.11 (non-text contrast 3:1) for the meaningful glyphs. Add visible text ("Included"/"Not included") or accessible names and raise glyph contrast.
-3. **(Sev 3) Muted helper text "Cancel anytime" at 2.7:1 fails 1.4.3.** Darken #8A94A6 to at least a #6B7280-class value to reach 4.5:1.
-4. **(Sev 2) Outline/secondary button border fails non-text contrast.** #93C5FD border at 1.9:1 is below the 3:1 required by 1.4.11 for the control boundary; the 4.5:1 label is borderline but the control edge is effectively invisible. Strengthen the border token.
+3. **(Sev 3) Muted helper text "Cancel anytime" at 3.1:1 fails 1.4.3.** Darken #8A94A6 to at least a #6B7280-class value to reach 4.5:1.
+4. **(Sev 2) Outline/secondary button border fails non-text contrast.** #93C5FD border at 1.8:1 is below the 3:1 required by 1.4.11 for the control boundary; the 4.5:1 label is borderline but the control edge is effectively invisible. Strengthen the border token.
 5. **(Sev 2) Heading outline skips a level (h1 -> h3).** Plan cards use h3 with no enclosing h2, violating the logical outline expected under semantic HTML / 1.3.1. Either promote the cards' grouping to an h2 or restructure.
 6. **(Sev 2) Annual-savings emphasis may be color-only.** If "save 20%" is distinguished from the monthly option purely by green, that risks 1.4.1; the text label "Annual (save 20%)" is present, so scope this narrowly to the *emphasis styling*, not the label itself.
 7. **(Sev 2) FAQ answer measure is too long.** ~140ch lines at full 1120px width hurt readability (typography craft; ~65ch target). Constrain the answer column to ~65ch.
@@ -105,8 +105,8 @@ A good reviewer should surface most of these. Severity uses the Nielsen 0–4 sc
 
 A reviewer must NOT make these claims from this text alone:
 
-- **Do not claim** the focus indicator is missing or invisible — a 2px #2563EB ring at 3.0:1 is explicitly stated as present and passing 1.4.11.
-- Do not claim body text or h1 contrast fails — they are 12.6:1 and 18.1:1 (passing).
+- **Do not claim** the focus indicator is missing or invisible — a 2px #2563EB ring at 5.2:1 is explicitly stated as present and passing 1.4.11.
+- Do not claim body text or h1 contrast fails — they are 14.8:1 and 18.7:1 (passing).
 - Do not claim there is no skip link — a visually-hidden-until-focus skip link is stated in the reading flow.
 - Do not claim the billing toggle is not keyboard operable — arrow-key navigation and Enter/Space activation are stated.
 - Do not invent INP/LCP/CLS numbers or assert a performance failure; only box-reservation (CLS-relevant) is stated as handled, and no timings are given.

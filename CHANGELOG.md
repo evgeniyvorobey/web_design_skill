@@ -29,7 +29,7 @@ The web domain layer is fully authored. Every mode, foundation, calibration fixt
 | 2 | Hover / right-click / keyboard-first treated as red flags | Required on web; the failure is **ignoring** hover/focus/keyboard operability |
 | 3 | "one-screen-at-a-time" heuristic | Web is multi-pane / multi-tab / long-scroll |
 | 4 | SaaS "avoid desktop density / table shrinkage" | **Exploit** desktop density: real tables, multi-pane, hover actions, keyboard shortcuts |
-| 5 | "platform-flattening cap (3/5)" | "responsive-flattening cap" (no behavior across breakpoints, hover/focus ignored, no 320px reflow) — in `weaknesses.md` + `validate_repo.py` |
+| 5 | "platform-flattening cap (3/5)" | "responsive-flattening cap" — the 3/5 cap lives in `design-quality-rubric.md` + the `heuristics.md` severity crosswalk (severe no-reflow form is P1 → 2/5); the weakness is named in `weaknesses.md` and the literal pattern is enforced in `validate_repo.py` (`WEAKNESS_REQUIRED_PATTERNS`) |
 | 6 | Touch target 44pt / 48dp + thumb-zone | WCAG 2.5.8 (24px) / 2.5.5 (44px AAA) + pointer-aware `@media (pointer: coarse\|fine)`; Fitts via cursor travel + screen edges/corners; thumb-zone deleted |
 | 7 | "keyboard" = on-screen keyboard TYPE | Two web meanings kept separate: input *type* (inputmode/type) vs *operability* (tab order, focus-visible, focus management, trap+restore, skip links); operability dominates |
 | 8 | "tooling last" (sources Tier 5) | Tooling is **first-class evidence** (Lighthouse/PSI/CrUX, axe-core/WAVE, Playwright, BrowserStack), re-tiered up |

@@ -18,6 +18,20 @@ Modes that propose, specify, review, or rationalize a design artifact also use `
 
 All modes use `docs/clarification-policy.md` before drafting. Ask clarifying questions only when missing information would materially change the recommendation; otherwise proceed with minimal labeled assumptions.
 
+## Mode identifiers (crosswalk)
+
+The same seven modes are referenced by letter (A–G, here and in `skill/skill.md`), by ordinal (1–7, in `SKILL.md`), and by slug (in `skill/metadata.yaml`). The validator and the emitted `Mode:` line always use the full canonical name. They are the same set, in the same order:
+
+| # | Letter | Slug | Canonical name (emitted in output + checked by the validator) |
+|---|--------|------|----------------------------------------------------------------|
+| 1 | A | page-concept | Generate web page concept |
+| 2 | B | web-flow | Design web user flow |
+| 3 | C | ui-spec | Create responsive UI spec |
+| 4 | D | review-page | Review page for usability/accessibility |
+| 5 | E | type-spacing-grid | Create typography, spacing and grid system |
+| 6 | F | rationale-handoff | Prepare design rationale / handoff |
+| 7 | G | marketing-landing | Generate / critique a marketing landing page (conversion / CRO) |
+
 ---
 
 ## Mode A: Generate web page concept

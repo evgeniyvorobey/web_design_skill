@@ -42,8 +42,12 @@ README_BADGE_RE = re.compile(
 )
 # Also match the HTML <img> form so the script stays in sync when the README
 # uses HTML for layout (centered hero block).
+# Tolerant to match validate_release.py: single/double quotes, hex or named colors,
+# and an optional ?style= query string.
 README_HTML_BADGE_RE = re.compile(
-    r'(<img\s+alt="version"\s+src="https://img\.shields\.io/badge/version-)(\d+\.\d+\.\d+)(-[a-zA-Z]+">)'
+    r'(<img\s+alt=["\']version["\']\s+src=["\']https://img\.shields\.io/badge/version-)'
+    r'(\d+\.\d+\.\d+)'
+    r'(-[A-Za-z0-9_-]+(?:\?[^"\'<>]*)?["\'][^>]*>)'
 )
 README_CURRENT_VERSION_RE = re.compile(
     r"(Current version:\s*\*\*)(\d+\.\d+\.\d+)(\*\*)"
@@ -119,12 +123,21 @@ def update_readme_badge(new_version: str) -> bool:
     if not README_PATH.exists():
         return False
     text = README_PATH.read_text(encoding="utf-8")
-    total = 0
-    for pattern in (README_BADGE_RE, README_HTML_BADGE_RE, README_CURRENT_VERSION_RE):
+    badge_count = 0
+    for pattern in (README_BADGE_RE, README_HTML_BADGE_RE):
         text, count = pattern.subn(rf"\g<1>{new_version}\g<3>", text, count=1)
-        total += count
-    if total == 0:
+        badge_count += count
+    text, current_count = README_CURRENT_VERSION_RE.subn(
+        rf"\g<1>{new_version}\g<3>", text, count=1
+    )
+    if badge_count == 0 and current_count == 0:
         return False
+    if badge_count == 0:
+        # Do not let the "Current version:" line mask an unrewritten badge.
+        print(
+            f"[WARN] README version badge not matched; update it manually to {new_version}",
+            file=sys.stderr,
+        )
     README_PATH.write_text(text, encoding="utf-8")
     return True
 

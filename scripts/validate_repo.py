@@ -2,9 +2,7 @@
 from __future__ import annotations
 
 import json
-import os
 import re
-import sys
 from pathlib import Path
 
 
@@ -28,6 +26,7 @@ REQUIRED_FILES = [
     "skill/templates.md",
     "skill/usage.md",
     "docs/clarification-policy.md",
+    "docs/commands.md",
     "docs/context-defaults.md",
     "docs/benchmark-report-format.md",
     "docs/design-quality.md",
@@ -49,6 +48,7 @@ REQUIRED_FILES = [
     "docs/patterns-catalog.md",
     "docs/principles.md",
     "docs/quality-bars.md",
+    "docs/release-automation.md",
     "docs/rendered-output-qa.md",
     "docs/self-review.md",
     "docs/sources.md",
@@ -243,7 +243,7 @@ MODE_REQUIREMENTS = {
         "accessibility_sections": ["Accessibility requirements"],
         "must_contain": [
             ("Spacing and layout notes", r"\b\d+(?:\.\d+)?\s?(px|rem)\b|space-\d+"),
-            ("Typography rules", r"\b\d+(?:\.\d+)?\s?(px|rem)\b|body|title|label|caption"),
+            ("Typography rules", r"\b\d+(?:\.\d+)?\s?(px|rem)\b"),
             ("Design quality requirements", r"Attention path:"),
             ("Design quality requirements", r"Production checks:"),
             ("Design quality requirements", r"\b[1-5]/5\b"),
@@ -293,7 +293,12 @@ MODE_REQUIREMENTS = {
             ("Size hierarchy", r"\b\d+(?:\.\d+)?\s?(px|rem)\b"),
             ("Line-height guidance", r"\b1\.[0-9]\b|\b\d+(?:\.\d+)?\s?(px|rem)\b"),
             ("Pointer, target-size and input implications", r"24\s?px|2\.5\.8|44\s?px"),
-            ("Visual rhythm rules", r"\b(4|8|12|16|24|32|48|64)\b"),
+            # Require a real spacing scale, not an incidental digit (e.g. the `4` in `4/5`):
+            # either an explicit "multiples of 4/8" or two scale values on one line.
+            (
+                "Visual rhythm rules",
+                r"multiples? of (4|8)\b|\b(8|12|16|24|32|48|64)\b[^\n]*\b(8|12|16|24|32|48|64)\b",
+            ),
             ("Visual rhythm rules", r"\b[1-5]/5\b"),
         ],
     },
@@ -1248,6 +1253,10 @@ def validate_links() -> None:
         for lineno, line in enumerate(text.splitlines(), start=1):
             for match in LINK_RE.finditer(line):
                 target = match.group(1).strip()
+                # Strip an optional Markdown link title: [x](url "Title").
+                title_match = re.match(r"^(\S+)\s+[\"'].*[\"']$", target)
+                if title_match:
+                    target = title_match.group(1)
                 if not target or "://" in target or target.startswith("#") or target.startswith("mailto:"):
                     continue
                 candidate = (file_path.parent / target).resolve()
@@ -1393,10 +1402,8 @@ def main() -> None:
         validate_rendered_output_qa()
         validate_example_responses()
 
-    mode = "STRICT" if STRICT else "structural-only (Iteration 1 stub mode; set WDS_STRICT=1 for full checks)"
     print(
-        f"[OK] Repository structure, documentation hygiene, relative links valid "
-        f"[{mode}]."
+        "[OK] Repository structure, documentation hygiene, relative links valid [STRICT]."
     )
 
 

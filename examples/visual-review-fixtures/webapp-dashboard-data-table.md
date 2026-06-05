@@ -80,17 +80,17 @@ Body text minimum: the densest readable content (table cells) is 14px, below the
 
 Palette and declared contrast pairs (foreground on background):
 
-- Table cell text `#3A3F47` on white `#FFFFFF`: contrast ratio 9.8:1. Passes 1.4.3.
+- Table cell text `#3A3F47` on white `#FFFFFF`: contrast ratio 10.6:1. Passes 1.4.3.
 - Table header label `#6B7280` on white `#FFFFFF`: 4.83:1. Passes 1.4.3 for the 12px size.
 - Secondary metadata `#9AA1AC` on white `#FFFFFF`: 2.6:1. FAILS 1.4.3 (needs 4.5:1 at 12px).
-- Status pill "Sent" — text `#2563EB` on fill `#DBEAFE`: 3.1:1. FAILS 1.4.3 for 12px pill text (needs 4.5:1).
-- Status pill "Paid" — text `#15803D` on fill `#DCFCE7`: 4.9:1. Passes.
+- Status pill "Sent" — text `#2563EB` on fill `#DBEAFE`: 4.2:1. FAILS 1.4.3 for 12px pill text (needs 4.5:1).
+- Status pill "Paid" — text `#15803D` on fill `#DCFCE7`: 4.6:1. Passes.
 - Status pill "Overdue" — text `#B91C1C` on fill `#FEE2E2`: 5.2:1. Passes.
 - Status is conveyed by the pill's fill color and its text label, so status is not color-alone. Good for 1.4.1.
 - Overdue stat-card number uses red `#DC2626` on white as the ONLY signal that the number is "bad"; there is no icon or text qualifier, only color. This is color-alone for that semantic and risks 1.4.1.
 - Active sort indicator: the sorted column header changes background tint only (no arrow glyph stated). Sort direction is therefore conveyed by a subtle background, plus `aria-sort` for AT. Sighted-but-non-AT users get a weak visual signal.
 - Current pagination page: indicated by a filled background `#2563EB` with white text; no underline, bold, or `aria-current` stated, so the "you are here" cue is background-color-only visually.
-- Focus indicator: a 2px outline `#2563EB` at 3:1 against white is stated for buttons and links, but the fixture does NOT state a visible focus style for the native row checkboxes or for the sticky-header sort buttons specifically.
+- Focus indicator: a 2px outline `#2563EB` at 5.2:1 against white is stated for buttons and links, but the fixture does NOT state a visible focus style for the native row checkboxes or for the sticky-header sort buttons specifically.
 - Row hover: background shifts to `#F3F4F6`. No hover affordance is stated for keyboard users (no equivalent row focus highlight described).
 
 ## Interaction states
@@ -120,7 +120,7 @@ A strong reviewer SHOULD surface these, with severity:
 
 1. **Table cell text is 14px, below the 16px body minimum** for primary reading content; combined with 12px/11px metadata, the densest text is small. Flag against the body-min bar and WCAG 1.4.4 (resize) headroom. Severity 2. (Defensible as intentional density, so not a 3.)
 2. **Secondary metadata `#9AA1AC` on white at 2.6:1 fails WCAG 1.4.3** (needs 4.5:1 at 12px). Severity 3.
-3. **"Sent" status pill `#2563EB` on `#DBEAFE` at 3.1:1 fails WCAG 1.4.3** for 12px text. Severity 3.
+3. **"Sent" status pill `#2563EB` on `#DBEAFE` at 4.2:1 fails WCAG 1.4.3** for 12px text. Severity 3.
 4. **Overdue stat-card number relies on color alone** (red, no icon/text qualifier) to signal "bad" — WCAG 1.4.1 risk. Severity 2.
 5. **Active sort and current-page are conveyed by background tint / fill color only** with no glyph, underline, or `aria-current` stated for the page indicator — weak non-AT visual cue and a 1.4.1 use-of-color concern; also `aria-current="page"` missing for pagination. Severity 2.
 6. **No visible focus style stated for row checkboxes and sticky-header sort buttons** — WCAG 2.4.7 / 2.4.11 (focus not obscured) gap, especially since the sticky header could overlap focused content while scrolling. Severity 3.
@@ -136,7 +136,7 @@ A strong reviewer SHOULD surface these, with severity:
 A reviewer must NOT make these claims from this text alone:
 
 - Do not claim the status is conveyed by color alone — the pills carry a text label; 1.4.1 is satisfied for status pills (only the Overdue stat-card NUMBER is color-alone).
-- Do not claim table cell text fails contrast — `#3A3F47` on white is 9.8:1 and passes.
+- Do not claim table cell text fails contrast — `#3A3F47` on white is 10.6:1 and passes.
 - Do not claim the table lacks a sticky header or that it is unsortable — both are stated present (`aria-sort`, sticky `<thead>`).
 - Do not claim there is no empty or error state — both are explicitly stated.
 - Do not claim there is no keyboard support for sorting — sort controls are `<button>`s with `aria-sort`; operability is present even though their focus *style* is unstated.
@@ -150,7 +150,7 @@ A reviewer must NOT make these claims from this text alone:
 
 Nielsen 0-4 severity scale (0 = not a problem, 1 = cosmetic, 2 = minor, 3 = major, 4 = catastrophe):
 
-- Metadata contrast fail (2.6:1), "Sent" pill contrast fail (3.1:1), 20px kebab target, missing focus on checkboxes/sort buttons, silent async/status-message gap: **3 (major)** — real barriers for low-vision and AT users on a data-heavy screen.
+- Metadata contrast fail (2.6:1), "Sent" pill contrast fail (4.2:1), 20px kebab target, missing focus on checkboxes/sort buttons, silent async/status-message gap: **3 (major)** — real barriers for low-vision and AT users on a data-heavy screen.
 - 14px body text below minimum, color-alone overdue number, sort/page color-only cue, toast timing: **2 (minor)** — defensible-but-should-fix.
 - Inverted type-size hierarchy: **2** trending **1** depending on whether the stat strip is judged a deliberate focal point.
 - No fluid type, missing `<footer>` landmark: **1 (cosmetic)**.

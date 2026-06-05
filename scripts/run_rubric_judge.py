@@ -318,10 +318,11 @@ def compare_judgement(fixture: dict[str, Any], judgement: dict[str, Any]) -> lis
             errors.append(f"{fixture_id}: missing hard limit `{hard_limit}`")
 
     for failed_dimension in fixture["expected_failed_dimensions"]:
+        # Match against the structured `failed_dimensions` list only — a dimension
+        # named positively in free-text rationale must not satisfy this check.
         if not contains_semantic_item(
             failed_dimension,
             judgement["failed_dimensions"],
-            extra_text=judgement["rationale"],
         ):
             errors.append(f"{fixture_id}: missing failed dimension `{failed_dimension}`")
 

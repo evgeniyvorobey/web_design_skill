@@ -65,14 +65,14 @@ System UI variable font, `font-display: swap`, above-the-fold display weight pre
 
 Near-monochrome with one warm accent. Stated foreground/background pairs (sRGB):
 
-- **Body text** `#2A2D31` on `#FFFFFF` — contrast ≈ 13.1:1 (passes 1.4.3 AA and AAA).
-- **Trust row** `#6B7177` on `#FFFFFF` — contrast ≈ 4.6:1 at 13px (passes AA for normal text).
-- **Compare-at struck price** `#9AA0A6` on `#FFFFFF` — contrast ≈ 2.9:1 (FAILS 1.4.3 AA for the 16px strikethrough text).
-- **Accent CTA:** label `#FFFFFF` on accent fill `#C8642A` (warm terracotta) — contrast ≈ 3.4:1 (FAILS 1.4.3 AA for the 16px button label).
-- **Accent ring / selected swatch indicator:** `#C8642A` ring on `#FFFFFF` — non-text contrast ≈ 3.1:1 (passes 1.4.11 3:1 as a UI indicator).
+- **Body text** `#2A2D31` on `#FFFFFF` — contrast ≈ 13.8:1 (passes 1.4.3 AA and AAA).
+- **Trust row** `#6B7177` on `#FFFFFF` — contrast ≈ 4.9:1 at 13px (passes AA for normal text).
+- **Compare-at struck price** `#9AA0A6` on `#FFFFFF` — contrast ≈ 2.6:1 (FAILS 1.4.3 AA for the 16px strikethrough text).
+- **Accent CTA:** label `#FFFFFF` on accent fill `#C8642A` (warm terracotta) — contrast ≈ 4.0:1 (FAILS 1.4.3 AA for the 16px button label).
+- **Accent ring / selected swatch indicator:** `#C8642A` ring on `#FFFFFF` — non-text contrast ≈ 4.0:1 (passes 1.4.11 3:1 as a UI indicator).
 - **Discount cue:** the markdown is communicated *only* by the accent color of the current price plus the strikethrough — no "Sale" text label or percent-off badge (relevant to 1.4.1 use of color).
 - **Out-of-stock swatch:** 40% opacity + diagonal slash; the slash is a non-text graphic at ≈ 2.4:1 against the chip.
-- **Focus indicator:** `:focus-visible` = 2px `#1A57C4` outline + 2px offset on all interactive controls; ≈ 4.9:1 against white (passes 1.4.11).
+- **Focus indicator:** `:focus-visible` = 2px `#1A57C4` outline + 2px offset on all interactive controls; ≈ 6.6:1 against white (passes 1.4.11).
 - **Disabled/unavailable size:** 40% opacity text, no other cue.
 
 ## Interaction states
@@ -96,8 +96,8 @@ Near-monochrome with one warm accent. Stated foreground/background pairs (sRGB):
 
 A strong reviewer SHOULD raise these, roughly in priority order:
 
-1. **CTA label contrast fails 1.4.3 (Severity 4).** "Add to cart" white text on `#C8642A` is ≈ 3.4:1 — below the 4.5:1 AA floor for 16px text. This is the single most important conversion control on the page; darken the fill (e.g. toward `#A24A18`, ≈ 5.6:1) or use a darker label.
-2. **Compare-at struck price fails 1.4.3 (Severity 3).** `#9AA0A6` at 16px is ≈ 2.9:1. Darken into the `#767C82` range for 4.5:1; strikethrough alone does not exempt it from contrast.
+1. **CTA label contrast fails 1.4.3 (Severity 4).** "Add to cart" white text on `#C8642A` is ≈ 4.0:1 — below the 4.5:1 AA floor for 16px text. This is the single most important conversion control on the page; darken the fill (e.g. toward `#A24A18`, ≈ 5.9:1) or use a darker label.
+2. **Compare-at struck price fails 1.4.3 (Severity 3).** `#9AA0A6` at 16px is ≈ 2.6:1. Darken into the `#6B7177` range, ≈ 4.9:1; strikethrough alone does not exempt it from contrast.
 3. **Discount communicated by color + strikethrough only — 1.4.1 use of color (Severity 3).** No "Sale" text or percent-off badge. Color-blind and low-vision shoppers may not perceive the markdown. Add a text label such as "Sale −20%."
 4. **Wishlist hit target is 24 × 24px with no padding — borderline 2.5.8 (Severity 3).** It meets the 24px AA minimum exactly but has zero spacing slack; on a dense buy box adjacent to the CTA this invites mis-clicks. Recommend a ≥ 24px target with padding, ideally toward 44px (2.5.5 AAA).
 5. **No size preselected yet the CTA is enabled (Severity 3).** A shopper can add to cart with no size chosen; either preselect a default, gate the CTA on selection, or surface an inline "Choose a size" validation tied to `aria-live`.
@@ -112,14 +112,14 @@ A strong reviewer SHOULD raise these, roughly in priority order:
 Do not raise these — they are not supportable from this text, or are explicitly handled:
 
 - **Do not claim** the page causes layout shift / fails CLS. The hero reserves space via explicit width/height and 4:5 aspect-ratio, and fonts use `font-display: swap` with tuned fallback metrics. CLS is addressed.
-- Do not claim the focus indicator is missing or invisible; a 2px `#1A57C4` `:focus-visible` outline at ≈ 4.9:1 with 2px offset is specified for all controls.
-- Do not claim body text fails contrast; `#2A2D31` on white is ≈ 13.1:1.
+- Do not claim the focus indicator is missing or invisible; a 2px `#1A57C4` `:focus-visible` outline at ≈ 6.6:1 with 2px offset is specified for all controls.
+- Do not claim body text fails contrast; `#2A2D31` on white is ≈ 13.8:1.
 - Do not claim the tabs, size-guide dialog, or carousel are keyboard-inaccessible; an arrow-key tablist, a `<dialog>` with focus trap + ESC + focus restore, and reachable arrow buttons are specified.
 - Do not claim the size & fit data is "just divs" or non-semantic; it is a real `<table>` with `<th scope="col">`.
 - Do not claim there is a floating circular action control or that the CTA floats; the primary action is an in-flow filled button in the buy box.
 - Do not invent mobile-web pixel values, gesture conflicts, or device-specific behaviors beyond the stated 390px reflow notes.
 - Do not claim missing alt text or specific image content — imagery is described only by dimensions; alt text is neither specified nor contradicted, so it is out of scope.
-- Do not claim the trust row fails contrast; `#6B7177` on white at 13px is ≈ 4.6:1, which passes AA for normal text.
+- Do not claim the trust row fails contrast; `#6B7177` on white at 13px is ≈ 4.9:1, which passes AA for normal text.
 - Do not invoke inspiration galleries (Awwwards, Land-book, Mobbin Web) as evidence for or against usability, accessibility, performance, or compliance.
 
 ## Severity expectations

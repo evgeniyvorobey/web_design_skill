@@ -48,7 +48,9 @@ PROJECT_PATH="$(pwd)"
 ACTION="install"
 
 print_help() {
-    sed -n '2,30p' "$0" | sed -e 's/^#//' -e 's/^ //'
+    # Print the whole leading comment block (skip the shebang, stop at the first
+    # non-comment line) so the header can grow without truncating --help.
+    awk 'NR==1 {next} /^#/ {sub(/^# ?/, ""); print; next} {exit}' "$0"
 }
 
 print_status() {

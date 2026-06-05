@@ -69,13 +69,13 @@ The structure is recoverable but risky: one giant form with a single bottom Save
 
 ## Design quality score (current → projected)
 - Current: 2/5 — provisional (D2). Structure is sound but a catastrophic destructive-adjacency and probable keyboard inoperability dominate.
-- Projected: 3/5 — the median of the assessable projected dimensions once F1–F3 land; conditional: requires F1 AND F2 AND F3 and the no-focus-styling assumption being real. Visual dimensions stay unassessable (n/v) and are not projected upward.
-- Ceiling note: with a visual pass confirming contrast, spacing, and focus appearance, the ceiling is 4/5 (capped at 4/5 unless resilience across states/forced-colors is named).
-- Primary lever(s): F1 (removes the catastrophe cap) and F2 (removes the keyboard cap).
+- Projected: 4/5 — the median of the assessable projected dimensions {Attention 3, Density 3, Interaction 4, Context 4, Production 4} = 4 once F1–F3 land; conditional: requires F1 AND F2 AND F3 and the no-focus-styling assumption being real. Visual dimensions stay unassessable (n/v) and are not projected upward; Attention and Density carry no finding, so they hold at 3.
+- Ceiling note: a visual pass that scores the n/v visual dimensions cannot, on its own, raise this above 4/5; reaching 5/5 needs named resilience (dark theme, forced-colors, reduced-motion, 320px reflow) plus a hierarchy/grouping pass that lifts Attention and Density.
+- Primary lever(s): F1 (removes the catastrophe cap) and F2 (removes the keyboard cap); together they unpin the median from 2 to 4.
 
 | Dimension | Now | Projected | Gated by (cap / ladder rung) | Confidence |
 |-----------|-----|-----------|------------------------------|------------|
-| Attention path & hierarchy | 3 | 4 | danger-zone separation | provisional |
+| Attention path & hierarchy | 3 | 3 | — (no finding moves hierarchy) | provisional |
 | Composition & spacing | n/v | n/v | no visual provided | not-from-text |
 | Typography craft | n/v | n/v | no visual provided | not-from-text |
 | Color, state & contrast | n/v | n/v | no visual provided | not-from-text |
@@ -83,7 +83,7 @@ The structure is recoverable but risky: one giant form with a single bottom Save
 | Interaction polish & motion | 2 | 4 | F3 inline validation | provisional |
 | Context & brand fit | 2 | 4 | F1 destructive handling | provisional |
 | Production readiness | 2 | 4 | F2 focus + semantics | provisional |
-- Projected overall = the median of the assessable (non-`n/v`) projected dimensions, lowered if a critical task dimension stays weak. It is not the sum of per-dimension gains.
+- Projected overall = the median of the assessable (non-`n/v`) projected dimensions {3, 3, 4, 4, 4} = 4, lowered only if a critical task dimension stays weak (none does here). It is not the sum of per-dimension gains; Attention and Density stay at 3 because no finding addresses them, and each finding moves exactly one dimension.
 
 ## Severity index
 - 4 (catastrophe): F1

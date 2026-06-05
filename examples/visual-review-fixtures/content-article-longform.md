@@ -140,14 +140,14 @@ lengths and containers use logical max-widths and the column is not height-cappe
 Surface is light. Contrast pairs (authored, not measured):
 
 - Body `#3A3F47` on `#FFFFFF`: ~10.4:1 — passes 1.4.3 AA for normal text.
-- `h1` `#14181F` on `#FFFFFF`: ~16.9:1 — passes.
+- `h1` `#14181F` on `#FFFFFF`: ~17.8:1 — passes.
 - Deck `#5A6270` on `#FFFFFF`: ~6.0:1 — passes AA normal text.
-- **Figure caption `#8A909B` on `#FFFFFF`: ~2.7:1 — FAILS 1.4.3** (needs 4.5:1;
+- **Figure caption `#8A909B` on `#FFFFFF`: ~3.2:1 — FAILS 1.4.3** (needs 4.5:1;
   13px is normal-sized text, not large text).
 - **Inline link color `#5B8DEF` on `#FFFFFF`: ~3.2:1 — FAILS 1.4.3** for link
   text, and links in body are distinguished **by color only** (no underline,
   no other non-color cue) → **also fails 1.4.1 Use of Color**.
-- Code text `#1F2430` on `#F5F6F8`: ~13:1 — passes.
+- Code text `#1F2430` on `#F5F6F8`: ~14:1 — passes.
 - Accent/brand `#2F6FED` used for the "Subscribe" button and TOC active border;
   button label `#FFFFFF` on `#2F6FED`: ~4.7:1 — passes AA normal text.
 - Focus ring (authored): 2px solid `#2F6FED` with a 2px white offset; against the
@@ -201,7 +201,7 @@ A good reviewer SHOULD surface these, from this text alone:
    affordance) and darken the link token to meet 4.5:1. This is the headline
    defect — it harms both low-vision and color-blind readers.
 2. **(Severity 2–3) Figure captions fail 1.4.3.** `#8A909B` on white at 13px is
-   ~2.7:1. Darken to at least a `#6B7280`-class gray (>=4.5:1) and/or do not go
+   ~3.2:1. Darken to at least a `#6B7280`-class gray (>=4.5:1) and/or do not go
    below 14px for body-adjacent text.
 3. **(Severity 2) Reading measure is too wide.** ~88–92ch at 760px exceeds the
    ~65ch comfort target, hurting return-sweep and reading speed. Constrain the

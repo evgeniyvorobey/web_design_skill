@@ -47,7 +47,7 @@ All values are in CSS reference pixels (`px`) and `rem` (1rem = the user's root 
 
 - **Spacing scale (4px base):** 4, 8, 12, 16, 24, 32, 48, 64, 96 px (0.25–6rem). Pick from the scale; no ad-hoc gaps.
 - **Breakpoint ladder (min-width, mobile-first):** ~320 (smallest supported, reflow floor) → 360/480 → 640 → 768 (tablet) → 1024 → 1280 (desktop) → 1440 → 1920+ (wide). Treat these as content-driven, not device-named.
-- **Container queries** for component-level adaptation (a card that reflows by its own width, independent of the viewport) once Baseline-available; media queries for page-level layout.
+- **Container queries** (Baseline since 2023) for component-level adaptation (a card that reflows by its own width, independent of the viewport); media queries for page-level layout.
 - **Max content width:** cap reading and form columns (~640–760px / 65ch); cap full app shells ~1200–1440px with fluid gutters beyond that.
 - **Grid:** 12 columns on desktop with 24–32px gutters; 8 columns tablet; 4 columns / single-column mobile. Whitespace scales up with viewport — desktop earns generous margins, not stretched line lengths.
 
@@ -82,7 +82,7 @@ Every interactive surface defines, at minimum: **default, hover, focus-visible, 
 - **Keyboard operability (2.1.1):** every action reachable and operable by keyboard; logical tab order matching visual order; no keyboard trap (2.1.2); ESC closes overlays.
 - **Focus management:** on route change or overlay open, move focus deliberately (to the dialog / new heading); **trap focus inside modal dialogs and restore it** to the trigger on close; provide a **skip link** to main content; consider a command palette for power users.
 - **Semantic structure:** one `<h1>` per page, a logical heading outline (no skipped levels), landmark regions (`header`/`nav`/`main`/`footer`), and `aria-live` for async updates.
-- **Reflow (1.4.10):** content reflows to a **320px** viewport (or 256px tall) with no two-dimensional scrolling for vertical content; data tables and code are the only sanctioned exceptions.
+- **Reflow (1.4.10):** content reflows without two-dimensional scrolling at a width equivalent to **320 CSS px** for vertically-scrolling content, or a height of **256 CSS px** for horizontally-scrolling content (e.g. vertical writing modes); data tables and code are the only sanctioned exceptions.
 - **Resize text (1.4.4):** usable at **200% zoom** with no loss of content or function.
 - **Text spacing (1.4.12)** and **forced-colors** as above.
 
