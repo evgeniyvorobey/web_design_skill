@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img alt="version" src="https://img.shields.io/badge/version-1.3.0-blue">
+  <img alt="version" src="https://img.shields.io/badge/version-1.4.0-blue">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="status" src="https://img.shields.io/badge/status-production--ready-brightgreen">
 </p>
@@ -17,7 +17,7 @@
 
 Runs as a **Claude Code** skill (`/web-design-skill`), as a **Codex / OpenAI** skill, or as a **system prompt** for the Claude API or any LLM. It reasons over text, screenshots, and structured design extracts; when a design-tool connector is loaded it can also read a Figma/Pencil file and write design tokens back.
 
-Current version: **1.3.0** — see [`CHANGELOG.md`](CHANGELOG.md).
+Current version: **1.4.0** — see [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it does
 

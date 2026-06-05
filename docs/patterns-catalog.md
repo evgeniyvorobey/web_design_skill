@@ -334,12 +334,44 @@ it into phone-style cards on desktop.
   cards just because they look modern.
 - **Mechanism**: each card is a self-contained unit; one clear primary
   target (the whole card may be the link, with nested actions handled so they
-  don't nest interactive controls illegally); consistent height handling.
+  don't nest interactive controls illegally). **Equal height across a row**:
+  peer cards in the same row share one height so their top *and* bottom edges
+  resolve on the same line — the row then reads as one group (Gestalt
+  similarity + continuity). Make each card a direct grid or flex child and
+  keep the default `align-items: stretch` (grid rows and flex rows already
+  stretch children to the tallest sibling); do not override a peer row to
+  `align-items: flex-start`. When body copy varies in length, lay the card
+  out as `display: flex; flex-direction: column` and push the footer row
+  (CTA, price, "Learn more") down with `margin-top: auto`, so those controls
+  align across cards even when the text above them does not. Emphasis on one
+  card (a recommended plan, a featured tile) is carried by color, border,
+  badge, or a deliberate equal-amount scale/elevation — never by letting it
+  size raggedly to its own content. **Align the content inside, too**: equal
+  card height is not enough — the internal rows must line up across siblings,
+  so every card's title, body, and footer sit on shared baselines even when
+  one title wraps to two lines and the next to one. Make the card row a grid
+  with shared row tracks (e.g. `grid-template-rows: auto 1fr auto` for
+  title / body / footer) and let each card adopt them with `display: grid;
+  grid-template-rows: subgrid; grid-row: span 3` (subgrid, Baseline since
+  2023). The tallest title then sets one shared track, the bodies start on
+  one line, and the CTAs land on one baseline across the row. Where subgrid
+  is outside the browser/engine scope, fall back to `flex-direction: column`
+  + `margin-top: auto` — which pins only the footer, not the title/body
+  boundary — or a uniform per-section `min-height`, and name the limitation.
 - **Failure mode**: nested interactive elements (a button inside a card that
-  is itself a link) producing invalid, unpredictable activation.
+  is itself a link) producing invalid, unpredictable activation; or peer
+  cards in a row sizing to their own content so bottom edges and footer CTAs
+  are ragged and the row reads as unfinished rather than as one set.
 - **Red flags**: a clickable card wrapping a link/button (nested
   interactives); inconsistent card affordances; using cards where a sortable
-  table is what the task wants.
+  table is what the task wants; peer cards in a row with mismatched heights
+  and ragged bottom edges because each sizes to its own content (auto height,
+  or `align-items: flex-start` on the row) instead of stretching to a shared
+  height; footer CTAs/links not sitting on a common baseline across sibling
+  cards; titles, descriptions, or CTAs that don't line up across sibling
+  cards because one title wraps to a different number of lines, so each
+  card's body and button start at a different height (use subgrid / shared
+  row tracks, not only `margin-top: auto`).
 
 ### Data table (first-class)
 

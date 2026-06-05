@@ -63,3 +63,13 @@ Why it fails: the label vanishes on focus/entry, fails 1.3.1 / 3.3.2, and hurts 
 
 Good:
 - "Use a persistent visible `<label>` associated with the input; reserve the placeholder for an example format. Tie inline errors to the field via `aria-describedby` and set `aria-invalid` on failure."
+
+### 7. Ragged-height card row
+
+Bad:
+- "Lay out the three feature cards side by side and let each one size to its own content."
+
+Why it fails: each card sizes to its own text, so a row of peers renders at different heights with ragged bottom edges and CTAs that do not line up — a Gestalt similarity/continuity break that reads as unfinished (weaknesses #9). And even forcing equal *card* height is not enough: when one title wraps to two lines and the next to one, the descriptions and buttons still start at different heights, so the internal rows stay misaligned. It is usually cosmetic-to-minor in severity, but it is a real finding a review must surface, not wave off as taste.
+
+Good:
+- "Make the card row a grid with shared row tracks — `grid-template-columns: repeat(3, 1fr)` on the row — and let each card adopt them with `display: grid; grid-template-rows: subgrid; grid-row: span 3` for its title / body / footer (subgrid, Baseline since 2023). The tallest title sets one shared track, the descriptions start on one line, and the CTAs land on one baseline across all three cards. Where subgrid is outside the browser/engine scope, fall back to `flex-direction: column` + `margin-top: auto` (which pins the footer only, not the title/body boundary) or a uniform per-section `min-height`, and name the limitation. Carry any 'recommended' emphasis with color/border/a badge — not by letting one card grow taller."

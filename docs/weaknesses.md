@@ -173,10 +173,12 @@ Failure signals:
 - visual hierarchy is asserted but not built through size, spacing, alignment, contrast, density, or position
 - design quality section reads like an essay, not implementation guidance
 - no production checks for large text, dark mode, contrast, state coverage, or tokens
+- peer cards/tiles in a row render at ragged, content-driven heights, or their internal rows (title, description, CTA) don't line up across siblings, so bottom edges and footer CTAs do not align
 
 Prevention:
 - apply `docs/design-quality.md`
 - define attention path, composition/spacing, typography, color/state, interaction polish, and production checks
+- give peer tiles in a row a shared height (grid/flex `stretch`) and align their internal rows across siblings with subgrid (shared title/body/footer tracks), not just `margin-top: auto` on the footer; carry any single-tile emphasis through color/border/badge, not height
 - keep the calibration concise and buildable
 
 ### 10. Visual overclaim in reviews

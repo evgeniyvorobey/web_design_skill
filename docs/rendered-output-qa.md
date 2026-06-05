@@ -18,6 +18,7 @@ Drive a real browser across the **breakpoint ladder** (320 / 360 / 768 / 1024 / 
 - **clipping** of content by fixed/sticky containers
 - **text overflow** / truncation and broken wrapping
 - horizontal scroll where there should be none; sticky-header overlap of focused content
+- **uneven peer-tile heights and internal misalignment**: cards, tiles, or columns that are peers in one row rendering at mismatched heights with ragged bottom edges, *or* whose internal rows don't line up across siblings — titles, descriptions, and CTAs starting at different heights because one title wrapped to more lines — instead of sharing both height and row tracks (a Gestalt similarity/continuity break — usually cosmetic-to-minor, but a real `observed` finding, not to be skipped)
 - the **320px reflow** (WCAG 1.4.10): no two-dimensional scrolling for vertical content, plus a usable 200% zoom
 - SSR/hydration mismatches that shift layout after load (a CLS source)
 

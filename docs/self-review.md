@@ -76,6 +76,7 @@ Do not skip self-review to save tokens. A response that fails self-review is a r
 - Did I define the intended attention path rather than only listing components?
 - Did I translate visual quality into concrete mechanisms (size, spacing, alignment, color role, density, motion, state treatment, tokens)?
 - Did I avoid using "premium", "clean", "modern", "delightful", or "polished" as unexplained taste words?
+- Equal-height + internal-alignment check: for any row of peer cards/tiles/columns, do they share a height *and* do their internal rows line up across siblings — title, description, and CTA each on a shared baseline (subgrid / shared row tracks) — so a title that wraps to a different number of lines doesn't shove that card's body and button out of line? Footer-only pinning (`margin-top: auto`) is not enough when titles/bodies vary in length. If one tile is intentionally emphasized, is that carried by color/border/badge/scale, not by accidental height variance?
 - Inert-page test: if this page lost its logo and brand color, would it still be distinguishable from a competitor's template? If not, flag it as inert (3/5 with an upside note), not a quiet 4/5.
 
 ### Web platform self-checks
@@ -138,6 +139,7 @@ Do not skip self-review to save tokens. A response that fails self-review is a r
 - Does every finding name the violated principle, and does every predicted effect name a user outcome (directional + confidence)?
 - Did I apply the web lenses where relevant — keyboard operability, Core Web Vitals, responsive-across-breakpoints, SEO & semantics, forced-colors?
 - Is severity rated 0–4 (Nielsen = frequency × impact × persistence) based on user impact, not visual taste?
+- For a rendered or visual (D1) artifact, did I check whether peer cards/tiles in a row have ragged, content-driven heights *and* whether their internal rows (title, description, CTA) fail to line up across cards (a Gestalt similarity/continuity finding), and rate it by user impact — usually cosmetic-to-minor — rather than skipping it as "just polish"? (For a D2 description-only review, do not assert heights or alignment unless they are stated.)
 - Did I expose both a current and a projected score, with the projection conditional, capped at 4/5 unless resilience is named, and labeled provisional for D2/D3?
 - If a Bold move is present: is its trigger met, all fields complete, and kept separate from required fixes — and did I withhold any UX-strengthening move only because it contradicts the product (if so, move it here)?
 

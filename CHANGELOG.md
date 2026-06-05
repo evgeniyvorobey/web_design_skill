@@ -2,6 +2,24 @@
 
 All notable changes to `web-design-skill` are documented here. This project follows [Semantic Versioning](https://semver.org/) adapted for a prompt-and-documentation skill (see [`docs/versioning.md`](docs/versioning.md)).
 
+## [1.4.0] - 2026-06-05
+
+### Added — Equal-height peer tiles + internal cross-card alignment
+- Closed a real gap: the skill had no rule that **peer cards/tiles/columns in a row should share a height *and* align their internal content across siblings**, so generated layouts (and reviews of them) let each card size to its own content — producing ragged bottom edges, misaligned footer CTAs, and titles/descriptions/buttons that start at different heights when one title wraps to more lines. The fix lands the rule across both the generation and the review/QA surfaces so it is produced *and* caught.
+- **Generation rule** — `docs/patterns-catalog.md` §3 *Card collection*: expanded the mechanism, failure mode, and red-flag list. Equal card height via direct grid/flex children + default `align-items: stretch`; **internal alignment** so title, body, and footer/CTA each sit on a shared baseline across cards via **subgrid** (shared row tracks: `grid-template-rows: subgrid; grid-row: span 3`, Baseline since 2023), with `flex-direction: column` + `margin-top: auto` or per-section `min-height` named as the fallback where subgrid is out of the browser/engine scope (it pins only the footer, not the title/body boundary); single-card emphasis carried via color/border/badge/equal-amount scale, never by ragged content-driven height.
+- **Quality bar** — `docs/quality-bars.md` §*Spacing, grid and breakpoints*: new "Equal-height peer tiles + internal alignment" bar (height via stretch; internal title/body/CTA baselines via subgrid) so workflow step 9 checks it as a concrete floor.
+- **Heuristic grounding** — `docs/heuristics.md` Gestalt *Continuity*: peer-tile height alignment is now named, with a quotable red flag, so Mode D findings can cite it (Gestalt similarity + continuity) instead of treating it as taste.
+- **Design-quality lens** — `docs/design-quality.md` dimension 2 *Composition & spacing*: equal-height peer tiles added to the alignment mechanisms.
+- **Calibration pair** — `examples/anti-patterns.md` #7 *Ragged-height card row*: Bad/Good pair with the concrete CSS mechanism.
+
+### Changed — Review now catches ragged card heights and internal misalignment
+- `docs/heuristics.md` Gestalt *Continuity* and `docs/design-quality.md` dimension 2: extended to name internal cross-card alignment (title/body/CTA on shared baselines via subgrid), with a quotable red flag, so Mode D can cite it.
+- `docs/self-review.md`: universal design-quality prompt and Mode D prompt now cover both shared height *and* internal-row alignment (a title wrapping to a different number of lines must not shove that card's body/CTA out of line), with the D2 description-only guard that heights/alignment are not asserted unless stated.
+- `docs/rendered-output-qa.md`: layout check is now "uneven peer-tile heights and internal misalignment" (titles/descriptions/CTAs not on shared baselines), a real `observed` finding (not to be skipped).
+- `docs/weaknesses.md` #9 *Weak design-quality calibration*: failure signal and prevention check now cover internal-row misalignment and the subgrid fix.
+- `docs/evals.md`: conditional content-validation checks for Mode A (generation addresses equal-height *and* internal cross-card alignment) and Mode D (a D1 review surfaces ragged heights and misaligned internal rows; a D2 review does not assert them unless stated).
+- `examples/anti-patterns.md` #7 *Ragged-height card row*: Good rewrite now uses subgrid for internal title/body/CTA alignment, with the flex/`min-height` fallback named.
+
 ## [1.3.0] - 2026-06-05
 
 ### Added — Runbook-level design-tool profiles & the reverse token-write path

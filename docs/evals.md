@@ -94,6 +94,7 @@ Hard-fail the response if it matches a P0 or P1 weakness in `docs/weaknesses.md`
 - [ ] Primary user task is singular and explicit
 - [ ] Hierarchy is task-driven (by user need), not visual-first (by prominence)
 - [ ] Suggested components are real (native elements or named design-system components)
+- [ ] When the layout places peer cards/tiles in a row, equal-height *and* internal cross-card alignment are addressed (grid/flex `stretch` for height; subgrid / shared row tracks so title, body, and CTA line up across cards — not just `margin-top: auto` on the footer) so the row does not go ragged
 - [ ] Rationale connects each major choice to user goal, accessibility, performance, or implementation
 - [ ] Design quality calibration defines attention path, composition/spacing, typography, color/state, interaction polish, and production checks
 - [ ] Accessibility considerations are specific (semantic outline, keyboard operability, contrast), not generic "use labels"
@@ -175,6 +176,7 @@ Hard-fail the response if it matches a P0 or P1 weakness in `docs/weaknesses.md`
 - [ ] Every predicted effect names a user outcome, stated directionally with a confidence level and no fabricated percentages
 - [ ] The web lenses are applied where relevant — keyboard operability, Core Web Vitals, responsive-across-breakpoints, SEO & semantics, forced-colors
 - [ ] Findings are concrete, not aesthetic opinions ("form is too long without grouping" vs "feels cluttered")
+- [ ] For a rendered/visual (D1) review of a peer card/tile row, ragged content-driven heights *and* misaligned internal rows (titles/descriptions/CTAs not on shared baselines across cards) are surfaced as a Gestalt similarity/continuity finding at an honest (usually cosmetic-to-minor) severity — not omitted; for a D2 description-only review, heights/alignment are not asserted unless stated
 - [ ] Both a current and a projected score are present; the projection is conditional (IF fixes land AND assumptions hold) and capped at 4/5 unless resilience is named
 - [ ] Unresolved assumptions list what cannot be verified from the provided material
 - [ ] For description-only reviews: visual/aesthetic claims are qualified, and visual dimensions are not projected upward
