@@ -38,11 +38,11 @@ All values are in CSS reference pixels (`px`) and `rem` (1rem = the user's root 
 
 ## Motion and reduced motion
 
-- **Durations:** 150–250ms for state/hover/press feedback, 200–400ms for entrances/overlays; avoid > 500ms for functional transitions.
+- **Durations:** 100–250ms for state/hover/press feedback (the smallest direct-manipulation changes — a toggle or checkbox — land near ~100ms), 200–400ms for entrances/overlays; avoid > 500ms for functional transitions.
 - **`prefers-reduced-motion: reduce`** must remove parallax, large translate/scale transitions, auto-advancing carousels, and scroll-jacking; replace with instant or opacity-only changes. Never gate content behind motion.
 - **No content flashing more than 3 times per second (2.3.1).**
 - **Scroll-triggered motion** is decoration: content must be fully present and readable with motion off and with JavaScript reveal-on-scroll disabled.
-- For the full easing palette (cubic-bezier tokens), the spring-vs-tween rule, the CSS → WAAPI → View Transitions → library build ladder, and the appropriateness gate (animate only where it earns its place), see [`motion-and-animation.md`](motion-and-animation.md).
+- For the canonical duration scale, the full easing palette (cubic-bezier tokens), the spring-vs-tween rule, the CSS → WAAPI → View Transitions → library build ladder, and the appropriateness gate (animate only where it earns its place), see [`motion-and-animation.md`](motion-and-animation.md).
 
 ## Spacing, grid and breakpoints
 

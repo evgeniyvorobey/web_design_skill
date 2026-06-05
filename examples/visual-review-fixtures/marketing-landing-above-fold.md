@@ -182,6 +182,6 @@ Scoring the 8 design-quality dimensions (1–5; target 4 = strong and shippable)
 | Context & brand fit | 4 | 4 |
 | Production readiness | 2 | 4 |
 
-- Expected current overall: ~3.2/5. The layout, spacing, and hierarchy are already strong; the page is dragged down by two contrast fails, incomplete focus styling, unspecified overlay semantics, and missing CTA/LCP production details.
+- Expected current overall: ~3.2/5 — the median of the assessable dimensions is 3.5, lowered to ~3.2 because two critical task dimensions (Color/state 2, Production readiness 2) drag below the median. The layout, spacing, and hierarchy are already strong; the page is dragged down by two contrast fails, incomplete focus styling, unspecified overlay semantics, and missing CTA/LCP production details.
 - Projected after the Expected-critique fixes: ~3.9–4.0/5 — strong and shippable.
 - A review that scores Color/state & contrast or Production readiness at 4 in the current state has missed the named failures and should be treated as a calibration miss.

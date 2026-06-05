@@ -2,7 +2,7 @@
 
 This layer makes the skill propose **tasteful, performant, accessible** motion — and **only where it earns its place**. Animation is generated from a known palette of capabilities (easing tokens, durations, spring, and a CSS→WAAPI→library build ladder), never sprinkled everywhere for spectacle.
 
-Use it whenever a mode proposes, specifies, or reviews interaction polish (Modes A, C, F, G, and the Mode D "Interaction polish & motion" lens). It complements the motion bars in [`quality-bars.md`](quality-bars.md) and the "interaction polish & motion" dimension in [`design-quality.md`](design-quality.md).
+Use it whenever a mode proposes, specifies, or reviews interaction polish (Modes A, C, F, G, and — in Mode D — findings filed under the Design quality or Performance (Core Web Vitals) lens that move the "Interaction polish & motion" rubric dimension). It complements the motion bars in [`quality-bars.md`](quality-bars.md) and the "interaction polish & motion" dimension in [`design-quality.md`](design-quality.md).
 
 Core doctrine: **a great animation is felt, not noticed.** It serves comprehension (feedback, orientation, continuity, status), not decoration. If a motion does not map to a functional purpose below, the default is **no animation**.
 
@@ -82,7 +82,7 @@ Reference duration scales: Material 3 short 50/100/150/200, medium 250/300/350/4
 Default to a **standard/productive** curve for app and utility surfaces; reserve **emphasized/expressive** for the rare hero moment. (Avoid the legacy Carbon v10 curves like `cubic-bezier(0.5, 0, 0.1, 1)` — superseded.)
 
 ### Spring-like easing in CSS — the `linear()` function
-CSS `linear()` (Baseline widely available since 2023: Chrome/Edge 113, Firefox 112, Safari 17) approximates springs and bounces with multivariate points, e.g. a gentle overshoot. Use it for spring feel without JS; generate the points with a tool (Josh Comeau's generator, the `linear()` easing generators) rather than by hand.
+CSS `linear()` (Baseline widely available since 2023: Chrome/Edge 113, Firefox 112, Safari 17.2) approximates springs and bounces with multivariate points, e.g. a gentle overshoot. Use it for spring feel without JS; generate the points with a tool (Josh Comeau's generator, the `linear()` easing generators) rather than by hand.
 
 ---
 
@@ -101,7 +101,7 @@ Pick the lightest tool that does the job. Animate from this capability ladder:
 
 1. **CSS `transition` (default)** — for state changes on `:hover`, `:focus-visible`, `:active`, toggled classes, `[data-state]`. Baseline, zero JS, cheapest. Use for ~80% of UI motion.
 2. **CSS `@keyframes`** — for multi-step or looping motion (spinners, pulse, shimmer skeletons).
-3. **Web Animations API — `element.animate()`** — Baseline widely available (since 2023). The no-dependency **JS** primitive when you need to animate dynamically, sequence, or **interrupt/reverse** an animation (e.g., a half-open drawer the user grabs back). Prefer it over hand-rolled `requestAnimationFrame` loops.
+3. **Web Animations API — `element.animate()`** — Baseline widely available (cross-browser since ~2020). The no-dependency **JS** primitive when you need to animate dynamically, sequence, or **interrupt/reverse** an animation (e.g., a half-open drawer the user grabs back). Prefer it over hand-rolled `requestAnimationFrame` loops.
 4. **View Transitions API** — for shared-element / page-to-page continuity:
    - *Same-document (SPA)* — Baseline **Newly available (Oct 2025)**: Chrome/Edge 111+, Safari 18+, Firefox 144+ (`document.startViewTransition()`). Automates the FLIP technique for you. Firefox lacks view-transition *types* initially.
    - *Cross-document (MPA, `@view-transition { navigation: auto }`)* — **not Baseline**: Chromium 126+ and Safari 18.2+, not Firefox. Treat as **progressive enhancement** — non-supporting engines snap without animation (graceful).
@@ -159,7 +159,7 @@ When a mode (A/C/F/G) packages interaction polish, emit a compact **Motion plan*
 - Performance: [transform/opacity only; INP/CLS safe]
 ```
 
-A Mode D review should flag both **missing** functional motion (no feedback on a slow action) and **over-animation** (motion on tables, forms, or keyboard actions), using the "Interaction polish & motion" lens.
+A Mode D review should flag both **missing** functional motion (no feedback on a slow action) and **over-animation** (motion on tables, forms, or keyboard actions) — under the Design quality or Performance (Core Web Vitals) lens — and reflect it in the "Interaction polish & motion" rubric dimension.
 
 ---
 
