@@ -1,7 +1,7 @@
 ---
 name: web-design-skill
 description: Use when designing, reviewing, specifying, or justifying website UI/UX for responsive web (desktop, tablet, mobile-web) and marketing or web-app surfaces. Produces structured, breakpoint- and browser-aware outputs for pages, flows, UI specs, typography systems, accessibility-aware reviews, and handoff rationale.
-version: 1.2.0
+version: 1.3.0
 ---
 
 # Website Design Skill
@@ -31,6 +31,7 @@ If deeper detail is needed during a task, load only the relevant references:
 - `docs/design-quality.md` for visual hierarchy, composition, density, typography craft, color semantics, interaction polish, and production-readiness calibration
 - `docs/motion-and-animation.md` for the motion layer: the appropriateness gate (animate only where it earns its place), easing/duration tokens, spring-vs-tween, the CSS → WAAPI → View Transitions → library build ladder, performance/accessibility rules, and wow-effect resources
 - `docs/design-tool-handoff.md` for tool-agnostic interop: consuming a structured design extract from Figma / Pencil / Penpot / Sketch (via the host's MCP connector) as Mode D input, and emitting handoff + W3C Design Tokens (DTCG 2025.10) as Mode F output
+- `docs/design-tool-runbooks.md` for the concrete, ordered call sequences behind that interop: per-tool READ runbooks (Figma `get_metadata`/`get_variable_defs`/`get_design_context`; Pencil `get_editor_state`/`get_variables`/`batch_get`) and REVERSE runbooks that write a DTCG `.tokens.json` back as Figma Variables (`use_figma` Plugin API or REST `POST /v1/files`) or Pencil variables (`set_variables`/`batch_design`), with the DTCG↔native mapping tables, idempotency, and alias-ordering rules
 - `docs/design-quality-rubric.md` for 1-5 quality scoring, target levels, caps, and the improvement ladder
 - `docs/golden-examples.md` and `examples/golden/` for taste and domain calibration across marketing landing, ecommerce PDP + checkout, content article, docs / dev portal, web-app dashboard, web form, and settings / account
 - `docs/synthetic-case-studies.md` and `examples/case-studies/` for synthetic bad-to-good calibration cases when tuning output quality

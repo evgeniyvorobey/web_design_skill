@@ -32,6 +32,7 @@ REQUIRED_FILES = [
     "docs/design-quality.md",
     "docs/design-quality-rubric.md",
     "docs/design-tool-handoff.md",
+    "docs/design-tool-runbooks.md",
     "docs/domain-packs/index.md",
     "docs/domain-packs/marketing-landing.md",
     "docs/domain-packs/ecommerce.md",
@@ -706,6 +707,54 @@ DESIGN_TOOL_REQUIRED_PATTERNS = [
     "var(--",
     "Ready for dev",
     "$extensions",
+]
+
+RUNBOOKS_REFERENCE_FILES = [
+    "SKILL.md",
+    "skill/skill.md",
+    "skill/metadata.yaml",
+    "skill/modes.md",
+    "docs/design-tool-handoff.md",
+    "docs/self-review.md",
+]
+
+# Runbooks must name the REAL tool calls (not paraphrases), cover the reverse
+# DTCG->native mapping, idempotency, the alias-ordering rule, and the honest
+# prompt-based boundary. These are concrete-runbook signals, distinct from the
+# conceptual-contract patterns above; do not collapse the two lists.
+RUNBOOKS_REQUIRED_PATTERNS = [
+    # real READ call names (Figma MCP + Pencil MCP)
+    "get_metadata",
+    "get_variable_defs",
+    "get_design_context",
+    "get_editor_state",
+    "get_variables",
+    "batch_get",
+    # real REVERSE call names / endpoints
+    "use_figma",
+    "figma-use",
+    "set_variables",
+    "batch_design",
+    "POST /v1/files",
+    "file_variables:write",
+    "file_variables:read",
+    "VARIABLE_ALIAS",
+    "tempIdToRealId",
+    # reverse mapping + correctness invariants
+    "reverse mapping",
+    "resolvedType",
+    "RGBA",
+    "idempoten",
+    "alias",
+    "topological",
+    # the honest boundary, preserved
+    "honest boundary",
+    "host's MCP connector",
+    # coverage of the four profiles
+    "Figma",
+    "Pencil",
+    "Penpot",
+    "Sketch",
 ]
 
 
@@ -1484,6 +1533,33 @@ def validate_design_tool_layer() -> None:
         )
 
 
+def validate_runbooks_layer() -> None:
+    doc = (ROOT / "docs/design-tool-runbooks.md").read_text(encoding="utf-8")
+    missing_patterns = [
+        pattern for pattern in RUNBOOKS_REQUIRED_PATTERNS if pattern not in doc
+    ]
+    if missing_patterns:
+        fail(
+            "docs/design-tool-runbooks.md is missing required runbook patterns: "
+            + ", ".join(missing_patterns)
+        )
+
+    missing_references = []
+    for relative_path in RUNBOOKS_REFERENCE_FILES:
+        text = (ROOT / relative_path).read_text(encoding="utf-8")
+        if (
+            "design-tool-runbooks.md" not in text
+            and "design_tool_runbooks" not in text
+        ):
+            missing_references.append(relative_path)
+
+    if missing_references:
+        fail(
+            "Design-tool runbooks layer is not referenced by required files: "
+            + ", ".join(missing_references)
+        )
+
+
 # Iteration 2: the web domain layer is authored, so content-depth checks run by
 # default. The WDS_STRICT gate is removed — strict validation is always on.
 STRICT = True
@@ -1514,6 +1590,7 @@ def main() -> None:
         validate_rendered_output_qa()
         validate_motion_layer()
         validate_design_tool_layer()
+        validate_runbooks_layer()
         validate_example_responses()
 
     print(

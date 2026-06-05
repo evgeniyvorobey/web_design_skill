@@ -2,6 +2,21 @@
 
 All notable changes to `web-design-skill` are documented here. This project follows [Semantic Versioning](https://semver.org/) adapted for a prompt-and-documentation skill (see [`docs/versioning.md`](docs/versioning.md)).
 
+## [1.3.0] - 2026-06-05
+
+### Added — Runbook-level design-tool profiles & the reverse token-write path
+- New `docs/design-tool-runbooks.md`: the concrete, executable companion to the conceptual `design-tool-handoff.md`. Where the handoff doc holds the *contract* (neutral extract schema, DTCG 2025.10 output, Dev-Mode handoff payload, thin profiles), the runbooks doc holds **exact, ordered call sequences** a host model can run step by step — every step names the real tool/endpoint, its inputs, what it returns, and the normalize action. Grounded in fresh verified research against official docs (developers.figma.com Plugin + REST API, docs.pencil.dev, Penpot/Sketch token docs) plus the live MCP tool schemas in-session.
+- **READ runbooks (extract → neutral schema):** Figma (`whoami` → `get_metadata` → `get_variable_defs` → `get_design_context` → `get_screenshot`/`get_libraries`, or the Enterprise REST path `GET /v1/files/:key` + `GET …/variables/local` with `file_variables:read`) and Pencil (`get_editor_state(include_schema:true)` → `get_variables` → `batch_get` → `snapshot_layout`), each ending at a populated handoff-§1 extract.
+- **REVERSE runbooks (DTCG `.tokens.json` → native variables):** Figma via **two paths** — Path A `use_figma` (Plugin API `figma.variables.*`, verified **not** Enterprise-gated, `/figma-use` skill mandatory) and Path B REST `POST /v1/files/:key/variables` (`file_variables:write`, Enterprise, atomic `tempIdToRealId` payload) — and Pencil via `set_variables` (hex-string colors, aliases pre-resolved, themed arrays) then `batch_design`.
+- **Exact DTCG↔native mapping tables:** DTCG `color` object ↔ Figma RGBA `{r,g,b,a}` 0–1 ↔ Pencil hex; `dimension`/`number`/`fontWeight`/`fontFamily`/`typography` (decomposed); aliases `{group.token}` ↔ Figma `VARIABLE_ALIAS` ↔ Pencil resolved-to-concrete; DTCG theme axes ↔ Figma collection modes ↔ Pencil themed arrays; Figma scopes + Code Syntax (`var(--…)`). Plus a worked round-trip from `examples/design-tool/tokens.tokens.json`.
+- **Runbook-lite** profiles for Penpot (Tokens-Studio-flavored DTCG export — adapter normalizes values + resolves `{reference}` aliases; call surface connector-dependent) and Sketch (Amazon Style Dictionary export, not W3C DTCG — adapter does a format conversion; write surface unverified).
+- **Caveats covered:** Figma Enterprise REST write-gating vs. the ungated Plugin path, idempotency (match by name / collection / `codeSyntax.WEB`; `UPDATE` over `CREATE`; Pencil `replace:false` merge), alias resolution order (topological: targets before referrers, no cycles), and the honest boundary — the skill sequences/reasons, the host's MCP connector executes the I/O. The runbooks emit only the portable `{group.token}` alias and never `$ref`/`$root`/`$extends` (they would not round-trip).
+
+### Changed
+- `docs/design-tool-handoff.md` §4: each vendor profile (Figma, Pencil, Penpot, Sketch) now points at its runbook, and §5 points the Mode C/F reverse-write path at it; the conceptual contract is otherwise intact. Penpot/Sketch profile text corrected to the verified token-export reality (Penpot = Tokens-Studio-flavored, needs normalization; Sketch = Style Dictionary format, needs conversion).
+- Wired the runbooks doc into `SKILL.md` (load list), `skill/skill.md`, `skill/metadata.yaml` (`design_tool_interop.runbooks`), `skill/modes.md` (Mode D read + Mode F handoff), and `docs/self-review.md` (design-tool gate now covers the READ/REVERSE call sequences, idempotency, and the boundary).
+- Enforced by a new `validate_runbooks_layer()` in `scripts/validate_repo.py` (requires the real call names — `get_variable_defs`, `get_design_context`, `get_editor_state`, `set_variables`, `batch_design`, `POST /v1/files`, `file_variables:write` — plus the reverse mapping, idempotency, alias ordering, and honest boundary, with reference-file wiring); `docs/design-tool-runbooks.md` added to `REQUIRED_FILES`. No existing check or depth threshold was loosened.
+
 ## [1.2.0] - 2026-06-05
 
 ### Added — Design-tool interop & handoff layer

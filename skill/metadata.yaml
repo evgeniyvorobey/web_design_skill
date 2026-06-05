@@ -1,6 +1,6 @@
 name: web-design-skill
 title: Website Design Skill
-version: 1.2.0
+version: 1.3.0
 status: production-ready
 owner: repository-maintained
 entrypoint: SKILL.md
@@ -295,7 +295,9 @@ motion_and_animation:
 design_tool_interop:
   role: tool-agnostic interop — consume a structured design extract and emit handoff + design tokens
   documentation: docs/design-tool-handoff.md
-  boundary: the skill reasons; the host's MCP connector does the file/API I/O (the skill never opens .fig/.pen itself)
+  runbooks: docs/design-tool-runbooks.md
+  runbooks_role: concrete ordered call sequences — per-tool READ (extract→neutral schema) and REVERSE (DTCG .tokens.json→native variables) runbooks with DTCG↔native mapping tables, idempotency, and alias-ordering rules
+  boundary: the skill reasons/sequences the calls; the host's MCP connector does the file/API I/O (the skill never opens .fig/.pen itself)
   token_standard: W3C Design Tokens (DTCG) 2025.10
   token_file: examples/design-tool/tokens.tokens.json
   input: neutral design-extract schema (nodes, layout, text, fills, token refs, components/states)

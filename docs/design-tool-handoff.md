@@ -93,22 +93,26 @@ Modern handoff is **Dev-Mode-native and live** — the static "export a spec doc
 
 ## 4. Vendor profiles (thin shims)
 
-Each profile is just: how the host gets data IN, how the native model maps to the neutral schema (§1) and DTCG (§2), and the caveats. Priority reflects 2025 usage.
+Each profile is just: how the host gets data IN, how the native model maps to the neutral schema (§1) and DTCG (§2), and the caveats. Priority reflects 2025 usage. The profiles here are the **conceptual** mapping; the **concrete, ordered call sequences** (exact tool names, inputs, returns, and the reverse-write path) live in [`design-tool-runbooks.md`](design-tool-runbooks.md) — a numbered READ runbook and a numbered REVERSE (DTCG → native variables) runbook per tool. Each profile below points at its runbook.
 
 ### Figma (dominant — the default target)
 - **In:** the official Figma MCP/Dev Mode (`get_variable_defs`, `get_code`, `get_design_context`, `get_metadata`) or the REST API: `GET /v1/files/:key` (object model `DOCUMENT → CANVAS → FRAME → …`, UPPERCASE node enums) and `GET /v1/files/:key/variables/local` (returns modes; OAuth `file_variables:read`).
 - **Variables → DTCG:** a `Variable` has `resolvedType` ∈ `COLOR|FLOAT|STRING|BOOLEAN`, `valuesByMode`, `scopes`, `codeSyntax{WEB,ANDROID,iOS}`. Map COLOR (RGBA 0–1) → DTCG `color`; FLOAT → `dimension` (scopes `CORNER_RADIUS/WIDTH_HEIGHT/GAP/FONT_SIZE/LINE_HEIGHT/LETTER_SPACING`) or `number`/`fontWeight`; STRING → `fontFamily` (scope `FONT_FAMILY`) or `string`; a per-mode `VariableAlias {type:"VARIABLE_ALIAS", id}` → DTCG `"{path}"`; collection modes → DTCG theming; ids/keys/scopes → `$extensions["com.figma"]`.
 - **Caveat:** the **variables REST endpoints are Enterprise-plan-gated**; outside Enterprise, rely on the Dev Mode MCP or a Tokens Studio export. Dev Mode surfaces variables as `var(--…)` only when **Code Syntax** is set.
+- **Runbook:** [`design-tool-runbooks.md`](design-tool-runbooks.md) → *Figma READ* (`get_metadata` → `get_variable_defs` → `get_design_context`, or REST `GET …/variables/local`) and *Figma REVERSE* (DTCG → Variables via `use_figma` Plugin API — **not** Enterprise-gated — or REST `POST /v1/files/:key/variables`).
 
 ### Pencil (`.pen`)
 - **In:** the Pencil MCP only — `get_editor_state(include_schema:true)`, `get_variables`, `export_nodes`, `get_screenshot`, `batch_get`. The `.pen` file is **opaque/encrypted via the connector** (never `Read`/`Grep` it), and a file must be open in the editor.
 - **Model (format version "2.13"):** a JSON `Document { version, themes{axis:[values]}, imports, variables, children }`. Nodes have `id` (no `/`), `type` (`frame|group|text|rectangle|ellipse|image|icon|ref|script|…`), `x/y`, and `reusable?` (true = component origin); frames carry `layout` (`none|vertical|horizontal`), `gap`, `padding`, `justifyContent`, `alignItems`, and `fit_content`/`fill_container` sizing; a `ref` node is a component instance with `descendants` overrides (slash-path). Map `themes` axes → DTCG theming, `variables` → DTCG tokens, the node tree → the neutral §1 schema.
+- **Runbook:** [`design-tool-runbooks.md`](design-tool-runbooks.md) → *Pencil READ* (`get_editor_state(include_schema:true)` → `get_variables` → `batch_get`) and *Pencil REVERSE* (DTCG → `set_variables`, aliases resolved to concrete hex/number values, then `batch_design`).
 
 ### Penpot (open-source / self-host)
-- **In:** Penpot's API/export; it is **standards-native** — the first platform to integrate the DTCG design-tokens format (built with Tokens Studio). Its token export is already close to DTCG, so the adapter is thin: normalize to 2025.10 and resolve aliases. The right profile when the team wants no vendor lock-in or self-hosting.
+- **In:** Penpot's API/export; it is **standards-leaning** — the first platform to integrate the DTCG design-tokens format (built with Tokens Studio). Its token export uses DTCG keys but Tokens-Studio value conventions (bare hex, `"16px"` strings, TS type names, a `$themes`/`$metadata` envelope), so the adapter normalizes values to the DTCG object shapes and resolves `{reference}` aliases. The right profile when the team wants no vendor lock-in or self-hosting.
+- **Runbook:** [`design-tool-runbooks.md`](design-tool-runbooks.md) → *Penpot runbook-lite* (connector-dependent; convert the Tokens-Studio-flavored export to/from DTCG object shapes).
 
 ### Sketch (Mac)
-- **In:** Sketch's token/Styles export (clean, standards-aligned). Smaller share (~7%) but worth a thin profile for Mac-first teams. Map shared Layer/Text Styles → DTCG `typography`/`color`; symbols → components.
+- **In:** Sketch's native token export (Document Details → Export Design Tokens), in the **Amazon Style Dictionary** format — not W3C DTCG — so the adapter does a format conversion, not just normalization. Smaller share (~7%) but worth a thin profile for Mac-first teams. Map Color Variables → DTCG `color`, shared Text Styles → `typography`, Layer Styles → `color`/`shadow`/`border`; symbols → components (not tokens).
+- **Runbook:** [`design-tool-runbooks.md`](design-tool-runbooks.md) → *Sketch runbook-lite* (Style Dictionary ↔ DTCG conversion; write call surface unverified).
 
 ### Framer (design → live site)
 - **In:** Framer's output is a **hosted site/CMS**, not code or a token file — so this profile is about consuming a *published URL* (treat as a rendered artifact for Mode D / rendered-output QA) rather than extracting tokens. Capture its CMS/responsive behavior, not a `.tokens.json`.
@@ -124,7 +128,7 @@ Each profile is just: how the host gets data IN, how the native model maps to th
 ## 5. How the modes use this layer
 
 - **Mode D (review):** accept a structured design extract (§1) as a high-confidence D1 input; assert layer/token facts; hold purely visual dimensions provisional until a render exists; flag rogue (un-tokenized) values.
-- **Mode C (spec) / Mode F (handoff):** emit the handoff payload (§3) and, when foundations are in scope, a DTCG `.tokens.json` (§2). Author the motion specs from [`motion-and-animation.md`](motion-and-animation.md) — they are the part a design tool does not capture.
+- **Mode C (spec) / Mode F (handoff):** emit the handoff payload (§3) and, when foundations are in scope, a DTCG `.tokens.json` (§2). When the tokens are to be written **back** into a tool, follow the reverse runbook in [`design-tool-runbooks.md`](design-tool-runbooks.md) (Figma Variables / Pencil variables — mapping table, write-call sequence, idempotency, alias order). Author the motion specs from [`motion-and-animation.md`](motion-and-animation.md) — they are the part a design tool does not capture.
 - **Self-review:** if a design tool / extract was provided, did I consume it as structured input (not just "a screenshot")? If I emitted tokens, are they valid DTCG 2025.10 (object color/dimension, aliases, theming) and is every value tokenized? Did I keep vendor data in `$extensions` and stay tool-neutral?
 
 The skill stays a *design-and-reasoning* layer that **composes with** whatever connector the host has; it never pretends to be the connector.
