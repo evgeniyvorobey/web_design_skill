@@ -2,6 +2,15 @@
 
 All notable changes to `web-design-skill` are documented here. This project follows [Semantic Versioning](https://semver.org/) adapted for a prompt-and-documentation skill (see [`docs/versioning.md`](docs/versioning.md)).
 
+## [1.2.0] - 2026-06-05
+
+### Added — Design-tool interop & handoff layer
+- New `docs/design-tool-handoff.md`: a durable, **tool-agnostic** interop layer so the skill can consume designs from any design tool and emit handoff the tool can read back — without binding to a vendor. Anchored on the **W3C Design Tokens (DTCG) format, version 2025.10** (its first stable release, 28 Oct 2025), grounded in fresh verified research.
+- **Input side:** a neutral "design extract" schema (nodes, layout, text, fills, token refs, components/states) that any tool's MCP output maps onto. A structured extract is a **higher-confidence Mode D (D1) input than a screenshot** — the review can assert layer/token facts (sizes, spacing, token names, heading outline) while holding purely visual properties provisional.
+- **Output side:** DTCG 2025.10 tokens (the modern object `color`/`dimension` shapes, aliases `{group.token}`, the `typography` composite, theming) plus a Dev-Mode-style handoff payload (tokens, component/state map, measurements, a11y annotations, responsive notes, motion specs, edge cases). Downstream pipeline `DTCG → Style Dictionary → CSS custom properties / Tailwind` with the `var(--…)` convention. A concrete example lives in `examples/design-tool/tokens.tokens.json`.
+- **Thin vendor profiles:** Figma (Variables REST/Dev Mode/MCP, `resolvedType` → `$type` mapping, Enterprise-gating caveat), Pencil/`.pen` (opaque-via-MCP, format v2.13 node/variable model), Penpot (DTCG-native, self-host), Sketch, Framer (published-site input); Builder.io/Visual Copilot as a design-to-code step; Adobe XD noted as legacy/discontinued.
+- **Honest boundary:** the skill reasons (review/spec/handoff/tokens); the **host's MCP connector** does the file/API I/O — the skill never opens `.fig`/`.pen` itself. Wired into Mode D (D1 input), Mode F (handoff target), SKILL.md, skill/skill.md, metadata, and self-review; enforced by a new `validate_design_tool_layer()` (doc patterns + valid DTCG example + reference wiring) and added to `REQUIRED_FILES`.
+
 ## [1.1.0] - 2026-06-05
 
 ### Added — Motion & animation layer

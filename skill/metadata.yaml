@@ -1,6 +1,6 @@
 name: web-design-skill
 title: Website Design Skill
-version: 1.1.0
+version: 1.2.0
 status: production-ready
 owner: repository-maintained
 entrypoint: SKILL.md
@@ -292,6 +292,20 @@ motion_and_animation:
     - libraries (Motion, GSAP, Lottie, Rive)
   performance: animate transform and opacity only; protect INP and CLS
   accessibility: honor prefers-reduced-motion with a reduced alternative, not just off
+design_tool_interop:
+  role: tool-agnostic interop — consume a structured design extract and emit handoff + design tokens
+  documentation: docs/design-tool-handoff.md
+  boundary: the skill reasons; the host's MCP connector does the file/API I/O (the skill never opens .fig/.pen itself)
+  token_standard: W3C Design Tokens (DTCG) 2025.10
+  token_file: examples/design-tool/tokens.tokens.json
+  input: neutral design-extract schema (nodes, layout, text, fills, token refs, components/states)
+  output: DTCG .tokens.json + a Dev-Mode-style handoff payload (tokens, component/state map, measurements, a11y, motion)
+  vendor_profiles:
+    - figma
+    - pencil
+    - penpot
+    - sketch
+    - framer
 rendered_output_qa:
   role: optional post-implementation QA workflow for rendered web artifacts, Playwright-first
   documentation: docs/rendered-output-qa.md

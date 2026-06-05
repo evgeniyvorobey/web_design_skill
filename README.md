@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img alt="version" src="https://img.shields.io/badge/version-1.1.0-blue">
+  <img alt="version" src="https://img.shields.io/badge/version-1.2.0-blue">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="status" src="https://img.shields.io/badge/status-production--ready-brightgreen">
 </p>
@@ -17,7 +17,7 @@ A reusable AI skill that helps generate, review, structure, and justify **websit
 
 Works as a Claude Code skill (`/web-design-skill`), as a Codex / OpenAI skill, and as a system prompt for the Claude API or any LLM integration.
 
-Current version: **1.1.0** — see [`CHANGELOG.md`](CHANGELOG.md).
+Current version: **1.2.0** — see [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What this skill does
 

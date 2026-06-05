@@ -86,6 +86,7 @@ Do not skip self-review to save tokens. A response that fails self-review is a r
 - Did I cover SEO & semantics where relevant (one h1, heading outline, landmarks, metadata/Open Graph on marketing/content surfaces)?
 - Did I check forced-colors / high-contrast survival and a real dark theme where relevant?
 - For any motion I proposed: does each animation serve a functional purpose (feedback, orientation, state change, status), or did I animate high-frequency/keyboard actions, dense tables, or forms where stillness is better? Is every animation `transform`/`opacity`-only with a `prefers-reduced-motion` fallback and named easing/duration tokens, per `docs/motion-and-animation.md`?
+- If a design came from or is going to a design tool: did I consume the structured extract as a high-confidence input (not just "a screenshot"), and — if I emitted tokens — are they valid DTCG 2025.10 (object color/dimension, aliases, theming), every value tokenized, with vendor data kept in `$extensions`, per `docs/design-tool-handoff.md`?
 
 ### Inspiration handling
 - If I used inspiration sources, are they clearly separated from UX rationale, web conventions, accessibility requirements, and compliance language?

@@ -142,6 +142,8 @@ When web standards/accessibility guidance conflicts with trend-based aesthetics,
 
 Use `docs/design-quality.md` when the output proposes, critiques, specifies, or rationalizes the quality of a design artifact. Use `docs/design-quality-rubric.md` to score the design-quality level from 1-5: for generated/specified artifacts, target 4/5 before returning; for reviews, expose the current design-quality score with a short reason.
 
+Use `docs/design-tool-handoff.md` when a design comes from (or is going to) a design tool. The host's MCP connector reads/writes the tool (Figma, Pencil/`.pen`, Penpot, Sketch, Framer); the skill consumes the structured extract as a high-confidence Mode D input and emits handoff plus W3C Design Tokens (DTCG 2025.10) as Mode F output. The skill never opens the tool's files itself.
+
 Use `docs/golden-examples.md` and `examples/golden/` as compact calibration references for marketing landing, ecommerce PDP + checkout, content article, docs / dev portal, web-app dashboard, web form, and settings / account.
 
 Use `docs/synthetic-case-studies.md` and `examples/case-studies/` during maintenance, calibration, or quality-sensitive drafting to compare weak vs strong answer shapes. These are synthetic fixtures, not real product validation.

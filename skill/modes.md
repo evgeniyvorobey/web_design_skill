@@ -221,7 +221,7 @@ Run an expert review of a page or page description through usability, accessibil
 Mode D behaves differently depending on what the user provides. Classify the request into exactly one sub-case at the start of the response, and adjust scope accordingly.
 
 #### D1: Review with visual design provided
-The user shares a screenshot, Figma link, rendered URL, or detailed visual description that includes layout, spacing, typography treatment, and color.
+The user shares a screenshot, Figma link, rendered URL, or detailed visual description that includes layout, spacing, typography treatment, and color. A **structured design extract** from a design tool (Figma / Pencil / Penpot / Sketch, pulled by the host's MCP connector — see `docs/design-tool-handoff.md`) is a higher-confidence D1 input than a screenshot: it lets the review assert layer- and token-level facts (sizes, spacing, token names, the text heading outline) while still holding purely visual properties (rendered contrast, focus appearance) provisional until a render exists.
 
 - Full assessment is possible across visual hierarchy, spacing, typography, colors, and contrast.
 - Accessibility checks can address visual properties (contrast, focus appearance, target-size visibility) as well as structural ones.
@@ -376,7 +376,7 @@ If brand rules are unknown:
 ## Mode F: Prepare design rationale / handoff
 
 ### Purpose
-Explain and package design decisions for product, design, and engineering handoff.
+Explain and package design decisions for product, design, and engineering handoff. When foundations or a design-tool round-trip are in scope, target the handoff payload and W3C Design Tokens (DTCG 2025.10) output in `docs/design-tool-handoff.md` — author the motion specs (the part a design tool does not capture) from `docs/motion-and-animation.md`.
 
 ### Required input
 At least one of:

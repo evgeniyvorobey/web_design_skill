@@ -31,6 +31,7 @@ REQUIRED_FILES = [
     "docs/benchmark-report-format.md",
     "docs/design-quality.md",
     "docs/design-quality-rubric.md",
+    "docs/design-tool-handoff.md",
     "docs/domain-packs/index.md",
     "docs/domain-packs/marketing-landing.md",
     "docs/domain-packs/ecommerce.md",
@@ -96,6 +97,7 @@ REQUIRED_FILES = [
     "examples/evals/rubric-score-5.json",
     "examples/rendered-output-qa/report-schema.json",
     "examples/rendered-output-qa/sample-report.json",
+    "examples/design-tool/tokens.tokens.json",
     "examples/visual-review-fixtures/ecommerce-pdp-desktop.md",
     "examples/visual-review-fixtures/webapp-dashboard-data-table.md",
     "examples/visual-review-fixtures/marketing-landing-above-fold.md",
@@ -678,6 +680,32 @@ MOTION_REQUIRED_PATTERNS = [
     "Motion plan",
     "animations.dev",
     "Codrops",
+]
+
+DESIGN_TOOL_REFERENCE_FILES = [
+    "SKILL.md",
+    "skill/skill.md",
+    "skill/metadata.yaml",
+    "skill/modes.md",
+    "docs/self-review.md",
+]
+
+DESIGN_TOOL_REQUIRED_PATTERNS = [
+    "DTCG",
+    "2025.10",
+    "$value",
+    "$type",
+    "{group",
+    "design-tokens+json",
+    ".tokens",
+    "design extract",
+    "Figma",
+    "Pencil",
+    "Penpot",
+    "Style Dictionary",
+    "var(--",
+    "Ready for dev",
+    "$extensions",
 ]
 
 
@@ -1420,6 +1448,42 @@ def validate_motion_layer() -> None:
         )
 
 
+def validate_design_tool_layer() -> None:
+    doc = (ROOT / "docs/design-tool-handoff.md").read_text(encoding="utf-8")
+    missing_patterns = [
+        pattern for pattern in DESIGN_TOOL_REQUIRED_PATTERNS if pattern not in doc
+    ]
+    if missing_patterns:
+        fail(
+            "docs/design-tool-handoff.md is missing required interop patterns: "
+            + ", ".join(missing_patterns)
+        )
+
+    tokens_path = ROOT / "examples/design-tool/tokens.tokens.json"
+    try:
+        tokens = json.loads(tokens_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        fail(f"examples/design-tool/tokens.tokens.json: invalid JSON ({exc})")
+    serialized = json.dumps(tokens)
+    if '"$value"' not in serialized or '"$type"' not in serialized:
+        fail(
+            "examples/design-tool/tokens.tokens.json must be a DTCG file containing "
+            "$value and $type tokens"
+        )
+
+    missing_references = []
+    for relative_path in DESIGN_TOOL_REFERENCE_FILES:
+        text = (ROOT / relative_path).read_text(encoding="utf-8")
+        if "design-tool-handoff.md" not in text and "design_tool" not in text:
+            missing_references.append(relative_path)
+
+    if missing_references:
+        fail(
+            "Design-tool interop layer is not referenced by required files: "
+            + ", ".join(missing_references)
+        )
+
+
 # Iteration 2: the web domain layer is authored, so content-depth checks run by
 # default. The WDS_STRICT gate is removed — strict validation is always on.
 STRICT = True
@@ -1449,6 +1513,7 @@ def main() -> None:
         validate_benchmark_report_format()
         validate_rendered_output_qa()
         validate_motion_layer()
+        validate_design_tool_layer()
         validate_example_responses()
 
     print(
