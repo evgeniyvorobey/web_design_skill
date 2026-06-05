@@ -17,6 +17,12 @@ All notable changes to `web-design-skill` are documented here. This project foll
 - Wired the runbooks doc into `SKILL.md` (load list), `skill/skill.md`, `skill/metadata.yaml` (`design_tool_interop.runbooks`), `skill/modes.md` (Mode D read + Mode F handoff), and `docs/self-review.md` (design-tool gate now covers the READ/REVERSE call sequences, idempotency, and the boundary).
 - Enforced by a new `validate_runbooks_layer()` in `scripts/validate_repo.py` (requires the real call names — `get_variable_defs`, `get_design_context`, `get_editor_state`, `set_variables`, `batch_design`, `POST /v1/files`, `file_variables:write` — plus the reverse mapping, idempotency, alias ordering, and honest boundary, with reference-file wiring); `docs/design-tool-runbooks.md` added to `REQUIRED_FILES`. No existing check or depth threshold was loosened.
 
+### Fixed — senior-review pass
+- **DTCG `$ref`/`$root`/`$extends` rationale corrected.** `docs/design-tool-handoff.md` previously called these "draft-only" features of the moving `/TR/drafts/` preview. Re-verified against the stable spec (designtokens.org/TR/2025.10/format/ §6.2/§6.4/§6.6): they are **normative in 2025.10** (`$ref` is MUST-support). The skill still does not emit them — now on the correct **portability** grounds (uneven round-trip support across design tools, Tokens Studio, and Style Dictionary), aligning handoff.md with the framing already in `design-tool-runbooks.md`. The recommended portable form remains the curly-brace `{group.token}` alias.
+- **Validator hardened (no loosening).** `validate_runbooks_layer()` now adds rule-binding assertions on top of the keyword presence checks — RGBA stated as 0–1 (not 0–255), alias targets before referrers, Pencil colors as hex — plus a minimum numbered-step count and minimum length, so a keyword-stuffed stub or a flipped correctness rule no longer passes.
+- **README repository map** now lists the design-tool interop (`design-tool-handoff.md`, `design-tool-runbooks.md`) and motion (`motion-and-animation.md`) layers, which the "What's inside" section had omitted.
+- Dropped a stray empty `()` after the no-input `whoami` step in the Figma READ runbook.
+
 ## [1.2.0] - 2026-06-05
 
 ### Added — Design-tool interop & handoff layer

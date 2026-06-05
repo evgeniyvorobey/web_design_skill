@@ -757,6 +757,28 @@ RUNBOOKS_REQUIRED_PATTERNS = [
     "Sketch",
 ]
 
+# Substring presence alone can't tell a real runbook from a keyword-stuffed stub,
+# nor catch a flipped correctness rule (e.g. RGBA 0-1 -> 0-255). These bindings
+# tie a keyword to its CORRECT rule and assert the doc has real runbook structure.
+# All are ADD-ONLY hardening: they cannot fail a currently-valid runbook and they
+# loosen nothing. (Dashes below allow en/em-dash or hyphen; "0..1" is also valid.)
+RUNBOOKS_REQUIRED_REGEXES = [
+    (
+        r"every channel[^\n]{0,12}0\s*(?:[–—-]|\.\.)\s*1",
+        "Figma color rule must state every channel as 0-1 (not 0-255)",
+    ),
+    (
+        r"target[^\n]{0,40}before[^\n]{0,40}referrer",
+        "alias-ordering rule must state targets before referrers",
+    ),
+    (
+        r"set_variables[^\n]{0,160}(?:hex|#)",
+        "Pencil reverse rule must state colors are hex strings",
+    ),
+]
+RUNBOOKS_MIN_NUMBERED_STEPS = 12
+RUNBOOKS_MIN_CHARS = 8000
+
 
 def fail(message: str) -> None:
     print(f"[FAIL] {message}")
@@ -1542,6 +1564,31 @@ def validate_runbooks_layer() -> None:
         fail(
             "docs/design-tool-runbooks.md is missing required runbook patterns: "
             + ", ".join(missing_patterns)
+        )
+
+    # Bind keywords to their correct rules (catches a flipped 0-1 -> 0-255, etc.).
+    missing_rules = [
+        description
+        for pattern, description in RUNBOOKS_REQUIRED_REGEXES
+        if not re.search(pattern, doc)
+    ]
+    if missing_rules:
+        fail(
+            "docs/design-tool-runbooks.md is missing required runbook rule bindings: "
+            + "; ".join(missing_rules)
+        )
+
+    # Require real runbook structure (catches a keyword-stuffed stub).
+    numbered_steps = len(re.findall(r"(?m)^\d+\.\s", doc))
+    if numbered_steps < RUNBOOKS_MIN_NUMBERED_STEPS:
+        fail(
+            "docs/design-tool-runbooks.md must contain at least "
+            f"{RUNBOOKS_MIN_NUMBERED_STEPS} numbered runbook steps; found {numbered_steps}"
+        )
+    if len(doc) < RUNBOOKS_MIN_CHARS:
+        fail(
+            "docs/design-tool-runbooks.md is too short to be a real runbook set "
+            f"({len(doc)} < {RUNBOOKS_MIN_CHARS} chars)"
         )
 
     missing_references = []
