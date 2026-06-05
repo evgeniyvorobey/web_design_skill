@@ -1,7 +1,7 @@
 ---
 name: web-design-skill
 description: Use when designing, reviewing, specifying, or justifying website UI/UX for responsive web (desktop, tablet, mobile-web) and marketing or web-app surfaces. Produces structured, breakpoint- and browser-aware outputs for pages, flows, UI specs, typography systems, accessibility-aware reviews, and handoff rationale.
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Website Design Skill
@@ -29,6 +29,7 @@ If deeper detail is needed during a task, load only the relevant references:
 - `docs/sources.md` for the source hierarchy and canonical URLs
 - `docs/quality-bars.md` for concrete numeric thresholds (typography, target size, contrast, motion, spacing, Core Web Vitals)
 - `docs/design-quality.md` for visual hierarchy, composition, density, typography craft, color semantics, interaction polish, and production-readiness calibration
+- `docs/motion-and-animation.md` for the motion layer: the appropriateness gate (animate only where it earns its place), easing/duration tokens, spring-vs-tween, the CSS → WAAPI → View Transitions → library build ladder, performance/accessibility rules, and wow-effect resources
 - `docs/design-quality-rubric.md` for 1-5 quality scoring, target levels, caps, and the improvement ladder
 - `docs/golden-examples.md` and `examples/golden/` for taste and domain calibration across marketing landing, ecommerce PDP + checkout, content article, docs / dev portal, web-app dashboard, web form, and settings / account
 - `docs/synthetic-case-studies.md` and `examples/case-studies/` for synthetic bad-to-good calibration cases when tuning output quality

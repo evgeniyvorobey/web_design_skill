@@ -70,7 +70,18 @@ If the request matches marketing/landing, ecommerce, content/publishing, docs/de
 
 ---
 
-## Step 3: Check information sufficiency
+## Step 3: Determine scope (the two axes)
+
+Identify, separately, the two scope axes every response carries:
+
+- **Responsive/breakpoint scope** — mobile-web, tablet, desktop, wide, or unspecified.
+- **Browser/engine scope** — Chromium, WebKit, Gecko, or unspecified, plus any Baseline/`caniuse` gating.
+
+If a scope is unspecified, ask only when a wrong assumption would mislead; otherwise continue with a labeled assumption (e.g. `Assumption: responsive, working down to 320px, on evergreen engines unless legacy support is specified`). Gate any non-trivial CSS/JS feature against `caniuse` / MDN Baseline and name the fallback.
+
+---
+
+## Step 4: Check information sufficiency
 
 Determine whether the request includes enough information for the chosen mode. Use `docs/clarification-policy.md` to decide whether to ask or proceed.
 
@@ -88,7 +99,7 @@ Still provide a useful structure, but limit specificity, state missing inputs cl
 
 ---
 
-## Step 4: Select source priority
+## Step 5: Select source priority
 
 Use the source hierarchy in this order:
 
@@ -117,7 +128,7 @@ Use the source hierarchy in this order:
 
 ---
 
-## Step 5: Build the response by mode
+## Step 6: Build the response by mode
 
 Use the response structure defined in `skill/templates.md`.
 
@@ -134,7 +145,7 @@ Every response ends with:
 
 ---
 
-## Step 6: Apply universal review lenses
+## Step 7: Apply universal review lenses
 
 Before finalizing, check the draft against these lenses. The first group is general; the lenses marked **(web)** are the web-specific additions and must be checked on every relevant artifact.
 
@@ -197,7 +208,7 @@ Before finalizing, check the draft against these lenses. The first group is gene
 
 ---
 
-## Step 7: Apply design reasoning
+## Step 8: Apply design reasoning
 
 Every major design decision in the response must have:
 
@@ -229,7 +240,7 @@ When a decision is driven by a known heuristic, cite it by name (Fitts' Law, Hic
 For every pattern-level decision (navigation, overlay, list/grid/table, primary action placement, form pattern, feedback surface, search, auth), consult the decision matrices in `docs/patterns-catalog.md` first. Use the Use-when / Avoid-when criteria; cite the choice in `Pattern choices and why`; put the losing pattern in `Alternatives considered`. Never invent a novel pattern when an established one covers the case — novelty breaks Jakob's Law.
 
 ### Calibrate design quality
-When the mode proposes or packages a design artifact, consult `docs/design-quality.md` and include the relevant calibration: attention path; composition and spacing (grid, responsive placement); typography (roles, clamp range, measure, font-loading); color and state (semantic roles, contrast, dark/forced-colors); interaction polish (feedback timing, motion budget, reduced-motion); production checks (tokens, states, breakpoints, semantic outline, CWV budget, axe/keyboard). Keep it concise and buildable.
+When the mode proposes or packages a design artifact, consult `docs/design-quality.md` and include the relevant calibration: attention path; composition and spacing (grid, responsive placement); typography (roles, clamp range, measure, font-loading); color and state (semantic roles, contrast, dark/forced-colors); interaction polish (feedback timing, motion budget, reduced-motion); production checks (tokens, states, breakpoints, semantic outline, CWV budget, axe/keyboard). Keep it concise and buildable. When the artifact warrants motion, consult `docs/motion-and-animation.md`: propose animation **only where it serves a functional purpose**, pick easing/duration tokens and a build mechanism (CSS → WAAPI → View Transitions → library) from its palette, and emit a compact Motion plan — do not animate high-frequency/keyboard actions, dense tables, or forms.
 
 ### Score design quality
 Use `docs/design-quality-rubric.md` after calibration. Internally target 4/5 for generated concepts, specs, type systems, and handoff; revise a weak dimension when context allows, or state the missing input. For Mode D reviews, expose both a current and a projected (conditional) score, capped at 4/5 unless resilience is named. Do not let a high visual score hide P0/P1 weaknesses, missing states, accessibility risks, or unsupported claims.
@@ -239,7 +250,7 @@ When the response uses inspiration sources: keep them in an `Inspiration referen
 
 ---
 
-## Step 8: Check concrete quality bars
+## Step 9: Check concrete quality bars
 
 Compare the draft against `docs/quality-bars.md`. At minimum confirm: typography roles cover the hierarchy with sizes/line-heights in range and a capped measure; target sizes and spacing met; contrast meets WCAG 2.2 AA; motion durations in range and reduced-motion respected; Core Web Vitals budget plausible (LCP/INP/CLS); states include at least default, loading, empty, error; spacing from the 4px scale; breakpoint behavior and 320px reflow; design-quality calibration/score applied; known weakness patterns addressed.
 
@@ -247,13 +258,13 @@ When the mode does not produce concrete values (Mode B flow, Mode F rationale), 
 
 ---
 
-## Step 9: Self-review against the quality bar
+## Step 10: Self-review against the quality bar
 
 Run the self-review pass defined in `docs/self-review.md`. Silently answer every prompt in the universal and mode-specific sections. If any answer is "no" or "not sure", revise and re-run. Never return a response that fails self-review with a disclaimer. Self-review is the single highest-impact quality mechanism in this skill.
 
 ---
 
-## Step 10: Finalize responsibly
+## Step 11: Finalize responsibly
 
 Make sure the final answer states assumptions clearly, distinguishes facts from recommendations, remains structured and reusable, avoids unsupported claims, and ends with concrete next actions.
 

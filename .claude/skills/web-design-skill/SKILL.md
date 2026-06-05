@@ -3,7 +3,7 @@ name: web-design-skill
 description: Generate, review, and structure website UI/UX decisions for responsive web (desktop, tablet, mobile-web), marketing/landing pages, and web apps. Use when you want to invoke the web design workflow directly in Claude Code with /web-design-skill.
 argument-hint: "[--judge] [task / page / flow]"
 disable-model-invocation: true
-version: 1.0.0
+version: 1.1.0
 ---
 
 # Website Design Skill

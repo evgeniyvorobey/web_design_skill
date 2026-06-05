@@ -190,7 +190,7 @@ For every major design decision in the response:
 - name at least one alternative that was considered
 - give a concrete reason the chosen option wins, tied to user goal, task, breakpoint/browser, accessibility, or implementation
 
-If a decision has no alternative, it was not a decision — it was a default; flag defaults as such. See `docs/workflow.md` Step 7 for detail.
+If a decision has no alternative, it was not a decision — it was a default; flag defaults as such. See `docs/workflow.md` Step 8 for detail.
 
 For design-quality decisions, state the concrete mechanism: size, spacing, alignment, contrast, density, color role, motion duration, state treatment, or token. Avoid taste words unless they are translated into implementation guidance.
 
@@ -205,7 +205,7 @@ Compare the draft against the numeric thresholds in `docs/quality-bars.md`:
 - typography sizes (16px/1rem body minimum), line-height, line length (~65ch)
 - target size (24px WCAG 2.5.8; 44px AAA) and pointer-aware spacing
 - WCAG 2.2 AA contrast ratios (4.5:1 / 3:1) and non-text contrast (3:1)
-- motion durations and reduced-motion respect
+- motion durations and reduced-motion respect; when proposing motion, apply `docs/motion-and-animation.md` — animate only where it serves a functional purpose, pick easing/duration tokens and a build mechanism from its palette, and never animate high-frequency/keyboard actions, dense tables, or forms
 - Core Web Vitals budgets (LCP ≤ 2.5s, INP ≤ 200ms, CLS ≤ 0.1)
 - state coverage (default, loading, empty, error, plus system states)
 - spacing from the 4px-based scale; breakpoint ladder; 320px reflow

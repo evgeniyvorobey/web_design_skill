@@ -4,7 +4,7 @@ This document defines the mandatory self-review pass every skill response must u
 
 Self-review is the single highest-impact lever for output quality. Without it, LLM responses drift toward plausible-sounding but shallow output — visible structure, weak substance. With it, most low-quality outputs are caught before the user ever sees them.
 
-Self-review runs inside the workflow as **Step 9: Self-review against quality bar**, after the draft is complete and before it is returned.
+Self-review runs inside the workflow as **Step 10: Self-review against the quality bar**, after the draft is complete and before it is returned.
 
 ---
 
@@ -85,6 +85,7 @@ Do not skip self-review to save tokens. A response that fails self-review is a r
 - Did I consider performance (LCP candidate prioritized, layout shift prevented, INP-friendly interactions) against the Core Web Vitals budget?
 - Did I cover SEO & semantics where relevant (one h1, heading outline, landmarks, metadata/Open Graph on marketing/content surfaces)?
 - Did I check forced-colors / high-contrast survival and a real dark theme where relevant?
+- For any motion I proposed: does each animation serve a functional purpose (feedback, orientation, state change, status), or did I animate high-frequency/keyboard actions, dense tables, or forms where stillness is better? Is every animation `transform`/`opacity`-only with a `prefers-reduced-motion` fallback and named easing/duration tokens, per `docs/motion-and-animation.md`?
 
 ### Inspiration handling
 - If I used inspiration sources, are they clearly separated from UX rationale, web conventions, accessibility requirements, and compliance language?

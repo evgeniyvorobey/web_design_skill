@@ -44,6 +44,7 @@ REQUIRED_FILES = [
     "docs/heuristics.md",
     "docs/inspiration-sources.md",
     "docs/judged-mode.md",
+    "docs/motion-and-animation.md",
     "docs/llm-judge-runner.md",
     "docs/patterns-catalog.md",
     "docs/principles.md",
@@ -654,6 +655,29 @@ CLARIFICATION_POLICY_REQUIRED_PATTERNS = [
     "Why this blocks",
     "Fast path",
     "Proceed-with-assumptions",
+]
+
+MOTION_REFERENCE_FILES = [
+    "SKILL.md",
+    "skill/skill.md",
+    "skill/metadata.yaml",
+    "docs/quality-bars.md",
+    "docs/design-quality.md",
+    "docs/self-review.md",
+    "docs/workflow.md",
+]
+
+MOTION_REQUIRED_PATTERNS = [
+    "cubic-bezier",
+    "prefers-reduced-motion",
+    "Web Animations API",
+    "View Transitions",
+    "scroll-driven",
+    "ease-out",
+    "transform",
+    "Motion plan",
+    "animations.dev",
+    "Codrops",
 ]
 
 
@@ -1372,6 +1396,30 @@ def extract_assumptions(text: str) -> str:
     return match.group("body").strip() if match else ""
 
 
+def validate_motion_layer() -> None:
+    doc = (ROOT / "docs/motion-and-animation.md").read_text(encoding="utf-8")
+    missing_patterns = [
+        pattern for pattern in MOTION_REQUIRED_PATTERNS if pattern not in doc
+    ]
+    if missing_patterns:
+        fail(
+            "docs/motion-and-animation.md is missing required motion patterns: "
+            + ", ".join(missing_patterns)
+        )
+
+    missing_references = []
+    for relative_path in MOTION_REFERENCE_FILES:
+        text = (ROOT / relative_path).read_text(encoding="utf-8")
+        if "motion-and-animation.md" not in text and "motion_animation" not in text:
+            missing_references.append(relative_path)
+
+    if missing_references:
+        fail(
+            "Motion/animation layer is not referenced by required files: "
+            + ", ".join(missing_references)
+        )
+
+
 # Iteration 2: the web domain layer is authored, so content-depth checks run by
 # default. The WDS_STRICT gate is removed — strict validation is always on.
 STRICT = True
@@ -1400,6 +1448,7 @@ def main() -> None:
         validate_visual_review_fixtures()
         validate_benchmark_report_format()
         validate_rendered_output_qa()
+        validate_motion_layer()
         validate_example_responses()
 
     print(

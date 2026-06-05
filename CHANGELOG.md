@@ -2,6 +2,18 @@
 
 All notable changes to `web-design-skill` are documented here. This project follows [Semantic Versioning](https://semver.org/) adapted for a prompt-and-documentation skill (see [`docs/versioning.md`](docs/versioning.md)).
 
+## [1.1.0] - 2026-06-05
+
+### Added — Motion & animation layer
+- New `docs/motion-and-animation.md`: a first-class motion layer so the skill proposes animation **only where it earns its place** (feedback, orientation, state change, status) and never on high-frequency/keyboard actions, dense tables, or forms.
+- Grounded in fresh web research (2024–2025), with verified facts: an easing palette of exact `cubic-bezier()` tokens (corrected Material 3 Standard vs Emphasized; IBM Carbon productive/expressive), a duration scale, spring-vs-tween guidance, and the CSS → WAAPI → View Transitions → CSS scroll-driven → library build ladder with **current Baseline status** per API (View Transitions same-document Baseline Oct 2025; cross-document and scroll-driven animations *not* Baseline → progressive enhancement; Web Animations API + `linear()` Baseline; GSAP now fully free incl. former Club plugins).
+- Performance rules (animate `transform`/`opacity` only; protect INP/CLS) and accessibility rules (`prefers-reduced-motion` with a *reduced* alternative, not just off; WCAG 2.2.2/2.3.1/2.3.3), plus a tiered wow-effect resource list (learn / build / inspire: animations.dev, Josh Comeau, web.dev; Motion, hover.dev, Lottie, Rive; Codrops, Awwwards, Godly).
+- A "Motion plan" output shape for Modes A/C/F/G and a Mode D motion lens that flags both missing functional motion and over-animation.
+- Wired into `SKILL.md`, `skill/skill.md`, `skill/metadata.yaml`, `quality-bars.md`, `design-quality.md`, `self-review.md`, `workflow.md`, and `inspiration-sources.md`; enforced by a new `validate_motion_layer()` check and added to `REQUIRED_FILES`.
+
+### Fixed
+- Workflow step-numbering desync: `docs/workflow.md` is aligned to the canonical 11-step scheme (a dedicated "Step 3: Determine scope" was added), and the cross-references in `docs/self-review.md` (now "Step 10") and `skill/skill.md` (now "workflow Step 8") were corrected.
+
 ## [1.0.0] - 2026-06-05
 
 ### Iteration 2 — production-ready web skill

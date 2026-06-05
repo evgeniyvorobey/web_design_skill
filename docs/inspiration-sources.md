@@ -35,6 +35,8 @@ Every craft idea borrowed from this layer carries mandatory caveats: re-check **
 
 Deliberately **demoted / dropped** for web: app-store-style galleries and mobile-pattern catalogs (Pttrns, UI Sources) — they index native mobile UI, not responsive web, and pull recommendations toward the wrong platform.
 
+For **motion and animation** specifically — the wow-effect galleries and learning sources (Codrops, Motion, hover.dev, animations.dev, Awwwards motion, Godly), tiered by learn / build / inspire with their caveats — see [`motion-and-animation.md`](motion-and-animation.md) §9. The same firewall applies: re-check `prefers-reduced-motion`, keyboard operability, and `transform`/`opacity`-only performance before shipping anything borrowed.
+
 ## Reasoning / derivation layer
 
 When the user asks for inspiration or "best-in-class" references:

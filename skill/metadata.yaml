@@ -1,6 +1,6 @@
 name: web-design-skill
 title: Website Design Skill
-version: 1.0.0
+version: 1.1.0
 status: production-ready
 owner: repository-maintained
 entrypoint: SKILL.md
@@ -279,6 +279,19 @@ visual_review_fixtures:
     - examples/visual-review-fixtures/saas-pricing-comparison.md
     - examples/visual-review-fixtures/content-article-longform.md
     - examples/visual-review-fixtures/web-form-checkout-desktop.md
+motion_and_animation:
+  role: tasteful, performant, accessible motion proposed only where it earns its place
+  documentation: docs/motion-and-animation.md
+  appropriateness_gate: animate only for feedback, orientation, state change, or status; never high-frequency or keyboard-initiated actions, dense tables, or forms
+  build_ladder:
+    - CSS transition
+    - CSS keyframes
+    - Web Animations API
+    - View Transitions API
+    - CSS scroll-driven animations (progressive enhancement, not Baseline)
+    - libraries (Motion, GSAP, Lottie, Rive)
+  performance: animate transform and opacity only; protect INP and CLS
+  accessibility: honor prefers-reduced-motion with a reduced alternative, not just off
 rendered_output_qa:
   role: optional post-implementation QA workflow for rendered web artifacts, Playwright-first
   documentation: docs/rendered-output-qa.md

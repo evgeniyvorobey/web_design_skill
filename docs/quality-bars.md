@@ -42,6 +42,7 @@ All values are in CSS reference pixels (`px`) and `rem` (1rem = the user's root 
 - **`prefers-reduced-motion: reduce`** must remove parallax, large translate/scale transitions, auto-advancing carousels, and scroll-jacking; replace with instant or opacity-only changes. Never gate content behind motion.
 - **No content flashing more than 3 times per second (2.3.1).**
 - **Scroll-triggered motion** is decoration: content must be fully present and readable with motion off and with JavaScript reveal-on-scroll disabled.
+- For the full easing palette (cubic-bezier tokens), the spring-vs-tween rule, the CSS → WAAPI → View Transitions → library build ladder, and the appropriateness gate (animate only where it earns its place), see [`motion-and-animation.md`](motion-and-animation.md).
 
 ## Spacing, grid and breakpoints
 
