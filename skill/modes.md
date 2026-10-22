@@ -437,6 +437,8 @@ If research evidence is missing:
 ### Purpose
 Design or review a marketing / landing page whose primary job is persuasion and conversion — not task completion. This mode optimizes the marketing-site end of the spectrum (above-the-fold clarity, scroll narrative, CTA hierarchy, social proof, conversion path), distinct from the web-app modes (A–F) which optimize task efficiency and density. **The marketing-vs-web-app split is the defining tension of this mode:** marketing surfaces earn expressive, editorial, brand-forward craft; web-app surfaces earn density, tables, keyboard-first task efficiency. Use the right end of the spectrum for the surface, and say which end you are optimizing.
 
+For a public-interest or social campaign, the conversion goal is understanding and recall rather than a sale; apply the social-campaign section of [`../docs/domain-packs/marketing-landing.md`](../docs/domain-packs/marketing-landing.md).
+
 ### Required input
 At least one of:
 - product / offer description

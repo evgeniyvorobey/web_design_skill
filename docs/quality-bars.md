@@ -14,6 +14,7 @@ All values are in CSS reference pixels (`px`) and `rem` (1rem = the user's root 
 - **Line-height: 1.5 for body, 1.2–1.35 for headings.** Tighter than 1.4 on body copy fails comfortable reading; tighter than 1.2 on large headings causes descender collisions.
 - **Type scale ratio:** 1.2 (minor third) for dense app UI, 1.25–1.333 for editorial/marketing. Define roles, not ad-hoc sizes.
 - **WCAG 1.4.12 Text Spacing (AA) must survive user overrides** with no clipping or overlap: line-height ≥ 1.5×, paragraph spacing ≥ 2× font size, letter-spacing ≥ 0.12em, word-spacing ≥ 0.16em.
+- **Font subsetting:** self-host and cut a variable font to the axes and ranges the page uses (fontTools `instancer`) and to the scripts it renders (fontTools `subset`, plus `unicode-range`). A full variable family from a font CDN often weighs 2–3× the subset. Re-run the subset when copy adds new glyphs or weights.
 - **Font loading:** prefer `font-display: swap` (accept FOUT) over invisible text (FOIT); `<link rel="preload">` the one or two fonts used above the fold; set `size-adjust` / fallback face metrics to keep the swap from shifting layout (protects CLS).
 
 ## Targets and pointer
@@ -62,6 +63,7 @@ Field "good" thresholds at the 75th percentile:
 - **CLS (Cumulative Layout Shift) ≤ 0.1** (needs-improvement 0.1–0.25; poor > 0.25).
 - Supporting: TTFB ≈ ≤ 0.8s, FCP ≤ 1.8s.
 - **Prevent CLS:** reserve media space with `width`/`height` or `aspect-ratio`; never inject content above existing content after load; reserve ad/embeds slots.
+- **Lazy media:** a below-the-fold `<img loading="lazy">` carries `width` / `height` attributes, and its container has a definite size or `aspect-ratio` before load. WebKit treats a zero-size box as never visible and skips the load, leaving an empty gap.
 - **Protect LCP:** the hero text/image is the LCP candidate — preload it, avoid render-blocking webfonts on it, don't lazy-load it.
 - **Protect INP:** keep main-thread tasks short; defer non-critical JS; debounce expensive handlers; show optimistic/loading feedback within 100ms.
 - Treat these as quality bars and as a Mode D review lens, not vanity metrics.

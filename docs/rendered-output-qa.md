@@ -12,15 +12,34 @@ Classify the artifact before inspecting: deployed URL, local HTML/dev server, pr
 
 ## Layout, overlap and reflow (320px)
 
-Drive a real browser across the **breakpoint ladder** (320 / 360 / 768 / 1024 / 1280 / 1440 / 1920) and capture issues that only appear once rendered:
+Drive a real browser across the **breakpoint ladder** (320 / 360 / 768 / 1024 / 1280 / 1440 / 1920) and capture issues that only appear once rendered. The ladder is where screenshots go; layout breaks live *between* its rungs, so add two geometry-only passes:
+
+- **Width sweep** — step the width by 10–20px from 320 to 1920 and record geometry only (no screenshots). A nav label that wraps at 1180px passes every ladder rung and still ships broken.
+- **Height sweep** — pair the widths with heights 667, 720 and 800, plus a landscape phone (844×390). The `h1` and the primary CTA land inside the first viewport at every pair; a 1280×720 laptop is a common miss when every check runs at 900px tall.
+
+Capture at every width:
 
 - element **overlap** and z-index collisions
 - **clipping** of content by fixed/sticky containers
 - **text overflow** / truncation and broken wrapping
 - horizontal scroll where there should be none; sticky-header overlap of focused content
 - **uneven peer-tile heights and internal misalignment**: cards, tiles, or columns that are peers in one row rendering at mismatched heights with ragged bottom edges, *or* whose internal rows don't line up across siblings — titles, descriptions, and CTAs starting at different heights because one title wrapped to more lines — instead of sharing both height and row tracks (a Gestalt similarity/continuity break — usually cosmetic-to-minor, but a real `observed` finding, not to be skipped)
+- **single-line labels**: nav links, buttons, tags and badges render on one line (`el.getClientRects().length === 1` for inline boxes, or a height within one line box). A label that wraps to two lines at a mid width is an `observed` finding.
+- **edge alignment**: every block with a background, border or shadow ends on the content column edge. A block with an offset (hard) shadow ends inside the column by exactly its shadow offset; a plain block stops short of the edge only when it is meant to. Ragged right edges at phone widths usually come from one compensation rule applied to every block.
 - the **320px reflow** (WCAG 1.4.10): no two-dimensional scrolling for vertical content, plus a usable 200% zoom
 - SSR/hydration mismatches that shift layout after load (a CLS source)
+
+## Lazy media and engine differences
+
+Scroll each section into view, wait for the network to settle, then assert every `<img>` has `complete && naturalWidth > 0`. A check that runs before the scroll passes on images that never load. Run it in WebKit as well as Chromium: WebKit leaves a `loading="lazy"` image unloaded when its box is zero-sized before load, so the image never counts as visible (the fix is in [`quality-bars.md`](quality-bars.md) under Performance).
+
+## Motion smoothness and the device check
+
+Headless engines report no scroll jank, so a green run says nothing about smoothness. Record a Chromium trace (`devtools.timeline` category) during a scripted scroll and count `Paint` events: a large layer that repaints on every scroll frame is a finding (the usual cause is a gradient or filter driven by a custom property; see [`motion-and-animation.md`](motion-and-animation.md) §6). Then confirm every scroll-linked animation on a real iOS Safari device; without a device, mark smoothness `unverified`.
+
+## Built output
+
+Run the sweep against the files that ship (minified, comment-stripped, with production URLs), not against the source tree. Build steps break things the source never shows: a minifier, a stripped attribute, a placeholder domain left in `og:image`.
 
 ## Targets and pointer
 
@@ -46,6 +65,13 @@ Capture Lighthouse / Core Web Vitals hints: the LCP element and timing, CLS sour
 Label every finding with an evidence tier — `observed` (seen in a render), `measured` (a tool number), `inferred`, or `user_supplied` — and a severity. A confirmed rendered overlap, clipping, overflow, failed 320px reflow, or focus-order break can cap an otherwise strong written design until fixed; record the cap and feed it back into the Mode D score. Never assert a visual property as `measured` when it was only `inferred` from a description.
 
 ## Playwright workflow
+
+[`../scripts/rendered_qa.py`](../scripts/rendered_qa.py) runs the geometry passes from this document in Chromium and WebKit: the width sweep, the height sweep for the first viewport, single-line labels, edge alignment, horizontal overflow, lazy media after scroll, and the scroll `Paint` count. It writes JSON findings and exits non-zero on a failure. Screenshots, axe-core and the focus-order walk stay with the ladder pass below.
+
+```bash
+uv run --with playwright python3 scripts/rendered_qa.py dist/site \
+  --cta ".hero .btn" --edges "main section .card, main section figure"
+```
 
 ```js
 // Resize across the ladder, screenshot, run axe, capture focus order, emulate media.

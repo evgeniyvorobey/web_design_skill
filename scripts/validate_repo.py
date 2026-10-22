@@ -110,6 +110,7 @@ REQUIRED_FILES = [
     "scripts/rubric_judge_oracle_agent.py",
     "scripts/run_rubric_judge.py",
     "scripts/validate_release.py",
+    "scripts/rendered_qa.py",
     "assets/logo-light.svg",
     "assets/logo-dark.svg",
 ]
@@ -649,6 +650,14 @@ RENDERED_OUTPUT_QA_REQUIRED_PATTERNS = [
     "axe-core",
     "focus order",
     "rendered-output-qa/v1",
+    "Width sweep",
+    "Height sweep",
+    "single-line labels",
+    "edge alignment",
+    "naturalWidth",
+    "real iOS Safari device",
+    "Built output",
+    "scripts/rendered_qa.py",
 ]
 
 CLARIFICATION_POLICY_REQUIRED_PATTERNS = [
@@ -681,6 +690,10 @@ MOTION_REQUIRED_PATTERNS = [
     "Motion plan",
     "animations.dev",
     "Codrops",
+    "Paint once, move the layer",
+    "overflow: clip",
+    "Pause ambient loops during scroll",
+    "21st.dev",
 ]
 
 DESIGN_TOOL_REFERENCE_FILES = [

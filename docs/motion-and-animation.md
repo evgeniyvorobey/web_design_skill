@@ -106,6 +106,8 @@ Pick the lightest tool that does the job. Animate from this capability ladder:
    - *Same-document (SPA)* — Baseline **Newly available (Oct 2025)**: Chrome/Edge 111+, Safari 18+, Firefox 144+ (`document.startViewTransition()`). Automates the FLIP technique for you. Firefox lacks view-transition *types* initially.
    - *Cross-document (MPA, `@view-transition { navigation: auto }`)* — **not Baseline**: Chromium 126+ and Safari 18.2+, not Firefox. Treat as **progressive enhancement** — non-supporting engines snap without animation (graceful).
 5. **CSS scroll-driven animations (`animation-timeline: scroll()/view()`)** — **NOT Baseline (Limited availability):** Chromium 115+ and Safari 26, Firefox behind a flag (~85% global). Use only as progressive enhancement, always wrapped in `@supports (animation-timeline: scroll())` with a non-animated fallback; never make core content depend on it. (A JS polyfill exists but runs on the main thread and defeats the perf win — use sparingly.)
+   - Keep one code path per engine: CSS drives the motion where `CSS.supports('animation-timeline: scroll()')` is true, and the JS scroll listener runs only where it is false. Running both makes them fight on the same property.
+   - `view()` follows the nearest scroll container. An ancestor with `overflow: hidden` *is* a scroll container, so the timeline attaches to it and the animation stops following the page. Clip with `overflow: clip` instead (keep `overflow: hidden` before it as the fallback declaration).
 6. **Libraries — only when the above don't suffice:**
    - **Motion** (motion.dev, formerly Framer Motion) — MIT, hybrid engine that uses native WAAPI where possible; `layout` prop is FLIP under the hood; springs, gestures, scroll. For React/JS/Vue apps with rich interaction.
    - **GSAP** — now **100% free including all former Club plugins** (SplitText, MorphSVG, DrawSVG, ScrollSmoother, MotionPath), commercial use included (April 2025, under Webflow). For complex timelines, text effects, SVG, and award-grade marketing motion.
@@ -120,6 +122,9 @@ Name the chosen mechanism and its scope in the spec/handoff, and gate any non-Ba
 
 - **Animate only `transform` and `opacity`** — they run on the compositor thread and hold 60fps even on low-end devices. Use `transform: translate/scale/rotate` for movement/resize and `opacity` for show/hide.
 - **Never animate layout/paint properties** for motion: `top/left/width/height/margin` (trigger layout), `background-color/box-shadow/color` (trigger paint) — these cause jank.
+- **Paint once, move the layer.** A `background`, gradient, `filter` or `clip-path` whose value comes from a custom property updated on scroll repaints the whole layer every frame; on iOS Safari that reads as stutter. Render the art once (oversized so rotation never shows its edge) and move it with `transform` / `rotate`.
+- **Pause ambient loops during scroll.** An idle loop (float, sway, shimmer) gets `animation-play-state: paused` while the page scrolls, through a class a debounced scroll listener adds and removes ~200ms after the last scroll event. The loop resumes from the same frame, and the compositor serves the scroll first.
+- **Verify on a device.** Headless runs show no jank; scroll-linked motion is confirmed on real iOS Safari (see [`rendered-output-qa.md`](rendered-output-qa.md)).
 - **`will-change`** only on confirmed jank, on elements truly about to animate; add/remove via JS for infrequent changes — leaving it on permanently wastes GPU memory.
 - **Core Web Vitals:** motion must not regress **INP** (≤ 200ms — keep handlers light, don't block the main thread) or **CLS** (≤ 0.1 — never animate layout; reserve space). Entrance animations on the LCP element can delay LCP — don't gate the hero behind a reveal.
 
@@ -175,6 +180,7 @@ Every resource below optimizes for visual impact, **not your constraints**. Befo
 **Tier 2 — Build (copy-paste, production-oriented; still audit a11y/perf):**
 - **Motion — motion.dev/examples** — 378+ examples across React/JS/Vue, copy-paste, MIT.
 - **hover.dev** — animated React + Tailwind sections (heroes, pricing, navs, cards) on Motion/JS.
+- **21st.dev** — community registry of React + Tailwind + shadcn/ui components, many animated with Motion. On a site without React, port the pattern (keyframes, duration, easing curve) to CSS `@keyframes` or WAAPI; adding React and Motion for one effect costs tens of KB of JS. Shipped code carries no attribution comments to the source.
 - **Lottie / LottieFiles** — pre-rendered vector animations; MIT runtimes; prefer `.lottie`.
 - **Rive** — interactive state-machine animation.
 - **CodePen** — vast technique pool; unvetted — scratch material, never paste blind.

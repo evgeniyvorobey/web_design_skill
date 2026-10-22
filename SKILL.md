@@ -1,7 +1,7 @@
 ---
 name: web-design-skill
 description: Use when designing, reviewing, specifying, or justifying website UI/UX for responsive web (desktop, tablet, mobile-web) and marketing or web-app surfaces. Produces structured, breakpoint- and browser-aware outputs for pages, flows, UI specs, typography systems, accessibility-aware reviews, and handoff rationale.
-version: 1.4.0
+version: 1.5.0
 ---
 
 # Website Design Skill

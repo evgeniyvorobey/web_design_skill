@@ -74,6 +74,11 @@ them as a system, not alternatives.
   (`<ul><li><a>`). It is a set of links, not a widget — do **not** apply
   `role="menubar"`. The current destination carries `aria-current="page"`.
   Each link is a real URL so it is shareable, mid-clickable, and indexable.
+- **Breakpoint**: show the inline nav only from the width where every label
+  fits on one line, measured by the rendered-QA width sweep, not guessed from
+  the ladder. Labels carry `white-space: nowrap`; below that width the nav
+  collapses to a disclosure button (`<button aria-expanded>`) with a text
+  label. The breakpoint absorbs the overflow, not shrinking type.
 - **Failure mode**: the link count outgrows the row, items wrap or get
   hidden behind an unlabeled icon, and the active state is lost. On small
   viewports it silently becomes an inaccessible icon toggle.
@@ -81,6 +86,7 @@ them as a system, not alternatives.
   - `role="menubar"` / `role="menuitem"` on what are really page links.
   - No `aria-current` on the active destination.
   - The "current page" relies on color alone (fails 1.4.1 / 1.4.3).
+  - A label wraps to two lines at a mid width (between ladder rungs).
   - Nav items are `<div onclick>` instead of `<a href>` — no real URL, no
     keyboard, no middle-click, no right-click "open in new tab".
 
@@ -652,6 +658,22 @@ is. Match the channel to the message's scope and urgency.
 - **Red flags**: optimistic UI on irreversible actions; failed mutation with
   no rollback/notice; skeletons that don't reserve the real dimensions
   (causes CLS); spinner-only for multi-second content loads.
+
+### Full-page preloader / splash
+
+- **Use-when**: a heavy client-rendered experience (WebGL scene, video-led
+  story) cannot paint anything meaningful until assets arrive.
+- **Avoid-when**: the page is static HTML/CSS with images and no video. The
+  hero is already painted when a preloader would cover it, so the preloader
+  only delays LCP; the browser's own progress indicator is the loading state.
+- **Mechanism**: when a client asks for one, state the LCP cost in
+  milliseconds before building it and offer the alternative: no preloader,
+  or a skeleton of the real layout. If it ships, it is inline CSS in the
+  first HTML bytes (a JS-injected preloader appears after the browser's own
+  blank or spinner frame) and it never outlasts `DOMContentLoaded` plus the
+  hero image.
+- **Red flags**: preloader on a page under a few MB; minimum display time;
+  a preloader that hides content already rendered.
 
 ## 7. States
 

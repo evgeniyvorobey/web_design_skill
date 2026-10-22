@@ -2,6 +2,27 @@
 
 All notable changes to `web-design-skill` are documented here. This project follows [Semantic Versioning](https://semver.org/) adapted for a prompt-and-documentation skill (see [`docs/versioning.md`](docs/versioning.md)).
 
+## [1.5.0] - 2026-10-22
+
+Lessons from shipping a one-page social-campaign landing (static HTML/CSS/JS, Chromium + WebKit QA). Automated checks on the fixed breakpoint ladder passed while the client still found bugs between the rungs, on real iOS Safari, and in the build. This release closes those gaps.
+
+### Added — Rendered QA between the ladder rungs
+- `docs/rendered-output-qa.md`: **Width sweep** (10–20px steps, geometry only) and **Height sweep** (667/720/800 plus landscape phone, h1 and primary CTA in the first viewport); **single-line labels** and **edge alignment** (offset-shadow blocks end inside the column by exactly the offset); lazy media checked after scrolling, in WebKit; scroll `Paint` count from a Chromium trace plus a mandatory real iOS Safari device check; QA runs on the **Built output**, not the source.
+- `scripts/rendered_qa.py`: geometry runner for the passes above in Chromium and WebKit. Emits `checks` in the `rendered-output-qa/v1` checkResult shape; exit code 1 on a failure. Calibrated on a real build: it caught a wrapped nav label, a ragged column edge, lazy logos that never loaded, and a background repainting on every scroll frame, with no false positives after tuning.
+- `docs/guardrails.md` §16 *Use brand marks from the source file*: extract the vector, verify by pixel overlay, no silent redraws.
+- `docs/domain-packs/marketing-landing.md` *Public-Interest And Social Campaigns*: conversion as understanding and recall; facts not offers (no sale vocabulary such as "−50%" stickers); sources at the claim; partner logo grid; imagery consent; social-advertising law routed to counsel. Pointer added to Mode G in `skill/modes.md`.
+- `docs/patterns-catalog.md` *Full-page preloader / splash*: avoid on static pages, state the LCP cost before building one.
+
+### Changed
+- `docs/motion-and-animation.md`: one code path per engine for scroll-driven motion; `overflow: clip` instead of `hidden` so `view()` keeps following the page; *Paint once, move the layer*; *Pause ambient loops during scroll*; device verification; 21st.dev added to the build resources with a port-to-CSS rule for non-React stacks.
+- `docs/quality-bars.md`: lazy media needs dimensions before load (WebKit skips zero-size lazy images); variable-font subsetting by axes and scripts.
+- `docs/patterns-catalog.md` *Top horizontal nav*: inline nav only from the width where every label fits on one line; red flag for mid-width wrapping.
+- `docs/design-quality.md` dimension 2: shared column edges with offset-shadow compensation on the shadowed element.
+- `docs/domain-packs/marketing-landing.md`: stat captions match the source definition, paired numbers share base and period; static logo grid up to about a dozen logos; concrete consent-mode checklist; static-host launch checklist (`404.html`, staging `noindex`, absolute OG URLs at build time).
+- `docs/weaknesses.md` #11: clean-build prevention check for code handoffs.
+- `scripts/validate_repo.py`: requires the new rendered-QA and motion patterns and `scripts/rendered_qa.py`.
+- `README.md`: lists the geometry runner and states the browser/network scope it uses when invoked.
+
 ## [1.4.0] - 2026-06-05
 
 ### Added — Equal-height peer tiles + internal cross-card alignment

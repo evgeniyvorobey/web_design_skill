@@ -11,6 +11,7 @@ Use this pack when the primary job of the surface is persuasion and conversion r
 - A pricing page where plan comparison and the upgrade CTA are the conversion event.
 - A lead-capture or waitlist page with a short form and an email/SMS gate.
 - A launch or event page with a countdown, registration, and social proof.
+- A public-interest or social campaign page (road safety, health, civic causes). Apply [Public-Interest And Social Campaigns](#public-interest-and-social-campaigns) first; it replaces the sales framing in the rest of this pack where the two disagree.
 
 Do NOT use this pack as the authority for the authenticated product itself (use the web-app pack), for documentation, or for transactional checkout flows where payment and order state dominate. A landing page hands off to those surfaces; it is not those surfaces.
 
@@ -31,7 +32,7 @@ Design the page so each scroll depth answers the next question. A visitor who sc
 
 Marketing pages are where overclaiming, dark patterns, and data-collection abuse concentrate. Treat these as first-class risks, not afterthoughts:
 
-- **Overclaiming and unsubstantiated stats.** "10x faster", "Join 50,000 teams", "#1 platform". Every quantified claim needs a verifiable source or it becomes a legal and reputational liability. Mark the source in copy or footnote.
+- **Overclaiming and unsubstantiated stats.** "10x faster", "Join 50,000 teams", "#1 platform". Every quantified claim needs a verifiable source or it becomes a legal and reputational liability. Mark the source in copy or footnote. Check the caption against the source as well as the number: the caption carries the source's own definition ("crashes with injuries" stays that, never "registered crashes"); numbers shown side by side share one base and one period; the data year sits next to the number or in the source link. Captions supplied by the client get the same check.
 - **Fabricated or unattributed social proof.** Stock-photo "customers", invented testimonials, logo walls of companies that never bought. Attributable name + role + company, or do not show it.
 - **Forced urgency and false scarcity.** Fake countdown timers that reset on reload, "Only 2 left!" on infinite digital goods, persistent "Sale ends today" banners. These are deceptive-pattern risks and erode trust on the second visit.
 - **Confirmshaming and manipulative opt-outs.** Decline links worded as "No thanks, I hate saving money". Avoid; the negative option must be neutral and equally clickable.
@@ -42,13 +43,23 @@ Marketing pages are where overclaiming, dark patterns, and data-collection abuse
 
 State in copy what the user is agreeing to, who receives their data, and how to opt out. Honesty is a conversion strategy on the return visit.
 
+## Public-Interest And Social Campaigns
+
+A social campaign page persuades too, but the conversion is understanding: the visitor reads the message, trusts the facts, remembers the slogan, and changes a behavior or shares it. Partner visits and pledges are secondary actions. Plan the scroll as orient → feel → trust the facts → remember → act or share.
+
+- **Facts, not offers.** The sales vocabulary reads as sales on any subject: a giant percentage, a minus sign before a number, strikethroughs, burst badges, countdown timers. A target such as "at least 50% fewer road deaths by 2030" works as a sentence with typographic emphasis, not as "−50%" in a sticker.
+- **Sources at the claim.** Official statistics carry the publisher and the year, linked to the primary page; the full source list may live in the footer, but the strongest figure on the page keeps its link next to it.
+- **Partners.** The partner set is small and the logo files vary in quality. Show them as a static grid, normalized by optical weight, and request vector files for every low-resolution logo before launch.
+- **Imagery and tone.** Use real campaign photos with a licence and consent from people in frame. Keep dignity for victims; a shock image that shames the audience costs trust the facts need.
+- **Advertising law.** Many jurisdictions regulate social advertising separately from commercial advertising: limits on naming or showing the commercial sponsor, a mandatory "social advertising" label, approval of official data use. Record the client's decision on sponsor naming in writing and route the page to legal counsel before launch.
+
 ## Common Web Surfaces
 
 Concrete components and page regions this pack governs:
 
 - **Hero** — `h1` value proposition, supporting subhead, primary CTA, optional secondary CTA (`<button>` for in-page action, `<a>` for navigation), hero media with reserved aspect ratio.
 - **Sticky header / top-nav** — logo, anchor links to sections, persistent CTA; collapses to a disclosure menu (`<button aria-expanded>`) on narrow viewports.
-- **Social-proof strip** — customer logos, star rating, "Trusted by" count, press mentions.
+- **Social-proof strip** — customer logos, star rating, "Trusted by" count, press mentions. Up to about a dozen logos sit in a static grid; a moving marquee suits only a large set of uniformly sharp logos and needs a pause control (WCAG 2.2.2).
 - **Feature blocks** — alternating media/text rows, icon grids, benefit-led headings.
 - **Testimonial cards / carousel** — quote, attributable name/role/avatar; carousel built as an APG-conformant pattern with accessible controls, not auto-advancing without pause.
 - **Comparison / pricing table** — tiered plans, feature matrix, "Most popular" highlight, monthly/annual toggle.
@@ -164,5 +175,6 @@ Before handing a marketing/landing page to engineering, confirm:
 - [ ] **Motion spec** with `prefers-reduced-motion` fallbacks; no auto-advancing carousel without a pause control.
 - [ ] **Performance budget** stated: LCP element identified and preloaded, image `srcset`/dimensions/`aspect-ratio` set, fonts with `swap` + preload + metric overrides, third-party/marketing tags deferred and gated behind consent; CLS-reserved space called out.
 - [ ] **Claim substantiation** noted: every stat, logo, and testimonial has a documented source and attribution; pricing discloses card requirement and renewal terms near the CTA.
-- [ ] **Consent / privacy** behavior specified: which tags fire pre- vs post-consent, GPC handling, opt-out path, and links to Privacy/Terms in the footer.
+- [ ] **Consent / privacy** behavior specified: which tags fire pre- vs post-consent, GPC handling, opt-out path, and links to Privacy/Terms in the footer. For analytics under a consent banner: consent mode defaults to `denied`; events fire only after the visitor grants consent; a refusal also deletes analytics cookies already set; the banner names the third party that receives the data and any transfer abroad, and links to a privacy page written for the jurisdiction; a footer control reopens the choice; the analytics retention period is set to match the privacy page.
+- [ ] **Launch checklist** for a static host: a real `404.html` (many static hosts otherwise serve the home page with status 200 for any path, a soft 404); `noindex` on staging, removed only by the release build; canonical, `og:url` and `og:image` as absolute URLs on the final domain, injected at build time.
 - [ ] **Tracking handoff** clean: analytics/conversion events named and mapped to CTAs and form submit, with URL-as-shareable-state for campaign params (UTMs) preserved through navigation.

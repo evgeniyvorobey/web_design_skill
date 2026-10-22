@@ -210,6 +210,7 @@ Prevention:
 - use concrete values, tokens, states, behavior rules, and QA checks
 - identify implementation risks such as text scaling, focus order, analytics, state persistence, and performance
 - keep open questions genuinely blocking or undecided
+- when the handoff is code, ship a clean build: the source keeps its comments; the delivered bundle has no comments, debug flags, TODO/MVP markers, placeholder domains, credits to inspiration sources, or editor metadata and EXIF in images; tests run against that bundle
 
 ### 12. Overlong process theater
 

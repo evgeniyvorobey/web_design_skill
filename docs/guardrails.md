@@ -154,3 +154,12 @@ Better: apply the rubric caps (including the responsive-flattening and keyboard-
 Clarifying questions are useful only when the answer changes the recommendation. Do not ask a discovery questionnaire before producing a simple artifact, ask brand/style questions before task/breakpoint/browser/safety/accessibility/implementation blockers, ask more than three questions at once, or block a provisional draft when a safe assumption would work.
 
 Better: apply `docs/clarification-policy.md`, proceed with the smallest labeled assumption when the gap is not blocking, ask one to three high-impact questions when the gap changes the design decision, and offer a fast path when the user can accept a provisional draft.
+
+---
+
+## 16. Use brand marks from the source file
+
+A logo or brand mark is a fixed asset, not a design variable. Take it from the client's source vector (PDF, AI, EPS, SVG): extract the paths and colors, then split it into the lockups the layout needs (full mark, symbol only, wordmark only). A redrawn or auto-traced look-alike drifts in letterforms, stroke weights and proportions, and the client sees it at once.
+
+Verify the extract by rendering the source and the result at the same size and reporting the share of differing pixels; anti-aliasing on edges is the only acceptable difference. When only a raster exists, tell the user before layout and ask for the vector. A redraw ships only with the user's explicit approval, labeled as a redraw.
+

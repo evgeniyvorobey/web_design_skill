@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img alt="version" src="https://img.shields.io/badge/version-1.4.0-blue">
+  <img alt="version" src="https://img.shields.io/badge/version-1.5.0-blue">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="status" src="https://img.shields.io/badge/status-production--ready-brightgreen">
 </p>
@@ -17,7 +17,7 @@
 
 Runs as a **Claude Code** skill (`/web-design-skill`), as a **Codex / OpenAI** skill, or as a **system prompt** for the Claude API or any LLM. It reasons over text, screenshots, and structured design extracts; when a design-tool connector is loaded it can also read a Figma/Pencil file and write design tokens back.
 
-Current version: **1.4.0** — see [`CHANGELOG.md`](CHANGELOG.md).
+Current version: **1.5.0** — see [`CHANGELOG.md`](CHANGELOG.md).
 
 ## What it does
 
@@ -171,7 +171,7 @@ Honest scope matters more than hype, so here it is plainly.
 
 - **It is not pixel-perfect rendering.** It reasons from text, DOM, screenshots, or structured extracts — it does not see sub-pixel layout, real font rendering, or runtime contrast unless you give it concrete values. Visual claims stay *provisional* until a render exists.
 - **Guidance, not a compliance guarantee.** Accessibility output is a strong design-time starting point, not a substitute for testing with real screen readers (VoiceOver/NVDA/JAWS), keyboard-only runs, and a contrast checker. It will not claim conformance it cannot verify.
-- **It doesn't run, deploy, or screenshot your site, or open a `.fig`/`.pen` itself.** Those I/O steps belong to your host's tools/MCP connector; the skill orchestrates and reasons. The optional [rendered-output QA](docs/rendered-output-qa.md) workflow is Playwright-first and host-driven.
+- **It doesn't run, deploy, or screenshot your site, or open a `.fig`/`.pen` itself.** Those I/O steps belong to your host's tools/MCP connector; the skill orchestrates and reasons. The optional [rendered-output QA](docs/rendered-output-qa.md) workflow is Playwright-first and host-driven; its geometry runner runs only when you invoke it.
 - **Rubric scores are model-judged, not deterministic.** The 1–5 number is a calibrated estimate to compare drafts and target a bar — two runs can differ slightly. Use it as a gradient, not a certificate.
 - **Scope is web.** Responsive web, marketing/landing, and web apps — not native iOS/Android, print, or email-client HTML.
 - **It will ask or assume, not invent.** Missing flows, states, or policies are surfaced as labeled assumptions or blocking questions rather than fabricated.
@@ -184,7 +184,7 @@ Honest scope matters more than hype, so here it is plainly.
 - **Design-tool interop & motion:** [`docs/design-tool-handoff.md`](docs/design-tool-handoff.md) (neutral extract + DTCG 2025.10 tokens), [`docs/design-tool-runbooks.md`](docs/design-tool-runbooks.md) (per-tool READ/REVERSE call sequences for Figma, Pencil, Penpot, Sketch), and [`docs/motion-and-animation.md`](docs/motion-and-animation.md) (the motion layer).
 - **Calibration corpus:** [`docs/golden-examples.md`](docs/golden-examples.md) + [`examples/golden/`](examples/golden/); [`docs/synthetic-case-studies.md`](docs/synthetic-case-studies.md) + [`examples/case-studies/`](examples/case-studies/); [`docs/visual-review-fixtures.md`](docs/visual-review-fixtures.md) + [`examples/visual-review-fixtures/`](examples/visual-review-fixtures/); the five web domain packs in [`docs/domain-packs/`](docs/domain-packs/index.md); and the rubric fixtures in [`examples/evals/`](examples/evals/) with the upgrade example [`examples/rubric-before-after.md`](examples/rubric-before-after.md).
 - **Inspiration (non-authoritative):** [`docs/inspiration-sources.md`](docs/inspiration-sources.md), [`docs/visual-benchmark-playbooks.md`](docs/visual-benchmark-playbooks.md), [`docs/benchmark-report-format.md`](docs/benchmark-report-format.md).
-- **Rendered-output QA (optional, Playwright-first):** [`docs/rendered-output-qa.md`](docs/rendered-output-qa.md) + [`examples/rendered-output-qa/`](examples/rendered-output-qa/).
+- **Rendered-output QA (optional, Playwright-first):** [`docs/rendered-output-qa.md`](docs/rendered-output-qa.md) + [`examples/rendered-output-qa/`](examples/rendered-output-qa/) + the geometry runner [`scripts/rendered_qa.py`](scripts/rendered_qa.py) (width and height sweeps, single-line labels, block edges, lazy media, scroll repaints).
 - **Tooling:** the LLM-as-judge runner [`scripts/run_rubric_judge.py`](scripts/run_rubric_judge.py) (documented in [`docs/llm-judge-runner.md`](docs/llm-judge-runner.md)) that powers `--judge` mode, the repo validator, and deterministic release validation in [`scripts/validate_release.py`](scripts/validate_release.py).
 
 ## Validation
@@ -201,7 +201,7 @@ Design quality is calibrated against the score-graded fixtures in [`examples/eva
 
 ## Security & trust
 
-This skill is prompt-and-docs plus a few **Python validation/release scripts** (no network calls, no secrets). As with any skill you install, read what runs: the scripts under [`scripts/`](scripts/) and the wrapper in [`.claude/`](.claude/). The skill performs no file or network I/O of its own — any reading of your design files or sites happens through your host's tools/MCP connectors, under your control.
+This skill is prompt-and-docs plus a few **Python validation/release scripts** (no network calls, no secrets). The one exception is the optional [`scripts/rendered_qa.py`](scripts/rendered_qa.py): when you run it, it drives a local Playwright browser against the URL or folder you pass, serving a folder on `127.0.0.1` only. As with any skill you install, read what runs: the scripts under [`scripts/`](scripts/) and the wrapper in [`.claude/`](.claude/). The skill performs no file or network I/O of its own — any reading of your design files or sites happens through your host's tools/MCP connectors, under your control.
 
 ## Versioning & contributing
 
